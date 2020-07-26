@@ -1,0 +1,257 @@
+import * as React from 'react';
+import { Box } from 'grommet';
+import { useStores } from 'stores';
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import * as styles from './landing-styles.styl';
+import styled from 'styled-components';
+import { Title, Text, Button } from 'components/Base';
+import { Pricing } from './Pricing';
+
+const MainLogo = styled.img`
+  width: auto;
+  height: 100px;
+  margin-left: -46px;
+  z-index: 999;
+`;
+
+export const Landing = observer(() => {
+  const { soccerPlayers, routing } = useStores();
+
+  useEffect(() => {
+    soccerPlayers.setMaxDisplay(20);
+
+    soccerPlayers.getList();
+  }, []);
+
+  return (
+    <Box direction="column" justify="between" align="center">
+      <Box className={styles.mainBlock}>
+        <Box
+          pad={{ top: '60px', bottom: '100px' }}
+          className={styles.pageContent}
+        >
+          <img src="/landing/main/dragon.png" className={styles.dragon} />
+          <img src="/landing/main/heroes.png" className={styles.heroes} />
+          <img src="/landing/main/gold.png" className={styles.gold} />
+
+          <Box
+            direction="column"
+            align="start"
+            justify="between"
+            style={{ height: '100%' }}
+          >
+            <MainLogo src="main_logo.png" />
+
+            <Box
+              direction="column"
+              margin={{ vertical: '60px' }}
+              style={{ maxWidth: 460 }}
+              gap="40px"
+            >
+              <Title
+                style={{
+                  textShadow: '3px 2px 10px #000000',
+                  fontWeight: 600,
+                  fontSize: 36,
+                }}
+                color="white"
+              >
+                First Official Chest Sale Begins
+              </Title>
+              <Text
+                style={{ textShadow: '1px 4px 12px #000000' }}
+                color="white"
+              >
+                With these 100 Limited Edition NFT chests, you will get a
+                greater discount than with in-game purchase. Each chest includes
+                a 150% extra gems, NFT Collectible Card and VIP points. Don't
+                miss out!
+              </Text>
+              <Button size="xxlarge" onClick={() => routing.push('/buy')}>
+                Buy now
+              </Button>
+            </Box>
+
+            <Box direction="row" align="center">
+              <a href="/">
+                <img
+                  src="/landing/main/app-store.png"
+                  className={styles.appStore}
+                />
+              </a>
+              <a href="">
+                <img src="/landing/main/gp.png" className={styles.googlePlay} />
+              </a>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box className={styles.howToBuy}>
+        <Box
+          pad={{ top: '120px', bottom: '50px' }}
+          className={styles.pageContent}
+          direction="column"
+          align="center"
+        >
+          <Title
+            color="white"
+            style={{
+              fontWeight: 600,
+              fontSize: 36,
+              marginBottom: 20,
+            }}
+          >
+            How to buy
+          </Title>
+          <Text color="white">
+            First time buying digital goods? Follow the tutorial below to
+            purchase these super valuable Crazy Defense Heroes NFT chests!
+          </Text>
+
+          <Box
+            pad={{ vertical: '60px' }}
+            className={styles.pageContent}
+            direction="row"
+            gap="20px"
+            justify="center"
+            style={{ flexWrap: 'wrap' }}
+          >
+            <Box className={styles.reason}>
+              <div className={styles.number}>1</div>
+              <div className={styles.imageContainer}>
+                <img src="/landing/how-to-buy/1.png" />
+              </div>
+              <div className={styles.smallTitle}>
+                <Text>Create a digital wallet</Text>
+              </div>
+              <div className={styles.description}>
+                <Text>
+                  Please create a wallet on Fortmatic or Huobi. If you have
+                  already created a wallet, skip to step 2.
+                </Text>
+              </div>
+              <Button>Create wallet</Button>
+            </Box>
+
+            <Box className={styles.reason}>
+              <div className={styles.number}>2</div>
+              <div className={styles.imageContainer}>
+                <img src="/landing/how-to-buy/2.png" />
+              </div>
+              <div className={styles.smallTitle}>
+                <Text>Download Beast Quest</Text>
+              </div>
+              <div className={styles.description}>
+                <Text>
+                  If you don't already have a CDH account, please download the
+                  game first. You need an User ID to get these special offers.
+                </Text>
+              </div>
+              <Button>Download</Button>
+            </Box>
+
+            <Box className={styles.reason}>
+              <div className={styles.number}>3</div>
+              <div className={styles.imageContainer}>
+                <img src="/landing/how-to-buy/3.png" />
+              </div>
+              <div className={styles.smallTitle}>
+                <Text>Get your game User ID</Text>
+              </div>
+              <div className={styles.description}>
+                <Text>
+                  After completing the tutorial in game, find your User ID in
+                  Settings.
+                </Text>
+              </div>
+              <Button>How to find</Button>
+            </Box>
+
+            <Box className={styles.reason}>
+              <div className={styles.number}>4</div>
+              <div className={styles.imageContainer}>
+                <img src="/landing/how-to-buy/4.png" />
+              </div>
+              <div className={styles.smallTitle}>
+                <Text>Top Up</Text>
+              </div>
+              <div className={styles.description}>
+                <Text>
+                  You will need to add currency (ETH or DAI) in your digital
+                  wallet to enjoy these special offers.
+                </Text>
+              </div>
+              <Button>Top Up</Button>
+            </Box>
+
+            <Box className={styles.reason}>
+              <div className={styles.number}>5</div>
+              <div className={styles.imageContainer}>
+                <img src="/landing/how-to-buy/5.png" />
+              </div>
+              <div className={styles.smallTitle}>
+                <Text>Purchase Super Value Chests</Text>
+              </div>
+              <div className={styles.description}>
+                <Text>
+                  Once you have purchased a chest, the Collectible Card will be
+                  stored in your digital wallet.
+                </Text>
+              </div>
+              <Button onClick={() => routing.push('/buy')}>Buy now</Button>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box className={styles.needToBuy}>
+        <Box
+          pad={{ top: '120px', bottom: '100px' }}
+          className={styles.pageContent}
+          direction="row"
+          align="center"
+        >
+          <Box width="50%">
+            <Title color="white">
+              Do I need to buy NFTs to enjoy Beast Quest Ultimate Heroes?
+            </Title>
+          </Box>
+          <Box width="50%">
+            <Text color="white">
+              No, NTFs are not essential for players to play the game. You might
+              prefer to fight the battles in order to complete the different
+              levels, which is the fun way of playing the game (we’ve designed
+              the game to give you lots of cool beasts to battle!). If you
+              decide to buy NFTs, please ask bill payer’s permission and make
+              sure they have read and understood the process above before you
+              proceed.
+            </Text>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box className={styles.pricing}>
+        <Box
+          pad={{ top: '120px', bottom: '100px' }}
+          className={styles.pageContent}
+          direction="column"
+          align="center"
+        >
+          <Title
+            style={{
+              fontWeight: 600,
+              fontSize: 36,
+              marginBottom: 20,
+            }}
+            color="white"
+          >
+            Pricing
+          </Title>
+          <Pricing />
+        </Box>
+      </Box>
+    </Box>
+  );
+});
