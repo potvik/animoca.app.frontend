@@ -16,6 +16,7 @@ import { formatWithTwoDecimals, moreThanZero } from 'utils';
 import { AuthWarning } from '../../components/AuthWarning';
 import { BuyPlayerModal } from '../PlayersMarketplace/BuyPlayerModal';
 import { IStores } from '../../stores';
+import {BuyLootBoxModal} from "../PlayersMarketplace/BuyLootBoxModal";
 
 export const BoxItem = (props: {
   id: string;
@@ -125,9 +126,9 @@ export class Pricing extends React.Component<IStores> {
       }
       await buyPlayer.initPlayer(soccerPlayers.list[0].player);
 
-      actionModals.open(() => <BuyPlayerModal />, {
+      actionModals.open(() => <BuyLootBoxModal />, {
         title: '',
-        applyText: 'Buy Player Card',
+        applyText: 'Buy Loot Box',
         closeText: 'Cancel',
         noValidation: true,
         width: '1000px',
