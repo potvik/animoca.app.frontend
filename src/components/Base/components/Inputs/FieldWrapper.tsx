@@ -31,7 +31,7 @@ export const FieldWrapper = (props: IFieldWrapperProps) => {
           {!isRowLabel && (
             <Box justify="center">
               {text && (
-                <Text margin={{ bottom: '5px' }} style={{ fontSize: '13px', color: '#9698a7' }}>
+                <Text margin={{ bottom: '5px' }} style={{ fontSize: '13px', color: 'white' }}>
                   {text}
                 </Text>
               )}

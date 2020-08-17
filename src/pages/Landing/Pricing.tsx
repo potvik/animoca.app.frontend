@@ -107,13 +107,14 @@ export class Pricing extends React.Component<IStores> {
     const { tokenList } = this.props;
 
     return (
-      <Box className={styles.pricingBody}>
+      <Box className={styles.pricingBody} margin={{ top: 'medium' }}>
         <Box
           direction="column"
           width="70%"
           gap="20px"
           style={{ background: '#0D1C2B', borderRadius: 12 }}
           pad="xlarge"
+          margin={{ top: 'medium' }}
         >
           <Title color="white">Legendary Chest </Title>
           <Text color="white">
@@ -140,7 +141,13 @@ export class Pricing extends React.Component<IStores> {
             </Box>
           </Box>
         </Box>
-        <Box direction="column" width="40%" justify="center">
+        <Box
+          direction="column"
+          width="40%"
+          justify="center"
+          margin={{ left: 'medium' }}
+          style={{ background: '#0D1C2B', borderRadius: 12 }}
+        >
           <Form
             ref={ref => (this.formRef = ref)}
             data={tokenList.formData}
@@ -167,7 +174,7 @@ export class Pricing extends React.Component<IStores> {
                 style={{ width: '361px' }}
                 margin={{ top: 'small', bottom: 'medium' }}
               >
-                <Text>Platform</Text>
+                <Text color="white">Platform</Text>
                 <Box direction="row">
                   <Box
                     className={cn(
