@@ -98,9 +98,7 @@ export class Pricing extends React.Component<IStores> {
         width: '1000px',
         showOther: true,
         onApply: () => this.props.tokenList.buyLootBox(),
-        onClose: () => {
-          tokenList.clear();
-        },
+        onClose: () => tokenList.clear(),
       });
     });
   };

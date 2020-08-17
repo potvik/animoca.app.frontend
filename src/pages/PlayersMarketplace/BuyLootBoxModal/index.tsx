@@ -15,10 +15,6 @@ interface IBuyPlayerModalProps {}
 export const BuyLootBoxModal = observer<IBuyPlayerModalProps>(props => {
   const { tokenList: buyPlayer } = useStores();
 
-  if (buyPlayer.status !== 'success') {
-    return <Text>Loading...</Text>;
-  }
-
   let icon = () => <Icon style={{ width: 50 }} glyph="RightArrow" />;
   let description = 'Approval';
 

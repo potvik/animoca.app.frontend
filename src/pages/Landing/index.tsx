@@ -16,7 +16,7 @@ const MainLogo = styled.img`
 `;
 
 export const Landing = observer(() => {
-  const { routing, user } = useStores();
+  const { routing, user, tokenList } = useStores();
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
@@ -76,7 +76,7 @@ export const Landing = observer(() => {
                   size="xxlarge"
                   onClick={() => routing.push('/my-cards')}
                 >
-                  My cards
+                  My cards ({tokenList.list.length})
                 </Button>
               ) : null}
             </Box>

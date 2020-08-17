@@ -105,6 +105,10 @@ export class TokenList extends StoreConstructor {
 
     return new Promise(async (resolve, reject) => {
       try {
+        if (Number(this.stores.user.balance) < Number(this.total) * 1e18) {
+          throw new Error('Your balance is not enough to buy');
+        }
+
         const res = await blockchain.purchase({
           address: this.stores.user.address,
           quantity: this.formData.amount,
@@ -116,9 +120,11 @@ export class TokenList extends StoreConstructor {
         if (!res.error) {
           this.actionStatus = 'success';
 
-          setTimeout(() => resolve(), 2000);
+          setTimeout(async () => {
+            await this.getList();
 
-          this.getList();
+            resolve();
+          }, 2000);
 
           return;
         }
@@ -126,7 +132,7 @@ export class TokenList extends StoreConstructor {
         this.error = res.error;
 
         this.actionStatus = 'error';
-        reject();
+        reject(res.error);
       } catch (e) {
         console.error(e);
         this.error = e.message;
