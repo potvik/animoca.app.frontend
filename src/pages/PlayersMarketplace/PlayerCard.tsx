@@ -17,6 +17,7 @@ import { useStores } from 'stores';
 import { BuyPlayerModal } from './BuyPlayerModal';
 import { AuthWarning } from '../../components/AuthWarning';
 import { SendPlayerModal } from './SendPlayerModal';
+import {SignIn} from "../../components/SignIn";
 
 const DataItem = (props: {
   text: any;
@@ -71,19 +72,15 @@ const PlayerCardEx = observer<IPlayerCardProps>(props => {
 
   const buyPlayerHandler = useCallback(async () => {
     if (!user.isAuthorized) {
-      if (!user.isMathWallet) {
-        return actionModals.open(() => <AuthWarning />, {
-          title: '',
-          applyText: 'Got it',
-          closeText: '',
-          noValidation: true,
-          width: '500px',
-          showOther: true,
-          onApply: () => Promise.resolve(),
-        });
-      } else {
-        await user.signIn();
-      }
+      await actionModals.open(SignIn, {
+        title: 'Sign in',
+        applyText: 'Sign in',
+        closeText: 'Cancel',
+        noValidation: true,
+        width: '500px',
+        showOther: true,
+        onApply: (data: any) => user.signIn(data.email),
+      });
     }
 
     if (user.address === bech32Owner) {

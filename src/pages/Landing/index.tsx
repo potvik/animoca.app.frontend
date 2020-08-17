@@ -213,12 +213,12 @@ export const Landing = observer(() => {
           direction="row"
           align="center"
         >
-          <Box width="50%">
+          <Box>
             <Title color="white">
               Do I need to buy NFTs to enjoy Beast Quest Ultimate Heroes?
             </Title>
           </Box>
-          <Box width="50%">
+          <Box>
             <Text color="white">
               No, NTFs are not essential for players to play the game. You might
               prefer to fight the battles in order to complete the different

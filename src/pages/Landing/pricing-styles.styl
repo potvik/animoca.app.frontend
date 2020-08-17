@@ -39,3 +39,17 @@
     }
   }
 }
+
+.pricingBody {
+  flex-direction row
+}
+
+@media (max-width: 900px) {
+  .pricingBody {
+    flex-direction column
+
+    > div {
+      width 100%
+    }
+  }
+}

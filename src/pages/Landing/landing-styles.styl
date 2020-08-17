@@ -133,6 +133,27 @@
   height auto
   width 100%
   background #0D1C2B
+
+  .pageContent {
+    > div {
+      width 50%
+      padding-right 40px
+      padding-left 40px
+    }
+  }
+
+  @media (max-width 600px) {
+    .pageContent {
+      > div {
+        width 100%
+        margin-bottom 20px
+      }
+
+      padding 80px 20px 60px 20px
+
+      flex-direction column
+    }
+  }
 }
 
 .pricing {
@@ -140,3 +161,5 @@
   min-height 300px
   background #000102
 }
+
+

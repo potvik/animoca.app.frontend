@@ -4,10 +4,12 @@ const { getAddress } = require('@harmony-js/crypto');
 
 export const EXPLORER_URL = 'https://explorer.harmony.one/#';
 
+export const RPC_URL = 'https://api.s0.b.hmny.io';
+
 const GAS_LIMIT = 103802;
 const GAS_PRICE = 1000000000;
 
-const hmy = new Harmony('https://api.s0.b.hmny.io', {
+const hmy = new Harmony(RPC_URL, {
   chainType: ChainType.Harmony,
   chainId: ChainID.HmyTestnet,
 });

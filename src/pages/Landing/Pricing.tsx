@@ -13,10 +13,9 @@ import {
 import { computed, observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { formatWithTwoDecimals, moreThanZero } from 'utils';
-import { AuthWarning } from '../../components/AuthWarning';
-import { BuyPlayerModal } from '../PlayersMarketplace/BuyPlayerModal';
 import { IStores } from '../../stores';
-import {BuyLootBoxModal} from "../PlayersMarketplace/BuyLootBoxModal";
+import { BuyLootBoxModal } from '../PlayersMarketplace/BuyLootBoxModal';
+import { SignIn } from '../../components/SignIn';
 
 export const BoxItem = (props: {
   id: string;
@@ -110,19 +109,15 @@ export class Pricing extends React.Component<IStores> {
 
     this.formRef.validateFields().then(async data => {
       if (!user.isAuthorized) {
-        if (!user.isMathWallet) {
-          return actionModals.open(() => <AuthWarning />, {
-            title: '',
-            applyText: 'Got it',
-            closeText: '',
-            noValidation: true,
-            width: '500px',
-            showOther: true,
-            onApply: () => Promise.resolve(),
-          });
-        } else {
-          await user.signIn();
-        }
+        await actionModals.open(SignIn, {
+          title: 'Sign in',
+          applyText: 'Sign in',
+          closeText: 'Cancel',
+          noValidation: true,
+          width: '500px',
+          showOther: true,
+          onApply: (data: any) => user.signIn(data.email),
+        });
       }
       await buyPlayer.initPlayer(soccerPlayers.list[0].player);
 
@@ -141,7 +136,7 @@ export class Pricing extends React.Component<IStores> {
 
   render() {
     return (
-      <Box direction="row">
+      <Box className={styles.pricingBody}>
         <Box
           direction="column"
           width="70%"

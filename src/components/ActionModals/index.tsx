@@ -88,7 +88,7 @@ export const ActionModal = observer<{
         />
       ) : null}
       {!isClassComponent(Render) ? (
-        Render({ actionData })
+        Render({ actionData, onValidate })
       ) : (
         <Render
           config={config}

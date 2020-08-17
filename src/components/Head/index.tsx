@@ -6,16 +6,12 @@ import { observer } from 'mobx-react-lite';
 import { Routes } from 'constants/routes';
 import { Text } from 'grommet';
 import { IStyledChildrenProps } from 'interfaces';
-import { Title } from '../Base/components/Title';
 import { Icon } from '../Base/components/Icons';
 import { useStores } from '../../stores';
 import { Button } from '../Base/components/Button';
-import { AuthWarning } from '../AuthWarning';
 import { formatWithTwoDecimals, ones } from '../../utils';
-import * as styles from './styles.styl';
-import { Info } from '../Info';
-import { PLAYERS_FILTER } from '../../stores/SoccerPlayersList';
-import { PageContainer } from '../PageContainer';
+import { SignIn } from '../SignIn';
+import { Spinner } from '../../ui/Spinner';
 
 export const MainLogo = styled.img`
   width: auto;
@@ -28,6 +24,9 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
     const { user, actionModals } = useStores();
     const { palette, container } = theme;
     const { minWidth, maxWidth } = container;
+
+    console.log(user.status)
+
     return (
       <Box
         style={{
@@ -74,20 +73,25 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
             {/*<Box style={{ flex: '1 1 100%' }} />*/}
 
             <Button onClick={() => history.push('/buy')}>Buy Loot Box</Button>
-            <Button
-              onClick={() => history.push('/my-cards')}
-              disabled={!user.isAuthorized}
-            >
-              My cards
-            </Button>
 
-            {user.isAuthorized ? (
+            {user.status !== 'success' ? null : (
+              <Button
+                onClick={() => history.push('/my-cards')}
+                disabled={!user.isAuthorized}
+              >
+                My cards
+              </Button>
+            )}
+
+            {user.status !== 'success' ? (
+              <Spinner />
+            ) : user.isAuthorized ? (
               <Box direction="row" justify="end" align="center">
                 <Box dir="column">
                   <Text color="rgb(164, 168, 171)" size="small">
-                    You authorised with Math Wallet as:
+                    You authorised as: {user.email}
                   </Text>
-                  {user.address}
+                  Address: {user.address}
                   <Text size="small">
                     Balance: {formatWithTwoDecimals(ones(user.balance))} ONEs
                   </Text>
@@ -118,19 +122,29 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
                 <Button
                   style={{ width: 120 }}
                   onClick={() => {
-                    if (!user.isMathWallet) {
-                      actionModals.open(() => <AuthWarning />, {
-                        title: '',
-                        applyText: 'Got it',
-                        closeText: '',
-                        noValidation: true,
-                        width: '500px',
-                        showOther: true,
-                        onApply: () => Promise.resolve(),
-                      });
-                    } else {
-                      user.signIn();
-                    }
+                    actionModals.open(SignIn, {
+                      title: 'Sign in',
+                      applyText: 'Sign in',
+                      closeText: 'Cancel',
+                      noValidation: true,
+                      width: '500px',
+                      showOther: true,
+                      onApply: (data: any) => user.signIn(data.email),
+                    });
+
+                    // if (!user.isMathWallet) {
+                    //   actionModals.open(() => <AuthWarning />, {
+                    //     title: '',
+                    //     applyText: 'Got it',
+                    //     closeText: '',
+                    //     noValidation: true,
+                    //     width: '500px',
+                    //     showOther: true,
+                    //     onApply: () => Promise.resolve(),
+                    //   });
+                    // } else {
+                    //   user.signIn();
+                    // }
                   }}
                 >
                   Sign in
