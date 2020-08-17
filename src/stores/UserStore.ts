@@ -3,6 +3,7 @@ import { IStores } from 'stores';
 import { statusFetching } from '../constants';
 import * as blockchain from '../blockchain';
 import { Magic } from 'magic-sdk';
+import { StoreConstructor } from './core/StoreConstructor';
 
 // const { Harmony: Index } = require('@harmony-js/core');
 const { ChainID } = require('@harmony-js/utils');
@@ -28,9 +29,12 @@ const magic = new Magic('pk_test_014A9E7A1431634F', {
 
 const rpcProvider = magic.rpcProvider;
 
+// @ts-ignore
+window.rpcProvider = magic.rpcProvider;
+
 const defaults = {};
 
-export class UserStoreEx {
+export class UserStoreEx extends StoreConstructor {
   public stores: IStores;
   @observable public isAuthorized: boolean;
   @observable public status: statusFetching = 'init';
@@ -47,7 +51,9 @@ export class UserStoreEx {
   @observable metadata: any = {};
   @observable email = '';
 
-  constructor() {
+  constructor(stores: IStores) {
+    super(stores);
+
     setInterval(async () => {
       if (this.isAuthorized) {
         // this.metadata = await this.getMetaData();
@@ -59,12 +65,15 @@ export class UserStoreEx {
     if (!this.isAuthorized) {
       magic.user
         .isLoggedIn()
-        .then(res => {
+        .then(async res => {
           this.isAuthorized = res;
 
           if (this.isAuthorized) {
             this.sessionType = `magic`;
-            return this.initMetaData();
+
+            await this.initMetaData();
+
+            this.stores.tokenList.getList();
           }
 
           return Promise.resolve();
@@ -109,6 +118,8 @@ export class UserStoreEx {
         await this.initMetaData();
 
         this.syncLocalStorage();
+
+        this.stores.tokenList.getList();
 
         return Promise.resolve();
       });

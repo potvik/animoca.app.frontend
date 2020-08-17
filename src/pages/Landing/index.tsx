@@ -16,12 +16,11 @@ const MainLogo = styled.img`
 `;
 
 export const Landing = observer(() => {
-  const { soccerPlayers, routing } = useStores();
+  const { routing, user } = useStores();
 
   useEffect(() => {
-    soccerPlayers.setMaxDisplay(20);
-
-    soccerPlayers.getList();
+    // soccerPlayers.setMaxDisplay(20);
+    // soccerPlayers.getList();
   }, []);
 
   return (
@@ -71,6 +70,15 @@ export const Landing = observer(() => {
               <Button size="xxlarge" onClick={() => routing.push('/buy')}>
                 Buy now
               </Button>
+              {user.isAuthorized ? (
+                <Button
+                  bgColor="rgb(0, 173, 232)"
+                  size="xxlarge"
+                  onClick={() => routing.push('/my-cards')}
+                >
+                  My cards
+                </Button>
+              ) : null}
             </Box>
 
             <Box direction="row" align="center">

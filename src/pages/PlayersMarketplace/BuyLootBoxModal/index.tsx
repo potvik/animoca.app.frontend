@@ -13,7 +13,7 @@ import {PlayerCardLiteOwner} from "./PlayerCardLiteOwner";
 interface IBuyPlayerModalProps {}
 
 export const BuyLootBoxModal = observer<IBuyPlayerModalProps>(props => {
-  const { buyPlayer } = useStores();
+  const { tokenList: buyPlayer } = useStores();
 
   if (buyPlayer.status !== 'success') {
     return <Text>Loading...</Text>;
@@ -63,7 +63,7 @@ export const BuyLootBoxModal = observer<IBuyPlayerModalProps>(props => {
         align="center"
         justify="between"
       >
-        <PlayerCardLite player={buyPlayer.currentPlayer} />
+        <PlayerCardLite />
 
         <Box
           direction="column"
@@ -86,7 +86,7 @@ export const BuyLootBoxModal = observer<IBuyPlayerModalProps>(props => {
           </Box>
         </Box>
 
-        <PlayerCardLiteOwner player={buyPlayer.currentPlayer} />
+        <PlayerCardLiteOwner />
         {/*<Box direction="column" gap="15px" align="center">*/}
         {/*  <Text>Your address:</Text>*/}
         {/*  <Box className={styles.addressBlock}>*/}

@@ -52,14 +52,9 @@ const DataItem = (props: {
   );
 };
 
-export interface IPlayerCardProps {
-  player?: IPlayerCard;
-  emptyPlayer?: IEmptyPlayerCard;
-}
+export interface IPlayerCardProps {}
 
 export const PlayerCardLiteOwner = observer<IPlayerCardProps>(props => {
-  const bech32Owner = props.player ? getBech32Address(props.player.owner) : '';
-
   const { user } = useStores();
 
   const newPrice = value => value + value * 0.13 + value * 0.02;
@@ -73,62 +68,21 @@ export const PlayerCardLiteOwner = observer<IPlayerCardProps>(props => {
     >
       <img width="100%" src="/landing/pricing/preview.png" />
 
-      {!props.player ? (
-        <Box className={styles.infoBlock} fill={true} gap="10px" pad="medium">
-          <DataItem
-            icon="ONE"
-            iconSize="16px"
-            text={
-              (props.player
-                ? formatWithTwoDecimals(ones(props.player.sellingPrice))
-                : '...') + ' ONEs'
-            }
-            label="Price:"
-          />
-          <DataItem
-            icon="User"
-            iconSize="16px"
-            text={props.player ? truncateAddressString(bech32Owner) : '...'}
-            label="Owner:"
-            link={EXPLORER_URL + `/address/${bech32Owner}`}
-          />
-          <DataItem
-            icon="Refresh"
-            iconSize="14px"
-            text={props.player ? props.player.transactionCount : '...'}
-            label="Transactions:"
-          />
-        </Box>
-      ) : (
-        <Box
-          className={styles.infoBlockEmpty}
-          fill={true}
-          gap="10px"
-          pad="medium"
-          justify="center"
-        >
-          <Box direction="column" gap="15px" align="center">
-            <Text color={'#1c2a5e'}>Your address:</Text>
-            <Box className={styles.addressBlock}>
-              <a
-                href={EXPLORER_URL + `/address/${user.address}`}
-                target="_blank"
-              >
-                {truncateAddressString(user.address)}
-              </a>
-            </Box>
+      <Box
+        className={styles.infoBlockEmpty}
+        fill={true}
+        gap="10px"
+        pad="medium"
+        justify="center"
+      >
+        <Box direction="column" gap="15px" align="center">
+          <Text color={'#1c2a5e'}>Your address:</Text>
+          <Box className={styles.addressBlock}>
+            <a href={EXPLORER_URL + `/address/${user.address}`} target="_blank">
+              {truncateAddressString(user.address)}
+            </a>
           </Box>
         </Box>
-      )}
-
-      <Box className={styles.buyButton} fill={true}>
-        <Text color="white" size={'medium'}>
-          {(props.player
-            ? formatWithTwoDecimals(
-                ones(newPrice(Number(props.player.sellingPrice))),
-              )
-            : '...') + ' ONEs'}
-        </Text>
       </Box>
     </Box>
   );

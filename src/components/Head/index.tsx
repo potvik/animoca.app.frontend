@@ -21,11 +21,11 @@ export const MainLogo = styled.img`
 export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
   observer(({ theme }: IStyledChildrenProps<BoxProps>) => {
     const history = useHistory();
-    const { user, actionModals } = useStores();
+    const { user, actionModals, tokenList } = useStores();
     const { palette, container } = theme;
     const { minWidth, maxWidth } = container;
 
-    console.log(user.status)
+    console.log(user.status);
 
     return (
       <Box
@@ -79,7 +79,7 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
                 onClick={() => history.push('/my-cards')}
                 disabled={!user.isAuthorized}
               >
-                My cards
+                My cards ({tokenList.list.length})
               </Button>
             )}
 

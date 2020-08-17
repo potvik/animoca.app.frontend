@@ -1,15 +1,10 @@
 import * as React from 'react';
 import { Box } from 'grommet';
-import { DisableWrap, Icon, Text } from 'components/Base';
+import { Icon, Text } from 'components/Base';
 import { observer } from 'mobx-react-lite';
 import * as styles from './card.styl';
-import { IEmptyPlayerCard, IPlayerCard } from 'stores/SoccerPlayersList';
-import {
-  formatWithTwoDecimals,
-  ones,
-  truncateAddressString,
-} from '../../../utils';
-import { EXPLORER_URL, getBech32Address } from '../../../blockchain';
+import { formatWithTwoDecimals, ones } from 'utils';
+import { useStores } from '../../../stores';
 
 const DataItem = (props: {
   text: any;
@@ -51,13 +46,10 @@ const DataItem = (props: {
   );
 };
 
-export interface IPlayerCardProps {
-  player?: IPlayerCard;
-  emptyPlayer?: IEmptyPlayerCard;
-}
+export interface IPlayerCardProps {}
 
 export const PlayerCardLite = observer<IPlayerCardProps>(props => {
-  const bech32Owner = props.player ? getBech32Address(props.player.owner) : '';
+  const { tokenList } = useStores();
 
   return (
     <Box
@@ -71,54 +63,24 @@ export const PlayerCardLite = observer<IPlayerCardProps>(props => {
         src="/landing/pricing/3.png"
       />
 
-      {props.player ? (
-        <Box className={styles.infoBlock} fill={true} gap="10px" pad="medium">
-          <DataItem
-            icon="ONE"
-            iconSize="16px"
-            text={
-              (props.player
-                ? formatWithTwoDecimals(ones(props.player.sellingPrice))
-                : '...') + ' ONEs'
-            }
-            label="Price:"
-          />
-          <DataItem
-            icon="User"
-            iconSize="16px"
-            text={props.player ? truncateAddressString(bech32Owner) : '...'}
-            label="Owner:"
-            link={EXPLORER_URL + `/address/${bech32Owner}`}
-          />
-          <DataItem
-            icon="Refresh"
-            iconSize="14px"
-            text={props.player ? props.player.transactionCount : '...'}
-            label="Transactions:"
-          />
-        </Box>
-      ) : (
-        <Box
-          className={styles.infoBlockEmpty}
-          fill={true}
-          gap="10px"
-          pad="medium"
-          justify="center"
-        >
-          <DataItem
-            icon="Refresh"
-            iconSize="14px"
-            text={''}
-            label="Loading data from blockchain..."
-          />
-        </Box>
-      )}
+      <Box className={styles.infoBlock} fill={true} gap="10px" pad="medium">
+        <DataItem
+          icon="Refresh"
+          iconSize="14px"
+          text={tokenList.formData.amount}
+          label="Amount:"
+        />
+        <DataItem
+          icon="ONE"
+          iconSize="16px"
+          text={formatWithTwoDecimals(tokenList.selectedBox.price) + ' ONEs'}
+          label="Price:"
+        />
+      </Box>
 
       <Box className={styles.buyButton} fill={true}>
         <Text color="white" size={'medium'}>
-          {(props.player
-            ? formatWithTwoDecimals(ones(props.player.sellingPrice))
-            : '...') + ' ONEs'}
+          {formatWithTwoDecimals(tokenList.total) + ' ONEs'}
         </Text>
       </Box>
     </Box>

@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 import { IStores } from 'stores';
 import { statusFetching } from '../constants';
 import { StoreConstructor } from './core/StoreConstructor';
-import * as blockchain from '../blockchain';
+import * as blockchain from '../blockchain-old';
 import { getBech32Address } from '../blockchain';
 
 export interface IPlayerCard {
@@ -49,9 +49,9 @@ export class SoccerPlayersList extends StoreConstructor {
 
     // this.status = 'success';
 
-    setInterval(() => {
-      this.getList();
-    }, 7000);
+    // setInterval(() => {
+    //   this.getList();
+    // }, 7000);
   }
 
   sortFunction = sort => (itemA, itemB) => {
