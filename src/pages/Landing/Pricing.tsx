@@ -75,6 +75,18 @@ export class Pricing extends React.Component<IStores> {
   buyHandler = async () => {
     const { user, actionModals, tokenList } = this.props;
 
+    if (!user.isAuthorized) {
+      await actionModals.open(SignIn, {
+        title: 'Sign in',
+        applyText: 'Sign in',
+        closeText: 'Cancel',
+        noValidation: true,
+        width: '500px',
+        showOther: true,
+        onApply: (data: any) => user.signIn(data.email),
+      });
+    }
+
     this.formRef.validateFields().then(async data => {
       if (!user.isAuthorized) {
         await actionModals.open(SignIn, {
@@ -104,7 +116,7 @@ export class Pricing extends React.Component<IStores> {
   };
 
   render() {
-    const { tokenList } = this.props;
+    const { tokenList, user, actionModals } = this.props;
 
     return (
       <Box className={styles.pricingBody} margin={{ top: 'medium' }}>
@@ -159,14 +171,38 @@ export class Pricing extends React.Component<IStores> {
               align="center"
               className={styles.formStyles}
             >
-              <Input
-                name="address"
-                disabled={true}
-                label="Wallet Address"
-                style={{ width: '361px' }}
-                placeholder="address"
-                rules={[isRequired]}
-              />
+              <Box direction="row" align="end">
+                <Input
+                  name="address"
+                  disabled={true}
+                  label={
+                    user.isAuthorized
+                      ? 'Wallet Address'
+                      : 'Wallet Address (sign in to get wallet address)'
+                  }
+                  style={{ width: !user.isAuthorized ? '260px' : '361px' }}
+                  placeholder="address"
+                  rules={[isRequired]}
+                />
+                {!user.isAuthorized ? (
+                  <Button
+                    margin={{ left: 'medium', bottom: 'small' }}
+                    onClick={() => {
+                      actionModals.open(SignIn, {
+                        title: 'Sign in',
+                        applyText: 'Sign in',
+                        closeText: 'Cancel',
+                        noValidation: true,
+                        width: '500px',
+                        showOther: true,
+                        onApply: (data: any) => user.signIn(data.email),
+                      });
+                    }}
+                  >
+                    Sign in
+                  </Button>
+                ) : null}
+              </Box>
               <Box
                 direction="column"
                 justify="start"
@@ -233,7 +269,7 @@ export class Pricing extends React.Component<IStores> {
                   </Box>
                 </Box>
                 <Box style={{ width: '361px' }}>
-                  <Button size="xlarge" onClick={() => this.buyHandler()}>
+                  <Button size="xlarge" onClick={() => { this.buyHandler() }}>
                     Buy now
                   </Button>
                 </Box>
