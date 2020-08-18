@@ -130,9 +130,9 @@ export class Pricing extends React.Component<IStores> {
         >
           <Title color="white">Legendary Chest </Title>
           <Text color="white">
-            A Legendary Chest contains one common card, 2400 gems, 730 vip
-            points and 5 REVV. The card is a collectible and can only be used
-            through NFTs trading platform.
+            Each Chest contains 2400 gems, 730 vip points and a card with rarity
+            Common, Epic or Legendary. The card is a collectible and can be used
+            to claim ONE rewards via staking.
           </Text>
           <Box direction="row">
             <Box direction="column">
@@ -198,6 +198,7 @@ export class Pricing extends React.Component<IStores> {
                         onApply: (data: any) => user.signIn(data.email),
                       });
                     }}
+                    disabled={user.status !== 'success'}
                   >
                     Sign in
                   </Button>
@@ -269,7 +270,13 @@ export class Pricing extends React.Component<IStores> {
                   </Box>
                 </Box>
                 <Box style={{ width: '361px' }}>
-                  <Button size="xlarge" onClick={() => { this.buyHandler() }}>
+                  <Button
+                    disabled={user.status !== 'success'}
+                    size="xlarge"
+                    onClick={() => {
+                      this.buyHandler();
+                    }}
+                  >
                     Buy now
                   </Button>
                 </Box>

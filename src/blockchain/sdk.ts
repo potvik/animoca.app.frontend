@@ -2,7 +2,7 @@ const { Harmony } = require('@harmony-js/core');
 const { ChainID, ChainType } = require('@harmony-js/utils');
 const { hexToNumber } = require('@harmony-js/utils');
 
-export const EXPLORER_URL = 'https://explorer.harmony.one/#';
+export const EXPLORER_URL = 'https://explorer.testnet.harmony.one/#';
 
 export const RPC_URL = 'https://api.s0.b.hmny.io';
 

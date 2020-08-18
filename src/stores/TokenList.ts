@@ -38,12 +38,12 @@ export class TokenList extends StoreConstructor {
     });
   }
 
-  @observable boxId = '1';
+  @observable boxId = '3';
 
   defaultDormData = {
     address: '',
     playerId: 'player_1',
-    boxId: '1',
+    boxId: '3',
     platform: 'ios',
     amount: 1,
   };
@@ -51,7 +51,7 @@ export class TokenList extends StoreConstructor {
   @observable formData = this.defaultDormData;
 
   boxes = [
-    { id: '1', total: 60, allow: 20, price: 100 },
+    { id: '3', total: 60, allow: 20, price: 100 },
     // { id: '2', total: 60, allow: 20, price: 200 },
     // { id: '3', total: 25, allow: 5, price: 300 },
     // { id: '4', total: 5, allow: 5, price: 400 },
@@ -76,6 +76,15 @@ export class TokenList extends StoreConstructor {
     return this.list;
   }
 
+  @observable newCardsList: Array<ITokenCard> = [];
+  @observable hasNewCards = false;
+
+  @action.bound
+  clearNewCards = () => {
+    this.hasNewCards = false;
+    this.newCardsList = [];
+  };
+
   @action.bound
   getList = async () => {
     if (!this.stores.user.isAuthorized) {
@@ -91,7 +100,18 @@ export class TokenList extends StoreConstructor {
     try {
       const res = await blockchain.getTokens(this.stores.user.address);
 
-      this.list = res.filter(r => !!r);
+      const list = res.filter(r => !!r);
+
+      if (this.status !== 'first_fetching' && list.length > this.list.length) {
+        const diffCount = list.length - this.list.length;
+
+        this.newCardsList = list.slice(list.length - diffCount, list.length);
+
+        this.hasNewCards = true;
+      }
+
+      this.list = list;
+
       this.status = 'success';
     } catch (e) {
       console.error(e);

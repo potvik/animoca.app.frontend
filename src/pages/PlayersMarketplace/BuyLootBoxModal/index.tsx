@@ -8,7 +8,7 @@ import * as styles from './card.styl';
 import { EXPLORER_URL } from '../../../blockchain';
 import { Spinner } from 'ui';
 import { truncateAddressString } from '../../../utils';
-import {PlayerCardLiteOwner} from "./PlayerCardLiteOwner";
+import { PlayerCardLiteOwner } from './PlayerCardLiteOwner';
 
 interface IBuyPlayerModalProps {}
 
@@ -28,7 +28,7 @@ export const BuyLootBoxModal = observer<IBuyPlayerModalProps>(props => {
         />
       );
       description =
-        'A Legendary Chest contains one common card, 2400 gems, 730 vip points and 5 REVV. The card is a collectible and can only be used through NFTs trading platform.';
+        'Each Chest contains 2400 gems, 730 vip points and a card with rarity Common, Epic or Legendary. The card is a collectible and can be used to claim ONE rewards via staking.';
       break;
 
     case 'fetching':

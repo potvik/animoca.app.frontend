@@ -19,7 +19,7 @@ const { ChainID } = require('@harmony-js/utils');
 //   },
 // );
 
-const magic = new Magic('pk_test_014A9E7A1431634F', {
+const magic = new Magic('pk_live_0E839FF643A591CC', {
   network: {
     rpcUrl: blockchain.RPC_URL,
     chainId: Number(ChainID.HmyTestnet),

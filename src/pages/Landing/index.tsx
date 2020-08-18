@@ -2,13 +2,15 @@ import * as React from 'react';
 import { Box } from 'grommet';
 import { useStores } from 'stores';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import * as styles from './landing-styles.styl';
 import styled from 'styled-components';
 import { Title, Text, Button } from 'components/Base';
 import { Pricing } from './Pricing';
 import CountdownTimer from 'react-component-countdown-timer';
-import moment = require('moment');
+import { SignIn } from '../../components/SignIn';
+import moment from 'moment';
+import { download } from '../../utils';
 
 const MainLogo = styled.img`
   width: auto;
@@ -28,11 +30,45 @@ const settings = {
 };
 
 export const Landing = observer(() => {
-  const { routing, user, tokenList } = useStores();
+  const { routing, actionModals, user, tokenList } = useStores();
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
     // soccerPlayers.getList();
+  }, []);
+
+  const signIn = useCallback(() => {
+    if (!user.isAuthorized) {
+      actionModals.open(SignIn, {
+        title: 'Sign in',
+        applyText: 'Sign in',
+        closeText: 'Cancel',
+        noValidation: true,
+        width: '500px',
+        showOther: true,
+        onApply: (data: any) => user.signIn(data.email),
+      });
+    } else {
+      actionModals.open(
+        () => (
+          <Box pad="large">
+            <Text>You are already authorised</Text>
+          </Box>
+        ),
+        {
+          title: 'Sign in',
+          applyText: 'Go to buy',
+          closeText: 'Cancel',
+          noValidation: true,
+          width: '500px',
+          showOther: true,
+          onApply: () => {
+            routing.push('/buy');
+            return Promise.resolve(true);
+          },
+        },
+      );
+    }
   }, []);
 
   return (
@@ -131,13 +167,13 @@ export const Landing = observer(() => {
             </Box>
 
             <Box direction="row" align="center">
-              <a href="/">
+              <a href="https://apps.apple.com/app/apple-store/id1419991954">
                 <img
                   src="/landing/main/app-store.png"
                   className={styles.appStore}
                 />
               </a>
-              <a href="">
+              <a href="https://play.google.com/store/apps/details?id=com.animocabrands.google.beastquest.towerdefense.td">
                 <img src="/landing/main/gp.png" className={styles.googlePlay} />
               </a>
             </Box>
@@ -185,11 +221,10 @@ export const Landing = observer(() => {
               </div>
               <div className={styles.description}>
                 <Text>
-                  Please create a wallet on Fortmatic or Huobi. If you have
-                  already created a wallet, skip to step 2.
+                  Click the button below to create a wallet using your email
                 </Text>
               </div>
-              <Button>Create wallet</Button>
+              <Button onClick={signIn}>Create wallet</Button>
             </Box>
 
             <Box className={styles.reason}>
@@ -206,7 +241,9 @@ export const Landing = observer(() => {
                   game first. You need an User ID to get these special offers.
                 </Text>
               </div>
-              <Button>Download</Button>
+              <a href="https://bquh2.onelink.me/b04p/d96d406e" target="_blank">
+                <Button btnType="href">Download Now</Button>
+              </a>
             </Box>
 
             <Box className={styles.reason}>
@@ -223,7 +260,56 @@ export const Landing = observer(() => {
                   Settings.
                 </Text>
               </div>
-              <Button>How to find</Button>
+              <Button
+                onClick={() => {
+                  actionModals.open(
+                    () => (
+                      <Box pad="medium">
+                        <Title>
+                          How to find your in-game user ID on Beast Quest
+                          Ultimate Heroes
+                        </Title>
+                        <Box margin={{ top: 'large' }}>
+                          <Text>
+                            <ul>
+                              <li>
+                                You need to first finish the tutorial (first 3
+                                levels)
+                              </li>
+                              <li>
+                                Then you will be able to access to the main
+                                menu.
+                              </li>
+                              <li>
+                                Tap the setting button on the top right corner
+                                to open the setting menu
+                              </li>
+                              <li>
+                                You will find your user ID at the bottom right
+                                corner
+                              </li>
+                            </ul>
+                          </Text>
+                          <img src="/landing/how-to-buy/help.png" />
+                        </Box>
+                      </Box>
+                    ),
+                    {
+                      title: 'How to find',
+                      applyText: 'Got it',
+                      closeText: '',
+                      noValidation: true,
+                      width: '700px',
+                      showOther: true,
+                      onApply: () => {
+                        return Promise.resolve(true);
+                      },
+                    },
+                  );
+                }}
+              >
+                How to find
+              </Button>
             </Box>
 
             <Box className={styles.reason}>
@@ -232,15 +318,25 @@ export const Landing = observer(() => {
                 <img src="/landing/how-to-buy/4.png" />
               </div>
               <div className={styles.smallTitle}>
-                <Text>Top Up</Text>
+                <Text>Top up</Text>
               </div>
               <div className={styles.description}>
                 <Text>
-                  You will need to add currency (ETH or DAI) in your digital
-                  wallet to enjoy these special offers.
+                  You will need to add ONE tokens to your digital wallet to
+                  enjoy these special offers
                 </Text>
               </div>
-              <Button>Top Up</Button>
+              <Button
+                onClick={() => {
+                  if (user.isAuthorized) {
+                    routing.push('/buy');
+                  } else {
+                    signIn();
+                  }
+                }}
+              >
+                Top Up
+              </Button>
             </Box>
 
             <Box className={styles.reason}>

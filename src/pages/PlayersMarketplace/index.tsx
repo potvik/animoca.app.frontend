@@ -6,18 +6,35 @@ import { TokenCard } from './TokenCard';
 import { useStores } from 'stores';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
+import { SignIn } from '../../components/SignIn';
 // import { PLAYERS_FILTER } from '../../stores/SoccerPlayersList';
 
 export const PlayersMarketplace = observer(() => {
-  const { tokenList, user } = useStores();
+  const { tokenList, user, actionModals, routing } = useStores();
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
-
-    if (tokenList.list.length === 0) {
-      tokenList.getList();
+    if (!user.isAuthorized && user.status === 'success') {
+      actionModals.open(SignIn, {
+        title: 'Sign in',
+        applyText: 'Sign in',
+        closeText: 'Cancel',
+        noValidation: true,
+        width: '500px',
+        showOther: true,
+        onApply: (data: any) => user.signIn(data.email),
+        onClose: () => {
+          if (!user.isAuthorized) {
+            routing.push('/');
+          }
+        },
+      });
+    } else {
+      if (tokenList.list.length === 0) {
+        tokenList.getList();
+      }
     }
-  }, []);
+  }, [user.status]);
 
   return (
     <BaseContainer>

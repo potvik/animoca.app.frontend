@@ -50,10 +50,11 @@ const DataItem = (props: {
 
 export interface IPlayerCardProps {
   data?: ITokenCard;
-  forwardedRef: any;
+  forwardedRef?: any;
+  style?: any;
 }
 
-const PlayerCardEx = observer<IPlayerCardProps>(props => {
+export const PlayerCardEx = observer<IPlayerCardProps>(props => {
   const { user } = useStores();
 
   // const bech32Owner = props.player ? getBech32Address(props.player.owner) : '';
@@ -65,6 +66,7 @@ const PlayerCardEx = observer<IPlayerCardProps>(props => {
       align="center"
       background=""
       ref={props.forwardedRef}
+      style={props.style}
     >
       <img width="100%" src={props.data.image} />
 
