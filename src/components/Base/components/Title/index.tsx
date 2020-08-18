@@ -35,6 +35,7 @@ interface ITitleProps {
   bold?: boolean;
   fontFamily?: string;
   style?: React.CSSProperties;
+  className?: string;
   pad?: TEdgeSize;
   margin?: TEdgeSize;
 }

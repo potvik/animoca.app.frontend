@@ -66,8 +66,8 @@ export const Landing = observer(() => {
                   fontWeight: 600,
                   fontSize: 50,
                   zIndex: 999,
-                  width: 800,
                 }}
+                className={styles.mainTitle}
                 color="white"
               >
                 First Official Chest Sale Begins

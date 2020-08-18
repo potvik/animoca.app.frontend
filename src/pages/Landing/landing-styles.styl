@@ -76,14 +76,18 @@
   left 30%
 }
 
+.mainTitle {
+  width 800px
+}
+
 .dragon {
   position absolute
   height auto
   width 300px
   top 50px
-  left 100px
-  opacity 0.5
-  // left 40%
+  // left 100px
+  opacity 1
+  right: 25%
 }
 
 .appStore {
@@ -104,9 +108,23 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   .heroes {
     display none
+  }
+
+  .dragon {
+    display none
+  }
+
+  .gold {
+    display none
+  }
+}
+
+@media (max-width: 800px) {
+  .mainTitle {
+    width 100%
   }
 }
 
