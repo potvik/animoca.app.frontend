@@ -1,3 +1,46 @@
+:global(.displayedTime) {
+  display flex;
+  align-items: center;
+  justify-content: center;
+
+  :global(.countBox) {
+    display flex
+    flex-direction row-reverse
+    align-items center
+    justify-content space-between
+
+    :global(.countBoxItem) {
+      margin 0px 20px
+
+      :global(.label) {
+        font-family: Nunito;
+        font-size: 20px !important;
+        text-align: center;
+        margin: 0 0 4px 0px;
+        // font-weight: 700;
+        // color: #0d1d2b;
+        color: white
+      }
+
+      :global(.count) {
+        font-family Nunito
+        font-size 20px
+
+        // background rgb(13, 28, 43) !important;
+        border-radius 5px
+        // color white !important
+
+        padding 10px 15px
+      }
+    }
+  }
+}
+
+.specialBlock {
+  background rgba(13, 29, 43, 0.7)
+  border-radius 15px
+}
+
 .mainBlock {
   background-image url("/landing/main/BeastQuest1.png")
   background-repeat no-repeat
@@ -38,7 +81,9 @@
   height auto
   width 300px
   top 50px
-  left 120px
+  left 100px
+  opacity 0.5
+  // left 40%
 }
 
 .appStore {

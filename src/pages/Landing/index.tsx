@@ -7,6 +7,8 @@ import * as styles from './landing-styles.styl';
 import styled from 'styled-components';
 import { Title, Text, Button } from 'components/Base';
 import { Pricing } from './Pricing';
+import CountdownTimer from 'react-component-countdown-timer';
+import moment = require('moment');
 
 const MainLogo = styled.img`
   width: auto;
@@ -14,6 +16,16 @@ const MainLogo = styled.img`
   margin-left: -46px;
   z-index: 999;
 `;
+
+const b = moment();
+const a = moment('20200901', 'YYYYMMDD');
+
+const settings = {
+  count: a.diff(b) / 1000,
+  border: true,
+  showTitle: true,
+  noPoints: true,
+};
 
 export const Landing = observer(() => {
   const { routing, user, tokenList } = useStores();
@@ -27,7 +39,7 @@ export const Landing = observer(() => {
     <Box direction="column" justify="between" align="center">
       <Box className={styles.mainBlock}>
         <Box
-          pad={{ top: '60px', bottom: '100px' }}
+          pad={{ top: '60px', bottom: '50px' }}
           className={styles.pageContent}
         >
           <img src="/landing/main/dragon.png" className={styles.dragon} />
@@ -44,41 +56,78 @@ export const Landing = observer(() => {
 
             <Box
               direction="column"
-              margin={{ vertical: '60px' }}
+              // margin={{ vertical: '60px' }}
               style={{ maxWidth: 460 }}
-              gap="40px"
+              gap="30px"
             >
               <Title
                 style={{
                   textShadow: '3px 2px 10px #000000',
                   fontWeight: 600,
-                  fontSize: 36,
+                  fontSize: 50,
+                  zIndex: 999,
+                  width: 800,
                 }}
                 color="white"
               >
                 First Official Chest Sale Begins
               </Title>
-              <Text
-                style={{ textShadow: '1px 4px 12px #000000' }}
-                color="white"
+
+              <Box
+                direction="column"
+                pad="large"
+                gap="22px"
+                className={styles.specialBlock}
               >
-                With these 100 Limited Edition NFT chests, you will get a
-                greater discount than with in-game purchase. Each chest includes
-                a 150% extra gems, NFT Collectible Card and VIP points. Don't
-                miss out!
-              </Text>
-              <Button size="xxlarge" onClick={() => routing.push('/buy')}>
-                Buy now
-              </Button>
-              {user.isAuthorized ? (
-                <Button
-                  bgColor="rgb(0, 173, 232)"
-                  size="xxlarge"
-                  onClick={() => routing.push('/my-cards')}
+                <Text
+                  // style={{ textShadow: '1px 4px 12px #000000' }}
+                  color="white"
+                  style={{
+                    fontSize: '19px',
+                    textShadow: '1px 4px 12px #000000',
+                  }}
                 >
-                  My cards ({tokenList.list.length})
+                  Limited Edition NFT Chests, include a huge discount on in-game
+                  items. Each chest includes a 150% extra gems, VIP points and
+                  an NFT collectible card which will earn you ONE tokens when
+                  you stake on the Harmony network.
+                  <b
+                    style={{
+                      textTransform: 'uppercase',
+                      color: '#e7ab10',
+                      margin: '15px 0 -5px 0',
+                      textAlign: 'center',
+                      display: 'block',
+                    }}
+                  >
+                    This offer ends
+                  </b>
+                </Text>
+                <CountdownTimer className={styles.timer} {...settings} />
+                <Button
+                  style={{
+                    width: '100%',
+                    height: '70px',
+                    alignItems: 'center',
+                    fontWeight: 500,
+                    fontSize: 25,
+                    marginTop: 10,
+                  }}
+                  onClick={() => routing.push('/buy')}
+                >
+                  Buy now
                 </Button>
-              ) : null}
+              </Box>
+
+              {/*{user.isAuthorized ? (*/}
+              {/*  <Button*/}
+              {/*    bgColor="rgb(0, 173, 232)"*/}
+              {/*    size="xxlarge"*/}
+              {/*    onClick={() => routing.push('/my-cards')}*/}
+              {/*  >*/}
+              {/*    My cards ({tokenList.list.length})*/}
+              {/*  </Button>*/}
+              {/*) : null}*/}
             </Box>
 
             <Box direction="row" align="center">
