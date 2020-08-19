@@ -85,28 +85,37 @@ export const Landing = observer(() => {
           <Box
             direction="column"
             align="start"
-            justify="between"
+            justify="start"
             style={{ height: '100%' }}
           >
             <MainLogo src="main_logo.png" />
 
             <Box
               direction="column"
-              // margin={{ vertical: '60px' }}
-              style={{ maxWidth: 460 }}
-              gap="30px"
+              margin={{ top: '40px' }}
+              justify="around"
+              style={{ maxWidth: 460, height: '100%' }}
             >
               <Title
                 style={{
                   textShadow: '3px 2px 10px #000000',
+                  // textShadow:
+                  //     '2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
                   fontWeight: 600,
-                  fontSize: 50,
+                  fontSize: 40,
                   zIndex: 999,
+                  // color: '#f9ca36',
+                  // color: 'rgb(249 183 18)',
+                  color: 'white',
+                  letterSpacing: '0.02em',
+                  fontFamily:
+                    'wfont_5de4af_58d65082edf1476c99721446ac4ddf3a,wf_58d65082edf1476c99721446a,orig_supercellmagic_regular',
                 }}
                 className={styles.mainTitle}
                 color="white"
               >
-                First Official Chest Sale Begins
+                First Official Chest
+                <br /> <span style={{ color: '#f9ca36' }}>Sale</span> Begins
               </Title>
 
               <Box
@@ -166,7 +175,16 @@ export const Landing = observer(() => {
               {/*) : null}*/}
             </Box>
 
-            <Box direction="row" align="center">
+            <Box
+              direction="row"
+              align="center"
+              justify="end"
+              style={{
+                position: 'absolute',
+                bottom: '40px',
+                right: '-40px',
+              }}
+            >
               <a href="https://apps.apple.com/app/apple-store/id1419991954">
                 <img
                   src="/landing/main/app-store.png"
