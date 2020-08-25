@@ -22,7 +22,7 @@ export const PlayersMarketplace = observer(() => {
         noValidation: true,
         width: '500px',
         showOther: true,
-        onApply: (data: any) => user.signIn(data.email),
+        onApply: (data: any) => user.signIn(data.email, data.walletType),
         onClose: () => {
           if (!user.isAuthorized) {
             routing.push('/');

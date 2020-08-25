@@ -1,23 +1,13 @@
-import { action, observable } from 'mobx';
+import { action, autorun, observable } from 'mobx';
 import { IStores } from 'stores';
 import { statusFetching } from '../constants';
 import * as blockchain from '../blockchain';
 import { Magic } from 'magic-sdk';
 import { StoreConstructor } from './core/StoreConstructor';
+import { sleep } from '../utils';
 
 // const { Harmony: Index } = require('@harmony-js/core');
 const { ChainID } = require('@harmony-js/utils');
-
-// const harmony = new Index(
-//   // rpc url
-//   blockchain.RPC_URL,
-//   {
-//     // chainType set to Index
-//     chainType: ChainType.Harmony,
-//     // chainType set to HmyLocal
-//     chainId: ChainID.HmyTestnet,
-//   },
-// );
 
 const magic = new Magic('pk_live_0E839FF643A591CC', {
   network: {
@@ -27,12 +17,15 @@ const magic = new Magic('pk_live_0E839FF643A591CC', {
   } as any,
 });
 
-const rpcProvider = magic.rpcProvider;
-
 // @ts-ignore
 window.rpcProvider = magic.rpcProvider;
 
 const defaults = {};
+
+export enum WALLET_TYPE {
+  ONE_WALLET = 'ONE_WALLET',
+  MAGIC_WALLET = 'MAGIC_WALLET',
+}
 
 export class UserStoreEx extends StoreConstructor {
   public stores: IStores;
@@ -40,11 +33,12 @@ export class UserStoreEx extends StoreConstructor {
   @observable public status: statusFetching = 'init';
   redirectUrl: string;
 
-  private mathwallet: any;
-  @observable public isMathWallet = false;
+  private onewallet: any;
+  @observable public isOneWallet = false;
   @observable public isLogged = false;
 
-  @observable public sessionType: 'mathwallet' | 'magic';
+  @observable public walletType: WALLET_TYPE;
+
   @observable public address: string;
   @observable public balance: string = '0';
 
@@ -55,6 +49,10 @@ export class UserStoreEx extends StoreConstructor {
     super(stores);
 
     setInterval(async () => {
+      if (!this.isOneWallet) {
+        this.initOneWallet();
+      }
+
       if (this.isAuthorized) {
         // this.metadata = await this.getMetaData();
         const res = await blockchain.getBalance(this.address);
@@ -62,67 +60,106 @@ export class UserStoreEx extends StoreConstructor {
       }
     }, 3000);
 
-    if (!this.isAuthorized) {
-      magic.user
-        .isLoggedIn()
-        .then(async res => {
-          this.isAuthorized = res;
-
-          if (this.isAuthorized) {
-            this.sessionType = `magic`;
-
-            await this.initMetaData();
-
-            this.stores.tokenList.getList();
-          }
-
-          return Promise.resolve();
-        })
-        .catch(e => {
-          console.error(e);
-        })
-        .finally(() => (this.status = 'success'));
-    }
-
-    // // @ts-ignore
-    // this.isMathWallet = window.harmony && window.harmony.isMathWallet;
-    // // @ts-ignore
-    // this.mathwallet = window.harmony;
-    //
-    // const session = localStorage.getItem('harmony_session');
-    //
-    // const sessionObj = JSON.parse(session);
-    //
-    // if (sessionObj && sessionObj.address) {
-    //   this.address = sessionObj.address;
-    //   this.sessionType = sessionObj.sessionType;
-    //   this.isAuthorized = true;
-    //
-    //   blockchain
-    //     .getBalance(this.address)
-    //     .then(res => (this.balance = res && res.result));
-    // }
+    this.firstInit();
   }
 
   @action.bound
-  public signIn(email: string) {
-    debugger;
+  initOneWallet() {
+    // @ts-ignore
+    this.isOneWallet = window.onewallet && window.onewallet.isOneWallet;
+    // @ts-ignore
+    this.onewallet = window.onewallet;
+  }
 
-    return magic.auth
-      .loginWithMagicLink({ email, showUI: true })
-      .then(async () => {
-        this.sessionType = `magic`;
+  @action.bound
+  public async firstInit() {
+    try {
+      if (!this.isAuthorized) {
+        const session = localStorage.getItem('harmony_session');
 
-        this.isAuthorized = true;
+        const sessionObj = JSON.parse(session);
 
-        await this.initMetaData();
+        if (sessionObj && sessionObj.address) {
+          switch (sessionObj.walletType) {
+            case WALLET_TYPE.MAGIC_WALLET:
+              this.status = 'fetching';
 
-        this.syncLocalStorage();
+              const res = await magic.user.isLoggedIn();
 
-        this.stores.tokenList.getList();
+              this.isAuthorized = res;
 
-        return Promise.resolve();
-      });
+              if (this.isAuthorized) {
+                this.address = sessionObj.address;
+                this.walletType = sessionObj.walletType;
+                await this.initMetaData();
+              }
+              break;
+
+            case WALLET_TYPE.ONE_WALLET:
+              this.status = 'fetching';
+
+              let count = 0;
+              this.initOneWallet();
+
+              while (!this.isOneWallet && count < 5) {
+                await sleep(1000);
+                this.initOneWallet();
+                count++;
+              }
+
+              await this.signIn(null, WALLET_TYPE.ONE_WALLET);
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.status = 'success';
+
+    if (this.isAuthorized) {
+      this.stores.tokenList.getList();
+      blockchain
+        .getBalance(this.address)
+        .then(res => (this.balance = res && res.result));
+    }
+  }
+
+  @action.bound
+  public signIn(email: string, walletType: WALLET_TYPE) {
+    this.walletType = walletType;
+
+    switch (walletType) {
+      case WALLET_TYPE.MAGIC_WALLET:
+        return magic.auth
+          .loginWithMagicLink({ email, showUI: true })
+          .then(async () => {
+            this.isAuthorized = true;
+
+            await this.initMetaData();
+
+            this.syncLocalStorage();
+
+            this.stores.tokenList.getList();
+
+            return Promise.resolve();
+          });
+
+      case WALLET_TYPE.ONE_WALLET:
+        return this.onewallet.getAccount().then(account => {
+          this.address = account.address;
+          this.isAuthorized = true;
+
+          this.syncLocalStorage();
+
+          blockchain
+            .getBalance(this.address)
+            .then(res => (this.balance = res && res.result));
+
+          return Promise.resolve();
+        });
+    }
   }
 
   @action.bound
@@ -138,11 +175,15 @@ export class UserStoreEx extends StoreConstructor {
 
   @action.bound
   public signOut() {
-    if (this.sessionType === 'mathwallet' && this.isMathWallet) {
-      return this.mathwallet
+    // if(!this.isAuthorized) {
+    //   return;
+    // }
+
+    if (this.walletType === WALLET_TYPE.ONE_WALLET) {
+      return this.onewallet
         .forgetIdentity()
         .then(() => {
-          this.sessionType = null;
+          this.walletType = null;
           this.address = null;
           this.isAuthorized = false;
           this.balance = '0';
@@ -156,9 +197,9 @@ export class UserStoreEx extends StoreConstructor {
         });
     }
 
-    if (this.sessionType === 'magic' && this.isAuthorized) {
+    if (this.walletType === WALLET_TYPE.MAGIC_WALLET) {
       return magic.user.logout().then(() => {
-        this.sessionType = null;
+        this.walletType = null;
         this.address = null;
         this.isAuthorized = false;
         this.balance = '0';
@@ -175,21 +216,9 @@ export class UserStoreEx extends StoreConstructor {
       'harmony_session',
       JSON.stringify({
         address: this.address,
-        sessionType: this.sessionType,
+        walletType: this.walletType,
       }),
     );
-  }
-
-  @action public signTransaction(txn: any) {
-    if (this.sessionType === 'mathwallet' && this.isMathWallet) {
-      return this.mathwallet.signTransaction(txn);
-    }
-  }
-
-  public saveRedirectUrl(url: string) {
-    if (!this.isAuthorized && url) {
-      this.redirectUrl = url;
-    }
   }
 
   @action public reset() {
@@ -203,45 +232,5 @@ export class UserStoreEx extends StoreConstructor {
     console.log('Metadata:', metadata);
 
     return metadata;
-  };
-
-  /**
-   Transfers ONE tokens
-
-   @param {string} to address
-   @param {string} from address
-   @param {string|number} value The value to transfer in ONE (will be converted to BigInt)
-   @param {number} [toShard] shard we're sending to
-   @param {number} [fromShard] shard we're sending from
-
-   @return {Promise<object{}>} The promise always resolves and returns the object { hash, receipt, error }
-   */
-  handlerSendTransaction = () => {
-    rpcProvider.sendAsync(
-      {
-        id: 42,
-        method: 'hmy_sendTransaction',
-        params: {
-          //  token send to
-          to: 'one1fcxhn7ethldh399rpu95flemzj3tvaqmygkedg',
-          // amount to send
-          value: '50000',
-          // gas limit, you can use string
-          gasLimit: '210000',
-          // send token from shardID
-          shardID: 0,
-          // send token to toShardID
-          toShardID: 0,
-          // gas Price, you can use Unit class, and use Gwei, then remember to use toWei(), which will be transformed to BN
-          gasPrice: 1000000000,
-        },
-      },
-      (err, res) => {
-        console.log('transaction result', res);
-        window.open(
-          `https://explorer.testnet.harmony.one/#/tx/${res.result.transactionHash}`,
-        );
-      },
-    );
   };
 }

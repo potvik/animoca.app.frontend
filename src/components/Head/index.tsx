@@ -129,7 +129,7 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
                       noValidation: true,
                       width: '500px',
                       showOther: true,
-                      onApply: (data: any) => user.signIn(data.email),
+                      onApply: (data: any) => user.signIn(data.email, data.walletType),
                     });
 
                     // if (!user.isMathWallet) {

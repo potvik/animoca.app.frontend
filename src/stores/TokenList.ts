@@ -3,6 +3,7 @@ import { IStores } from 'stores';
 import { statusFetching } from '../constants';
 import { StoreConstructor } from './core/StoreConstructor';
 import * as blockchain from '../blockchain';
+import { WALLET_TYPE } from './UserStore';
 
 export interface ITokenCard {
   id: string;
@@ -42,7 +43,7 @@ export class TokenList extends StoreConstructor {
 
   defaultDormData = {
     address: '',
-    playerId: 'player_1',
+    playerId: '',
     boxId: '3',
     platform: 'ios',
     amount: 1,
@@ -129,13 +130,27 @@ export class TokenList extends StoreConstructor {
           throw new Error('Your balance is not enough to buy');
         }
 
-        const res = await blockchain.purchase({
-          address: this.stores.user.address,
-          quantity: this.formData.amount,
-          amount: String(this.total),
-        });
+        let res;
 
-        this.txId = res.result.transactionHash;
+        if (this.stores.user.walletType === WALLET_TYPE.MAGIC_WALLET) {
+          res = await blockchain.purchase({
+            address: this.stores.user.address,
+            quantity: this.formData.amount,
+            amount: String(this.total),
+            playerId: this.formData.playerId,
+          });
+        }
+
+        if (this.stores.user.walletType === WALLET_TYPE.ONE_WALLET) {
+          res = await blockchain.purchaseOneWallet({
+            address: this.stores.user.address,
+            quantity: this.formData.amount,
+            amount: String(this.total),
+            playerId: this.formData.playerId,
+          });
+        }
+
+        this.txId = res.result.transactionHash || res.result.id;
 
         if (!res.error) {
           this.actionStatus = 'success';

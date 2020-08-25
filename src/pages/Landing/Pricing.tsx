@@ -83,7 +83,7 @@ export class Pricing extends React.Component<IStores> {
         noValidation: true,
         width: '500px',
         showOther: true,
-        onApply: (data: any) => user.signIn(data.email),
+        onApply: (data: any) => user.signIn(data.email, data.walletType),
       });
     }
 
@@ -96,7 +96,7 @@ export class Pricing extends React.Component<IStores> {
           noValidation: true,
           width: '500px',
           showOther: true,
-          onApply: (data: any) => user.signIn(data.email),
+          onApply: (data: any) => user.signIn(data.email, data.walletType),
         });
       }
 
@@ -195,7 +195,7 @@ export class Pricing extends React.Component<IStores> {
                         noValidation: true,
                         width: '500px',
                         showOther: true,
-                        onApply: (data: any) => user.signIn(data.email),
+                        onApply: (data: any) => user.signIn(data.email, data.walletType),
                       });
                     }}
                     disabled={user.status !== 'success'}
@@ -239,7 +239,6 @@ export class Pricing extends React.Component<IStores> {
               </Box>
               <Input
                 name="playerId"
-                disabled={true}
                 label="Player ID"
                 style={{ width: '361px' }}
                 placeholder="player id"
