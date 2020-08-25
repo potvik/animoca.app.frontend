@@ -26,6 +26,7 @@
     "grommet": "^2.8.1",
     "lodash": "^4.17.15",
     "magic-sdk": "^2.4.6",
+    "mobile-detect": "^1.4.4",
     "mobx": "5.15.0",
     "mobx-react": "6.1.4",
     "mobx-react-router": "4.0.7",

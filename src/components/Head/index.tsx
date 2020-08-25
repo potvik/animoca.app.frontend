@@ -72,14 +72,17 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
           <Box direction="row" align="center" gap="30px">
             {/*<Box style={{ flex: '1 1 100%' }} />*/}
 
-            <Button onClick={() => history.push('/buy')}>Buy Loot Box</Button>
+            <Button style={{ width: 140 }} onClick={() => history.push('/buy')}>
+              Buy
+            </Button>
 
             {user.status !== 'success' ? null : (
               <Button
                 onClick={() => history.push('/my-cards')}
                 disabled={!user.isAuthorized}
+                style={{ width: 140 }}
               >
-                My cards ({tokenList.list.length})
+                Inventory ({tokenList.list.length})
               </Button>
             )}
 
@@ -129,7 +132,8 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
                       noValidation: true,
                       width: '500px',
                       showOther: true,
-                      onApply: (data: any) => user.signIn(data.email, data.walletType),
+                      onApply: (data: any) =>
+                        user.signIn(data.email, data.walletType),
                     });
 
                     // if (!user.isMathWallet) {

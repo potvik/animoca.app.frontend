@@ -218,7 +218,7 @@ export const Landing = observer(() => {
           </Title>
           <Text color="white">
             First time buying digital goods? Follow the tutorial below to
-            purchase these super valuable Crazy Defense Heroes NFT chests!
+            purchase these super valuable Beast Quest NFT chests!
           </Text>
 
           <Box

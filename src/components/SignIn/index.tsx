@@ -9,6 +9,9 @@ import * as styles from './styles.styl';
 import cn from 'classnames';
 import { IStores } from 'stores';
 import { AuthWarning } from '../AuthWarning';
+import MobileDetect from 'mobile-detect';
+
+const md = new MobileDetect(window.navigator.userAgent);
 
 @inject('user')
 @observer
@@ -40,6 +43,8 @@ export class SignIn extends React.Component<IStores & any> {
   render() {
     const { user } = this.props;
 
+    const isMobile = !!md.mobile();
+
     return (
       <Box pad={{ horizontal: 'large', top: 'large' }}>
         <Box direction="column">
@@ -47,19 +52,23 @@ export class SignIn extends React.Component<IStores & any> {
             Choose your wallet
           </Title>
 
-          <Box
-            className={cn(
-              styles.walletItem,
-              this.walletType === WALLET_TYPE.ONE_WALLET ? styles.selected : '',
-            )}
-            onClick={() => (this.walletType = WALLET_TYPE.ONE_WALLET)}
-          >
-            <img
-              src="/one.svg"
-              style={{ marginRight: 10, marginBottom: 3, height: 26 }}
-            />
-            ONE Wallet
-          </Box>
+          {!isMobile ? (
+            <Box
+              className={cn(
+                styles.walletItem,
+                this.walletType === WALLET_TYPE.ONE_WALLET
+                  ? styles.selected
+                  : '',
+              )}
+              onClick={() => (this.walletType = WALLET_TYPE.ONE_WALLET)}
+            >
+              <img
+                src="/one.svg"
+                style={{ marginRight: 10, marginBottom: 3, height: 26 }}
+              />
+              ONE Wallet
+            </Box>
+          ) : null}
           <Box
             className={cn(
               styles.walletItem,
