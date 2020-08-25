@@ -77,7 +77,7 @@ export const ActionModal = observer<{
       width={width}
       position={position}
       onClose={onClose}
-      style={{ visibility: visible ? 'visible' : 'hidden' }}
+      style={{ visibility: visible ? 'visible' : 'hidden', maxWidth: '100vw' }}
       config={config}
     >
       {false ? (

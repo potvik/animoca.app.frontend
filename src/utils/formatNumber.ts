@@ -21,11 +21,17 @@ export function formatWithTwoDecimalsRub(value: number) {
 }
 
 export function ones(value: number | string) {
-  return Number(value) / 1e18
+  return Number(value) / 1e18;
 }
 
-export function truncateAddressString(address) {
-  const first = address.slice(0, 6);
-  const last = address.slice(-4);
+// export function truncateAddressString(address) {
+//   const first = address.slice(0, 6);
+//   const last = address.slice(-4);
+//   return `${first}...${last}`;
+// }
+
+export function truncateAddressString(address, num?) {
+  const first = address.slice(0, num || 6);
+  const last = address.slice(-(num || 4));
   return `${first}...${last}`;
 }
