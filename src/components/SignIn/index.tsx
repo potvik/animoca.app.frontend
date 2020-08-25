@@ -29,6 +29,12 @@ export class SignIn extends React.Component<IStores & any> {
   // };
 
   componentDidMount = () => {
+    const isMobile = !!md.mobile();
+
+    if (isMobile) {
+      this.walletType = WALLET_TYPE.MAGIC_WALLET;
+    }
+
     this.props.onValidate.callback = () => {
       if (this.walletType === WALLET_TYPE.MAGIC_WALLET) {
         return this.formRef
@@ -101,7 +107,7 @@ export class SignIn extends React.Component<IStores & any> {
                 <Input
                   name="email"
                   label=""
-                  style={{ width: '361px' }}
+                  style={{ width: '361px', maxWidth: '100%' }}
                   placeholder="email@gmail.com"
                   rules={[isRequired, isEmail]}
                 />

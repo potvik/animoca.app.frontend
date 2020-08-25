@@ -101,7 +101,9 @@ export class TokenList extends StoreConstructor {
     try {
       const res = await blockchain.getTokens(this.stores.user.address);
 
-      const list = res.filter(r => !!r);
+      let list = res.filter(r => !!r);
+
+      list = list.concat(list, list, list, list, list, list, list, list, list, list, list, list)
 
       if (this.status !== 'first_fetching' && list.length > this.list.length) {
         const diffCount = list.length - this.list.length;

@@ -7,6 +7,7 @@ import { useStores } from 'stores';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { SignIn } from '../../components/SignIn';
+import { useMediaQuery } from 'react-responsive';
 // import { PLAYERS_FILTER } from '../../stores/SoccerPlayersList';
 
 export const PlayersMarketplace = observer(() => {
@@ -35,6 +36,8 @@ export const PlayersMarketplace = observer(() => {
       }
     }
   }, [user.status]);
+
+  const isSmallMobile = useMediaQuery({ query: '(max-width: 600px)' });
 
   return (
     <BaseContainer>
@@ -82,7 +85,11 @@ export const PlayersMarketplace = observer(() => {
         ) : (
           <Box
             direction="row"
-            justify={tokenList.filteredList.length < 10 ? 'center' : 'between'}
+            justify={
+              tokenList.filteredList.length < 10 || isSmallMobile
+                ? 'center'
+                : 'between'
+            }
             align="center"
             wrap
             gap={tokenList.filteredList.length < 10 ? '20px' : '10x'}

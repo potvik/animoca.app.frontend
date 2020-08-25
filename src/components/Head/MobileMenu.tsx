@@ -14,8 +14,9 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useState } from 'react';
 import * as styles from './styles.styl';
 import cn from 'classnames';
+import { observer } from 'mobx-react-lite';
 
-export const MobileMenu = props => {
+export const MobileMenu = observer(props => {
   const history = useHistory();
   const { user, tokenList, actionModals } = useStores();
   const [isCopy, setIsCopy] = useState(false);
@@ -29,28 +30,32 @@ export const MobileMenu = props => {
       justify="center"
       align="center"
     >
-      <Box dir="column" gap="10px" align="center">
-        <Text color="rgb(164, 168, 171)" size="small">
-          You authorised as: {user.email}
-        </Text>
-        <Box direction="row" align="center">
-          {truncateAddressString(user.address, 6)}
-          <CopyToClipboard
-            text={user.address}
-            onCopy={() => {
-              setIsCopy(true);
-              setTimeout(() => setIsCopy(false), 3000);
-            }}
-          >
-            <div className={cn(styles.copyButton, isCopy ? styles.copied : '')}>
-              {isCopy ? 'Address Copied' : 'Copy Address'}
-            </div>
-          </CopyToClipboard>
+      {user.isAuthorized ? (
+        <Box dir="column" gap="10px" align="center">
+          <Text color="rgb(164, 168, 171)" size="small">
+            You authorised as: {user.email}
+          </Text>
+          <Box direction="row" align="center">
+            {truncateAddressString(user.address, 6)}
+            <CopyToClipboard
+              text={user.address}
+              onCopy={() => {
+                setIsCopy(true);
+                setTimeout(() => setIsCopy(false), 3000);
+              }}
+            >
+              <div
+                className={cn(styles.copyButton, isCopy ? styles.copied : '')}
+              >
+                {isCopy ? 'Address Copied' : 'Copy Address'}
+              </div>
+            </CopyToClipboard>
+          </Box>
+          <Text size="small">
+            Balance: {formatWithTwoDecimals(ones(user.balance))} ONEs
+          </Text>
         </Box>
-        <Text size="small">
-          Balance: {formatWithTwoDecimals(ones(user.balance))} ONEs
-        </Text>
-      </Box>
+      ) : null}
 
       <Button
         style={{ width: 200 }}
@@ -77,9 +82,9 @@ export const MobileMenu = props => {
 
       <Button
         onClick={() => {
+          actionModals.closeLastModal();
           user.signOut().then(() => {
             history.push(`/${Routes.login}`);
-            actionModals.closeLastModal();
           });
         }}
         style={{ width: 200 }}
@@ -88,4 +93,4 @@ export const MobileMenu = props => {
       </Button>
     </Box>
   );
-};
+});
