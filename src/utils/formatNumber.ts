@@ -31,6 +31,10 @@ export function ones(value: number | string) {
 // }
 
 export function truncateAddressString(address, num?) {
+  if(!address) {
+    return address;
+  }
+
   const first = address.slice(0, num || 6);
   const last = address.slice(-(num || 4));
   return `${first}...${last}`;
