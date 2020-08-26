@@ -12,9 +12,10 @@ import {
 } from 'components/Form';
 import { inject, observer } from 'mobx-react';
 import { formatWithTwoDecimals, moreThanZero } from 'utils';
-import { IStores } from '../../stores';
+import { IStores, useStores } from '../../stores';
 import { BuyLootBoxModal } from '../PlayersMarketplace/BuyLootBoxModal';
 import { SignIn } from '../../components/SignIn';
+import { useMediaQuery } from 'react-responsive';
 
 export const BoxItem = (props: {
   id: string;
@@ -63,6 +64,49 @@ const DataItemLarge = (props: { text: any; label: string }) => {
       <Title color="white" bold={true}>
         {props.text}
       </Title>
+    </Box>
+  );
+};
+
+const Preview = () => {
+  const isSmallMobile = useMediaQuery({ query: '(max-width: 600px)' });
+  const { tokenList } = useStores();
+
+  return (
+    <Box
+      direction="column"
+      width="70%"
+      gap="20px"
+      style={{ background: '#0D1C2B', borderRadius: 12 }}
+      pad="xlarge"
+      margin={{ top: 'medium' }}
+    >
+      <Title color="white">Legendary Chest </Title>
+      <Text color="white">
+        Each Chest contains 2400 gems, 730 vip points and a card with rarity
+        Common, Epic or Legendary. The card is a collectible and can be used to
+        claim ONE rewards via staking.
+      </Text>
+      <Box direction="row">
+        <Box direction="column" style={{ minWidth: 132 }}>
+          {tokenList.boxes.map(box => (
+            <BoxItem
+              key={box.id}
+              {...box}
+              selected={box.id === tokenList.boxId}
+              onClick={() => (tokenList.boxId = box.id)}
+            />
+          ))}
+        </Box>
+        {!isSmallMobile ? (
+          <Box justify="center" align="center" margin={{ left: '50px' }}>
+            <img
+              style={{ maxWidth: '100%' }}
+              src={`/landing/pricing/preview.png`}
+            />
+          </Box>
+        ) : null}
+      </Box>
     </Box>
   );
 };
@@ -120,44 +164,12 @@ export class Pricing extends React.Component<IStores> {
 
     return (
       <Box className={styles.pricingBody} margin={{ top: 'medium' }}>
-        <Box
-          direction="column"
-          width="70%"
-          gap="20px"
-          style={{ background: '#0D1C2B', borderRadius: 12 }}
-          pad="xlarge"
-          margin={{ top: 'medium' }}
-        >
-          <Title color="white">Legendary Chest </Title>
-          <Text color="white">
-            Each Chest contains 2400 gems, 730 vip points and a card with rarity
-            Common, Epic or Legendary. The card is a collectible and can be used
-            to claim ONE rewards via staking.
-          </Text>
-          <Box direction="row">
-            <Box direction="column">
-              {tokenList.boxes.map(box => (
-                <BoxItem
-                  key={box.id}
-                  {...box}
-                  selected={box.id === tokenList.boxId}
-                  onClick={() => (tokenList.boxId = box.id)}
-                />
-              ))}
-            </Box>
-            <Box justify="center" align="center" margin={{ left: '50px' }}>
-              <img
-                style={{ maxWidth: 500 }}
-                src={`/landing/pricing/preview.png`}
-              />
-            </Box>
-          </Box>
-        </Box>
+        <Preview />
+
         <Box
           direction="column"
           width="40%"
           justify="center"
-          margin={{ left: 'medium' }}
           style={{ background: '#0D1C2B', borderRadius: 12 }}
         >
           <Form
@@ -169,6 +181,7 @@ export class Pricing extends React.Component<IStores> {
               direction="column"
               justify="between"
               align="center"
+              pad="20px"
               className={styles.formStyles}
             >
               <Box direction="row" align="end">
@@ -180,7 +193,7 @@ export class Pricing extends React.Component<IStores> {
                       ? 'Wallet Address'
                       : 'Wallet Address (sign in to get wallet address)'
                   }
-                  style={{ width: !user.isAuthorized ? '260px' : '361px' }}
+                  style={{ width: !user.isAuthorized ? '260px' : '361px', maxWidth: "100%" }}
                   placeholder="address"
                   rules={[isRequired]}
                 />
@@ -195,7 +208,8 @@ export class Pricing extends React.Component<IStores> {
                         noValidation: true,
                         width: '500px',
                         showOther: true,
-                        onApply: (data: any) => user.signIn(data.email, data.walletType),
+                        onApply: (data: any) =>
+                          user.signIn(data.email, data.walletType),
                       });
                     }}
                     disabled={user.status !== 'success'}
@@ -240,14 +254,14 @@ export class Pricing extends React.Component<IStores> {
               <Input
                 name="playerId"
                 label="Player ID"
-                style={{ width: '361px' }}
+                style={{ width: '361px', maxWidth: "100%" }}
                 placeholder="player id"
                 rules={[isRequired]}
               />
               <NumberInput
                 name="amount"
                 label="Amount"
-                style={{ width: '361px' }}
+                style={{ width: '361px', maxWidth: "100%" }}
                 placeholder="0"
                 rules={[isRequired, moreThanZero]}
               />
@@ -268,7 +282,7 @@ export class Pricing extends React.Component<IStores> {
                     />
                   </Box>
                 </Box>
-                <Box style={{ width: '361px' }}>
+                <Box style={{ width: '361px', maxWidth: "100%" }}>
                   <Button
                     disabled={user.status !== 'success'}
                     size="xlarge"
