@@ -11,6 +11,7 @@ import CountdownTimer from 'react-component-countdown-timer';
 import { SignIn } from '../../components/SignIn';
 import moment from 'moment';
 import { download } from '../../utils';
+import { useMediaQuery } from 'react-responsive';
 
 const MainLogo = styled.img`
   width: auto;
@@ -31,6 +32,9 @@ const settings = {
 
 export const Landing = observer(() => {
   const { routing, actionModals, user, tokenList } = useStores();
+
+  const isMobile = useMediaQuery({ query: '(max-width: 1000px)' });
+  const isSmallMobile = useMediaQuery({ query: '(max-width: 600px)' });
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
@@ -72,15 +76,27 @@ export const Landing = observer(() => {
   }, []);
 
   return (
-    <Box direction="column" justify="between" align="center">
+    <Box
+      direction="column"
+      justify="between"
+      align="center"
+      style={{ overflow: 'hidden' }}
+    >
       <Box className={styles.mainBlock}>
         <Box
-          pad={{ top: '60px', bottom: '50px' }}
+          pad={{
+            top: isSmallMobile ? '20px' : '60px',
+            bottom: isSmallMobile ? '20px' : '50px',
+          }}
           className={styles.pageContent}
         >
-          <img src="/landing/main/dragon.png" className={styles.dragon} />
-          <img src="/landing/main/heroes.png" className={styles.heroes} />
-          <img src="/landing/main/gold.png" className={styles.gold} />
+          {!isMobile ? (
+            <>
+              <img src="/landing/main/dragon.png" className={styles.dragon} />
+              <img src="/landing/main/heroes.png" className={styles.heroes} />
+              <img src="/landing/main/gold.png" className={styles.gold} />
+            </>
+          ) : null}
 
           <Box
             direction="column"
@@ -94,7 +110,10 @@ export const Landing = observer(() => {
               direction="column"
               margin={{ top: '40px' }}
               justify="around"
-              style={{ maxWidth: 460, height: '100%' }}
+              style={{
+                maxWidth: isSmallMobile ? '100%' : 460,
+                height: isSmallMobile ? 'auto' : '100%',
+              }}
             >
               <Title
                 style={{
@@ -102,12 +121,14 @@ export const Landing = observer(() => {
                   // textShadow:
                   //     '2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
                   fontWeight: 600,
-                  fontSize: 40,
+                  fontSize: isSmallMobile ? 25 : isMobile ? 30 : 40,
                   zIndex: 999,
                   // color: '#f9ca36',
                   // color: 'rgb(249 183 18)',
                   color: 'white',
+                  textAlign: isSmallMobile ? 'center' : 'left',
                   letterSpacing: '0.02em',
+                  display: isSmallMobile ? 'none' : 'block',
                   fontFamily:
                     'wfont_5de4af_58d65082edf1476c99721446ac4ddf3a,wf_58d65082edf1476c99721446a,orig_supercellmagic_regular',
                 }}
@@ -132,6 +153,17 @@ export const Landing = observer(() => {
                     textShadow: '1px 4px 12px #000000',
                   }}
                 >
+                  <b
+                    style={{
+                      textTransform: 'uppercase',
+                      color: '#e7ab10',
+                      margin: '15px 0px 15px 0',
+                      textAlign: 'center',
+                      display: !isSmallMobile ? 'none' : 'block',
+                    }}
+                  >
+                    First Official Chest Sale Begins
+                  </b>
                   Limited Edition NFT Chests, include a huge discount on in-game
                   items. Each chest includes a 150% extra gems, VIP points and
                   an NFT collectible card which will earn you ONE tokens when
@@ -142,7 +174,7 @@ export const Landing = observer(() => {
                       color: '#e7ab10',
                       margin: '15px 0 -5px 0',
                       textAlign: 'center',
-                      display: 'block',
+                      display: isSmallMobile ? 'none' : 'block',
                     }}
                   >
                     This offer ends
@@ -176,13 +208,13 @@ export const Landing = observer(() => {
             </Box>
 
             <Box
-              direction="row"
+              direction={isSmallMobile ? 'column' : 'row'}
               align="center"
               justify="end"
               style={{
-                position: 'absolute',
-                bottom: '40px',
-                right: '-40px',
+                position: isMobile ? 'relative' : 'absolute',
+                bottom: isMobile ? '-20px' : '40px',
+                right: isMobile ? '' : '-40px',
               }}
             >
               <a href="https://apps.apple.com/app/apple-store/id1419991954">
@@ -201,10 +233,11 @@ export const Landing = observer(() => {
 
       <Box className={styles.howToBuy}>
         <Box
-          pad={{ top: '120px', bottom: '50px' }}
+          pad={{ top: '120px', bottom: '50px', horizontal: 'large' }}
           className={styles.pageContent}
           direction="column"
           align="center"
+          style={{ maxWidth: 1350 }}
         >
           <Title
             color="white"
@@ -405,10 +438,15 @@ export const Landing = observer(() => {
 
       <Box className={styles.pricing}>
         <Box
-          pad={{ top: '120px', bottom: '100px' }}
-          className={styles.pageContent}
+          pad={{
+            top: isSmallMobile ? '50px' : '80px',
+            bottom: isSmallMobile ? '50px' : '80px',
+          }}
+          // className={styles.pageContent}
           direction="column"
           align="center"
+          fill={true}
+          style={{ maxWidth: 1200, margin: '0 auto' }}
         >
           <Title
             style={{

@@ -103,7 +103,7 @@ export class TokenList extends StoreConstructor {
 
       let list = res.filter(r => !!r);
 
-      list = list.concat(list, list, list, list, list, list, list, list, list, list, list, list)
+      // list = list.concat(list, list, list, list, list, list, list, list, list, list, list, list)
 
       if (this.status !== 'first_fetching' && list.length > this.list.length) {
         const diffCount = list.length - this.list.length;

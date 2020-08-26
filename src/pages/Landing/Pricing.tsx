@@ -163,7 +163,13 @@ export class Pricing extends React.Component<IStores> {
     const { tokenList, user, actionModals } = this.props;
 
     return (
-      <Box className={styles.pricingBody} margin={{ top: 'medium' }} gap="20px" justify="between">
+      <Box
+        className={styles.pricingBody}
+        margin={{ top: 'medium' }}
+        gap="20px"
+        justify="between"
+        fill={true}
+      >
         <Preview />
 
         <Box
