@@ -75,11 +75,11 @@ const Preview = () => {
   return (
     <Box
       direction="column"
-      width="70%"
+      width="400px"
       gap="20px"
-      style={{ background: '#0D1C2B', borderRadius: 12 }}
-      pad="xlarge"
-      margin={{ top: 'medium' }}
+      style={{ background: '#0D1C2B', borderRadius: 12, flexGrow: 1 }}
+      pad={isSmallMobile ? '20px' : 'xlarge'}
+      margin={{ top: isSmallMobile ? '' : 'medium', right: 'medium' }}
     >
       <Title color="white">Legendary Chest </Title>
       <Text color="white">
@@ -163,12 +163,12 @@ export class Pricing extends React.Component<IStores> {
     const { tokenList, user, actionModals } = this.props;
 
     return (
-      <Box className={styles.pricingBody} margin={{ top: 'medium' }}>
+      <Box className={styles.pricingBody} margin={{ top: 'medium' }} gap="20px" justify="between">
         <Preview />
 
         <Box
           direction="column"
-          width="40%"
+          width="400px"
           justify="center"
           style={{ background: '#0D1C2B', borderRadius: 12 }}
         >
@@ -193,7 +193,10 @@ export class Pricing extends React.Component<IStores> {
                       ? 'Wallet Address'
                       : 'Wallet Address (sign in to get wallet address)'
                   }
-                  style={{ width: !user.isAuthorized ? '260px' : '361px', maxWidth: "100%" }}
+                  style={{
+                    width: !user.isAuthorized ? '260px' : '361px',
+                    maxWidth: '100%',
+                  }}
                   placeholder="address"
                   rules={[isRequired]}
                 />
@@ -254,14 +257,14 @@ export class Pricing extends React.Component<IStores> {
               <Input
                 name="playerId"
                 label="Player ID"
-                style={{ width: '361px', maxWidth: "100%" }}
+                style={{ width: '361px', maxWidth: '100%' }}
                 placeholder="player id"
                 rules={[isRequired]}
               />
               <NumberInput
                 name="amount"
                 label="Amount"
-                style={{ width: '361px', maxWidth: "100%" }}
+                style={{ width: '361px', maxWidth: '100%' }}
                 placeholder="0"
                 rules={[isRequired, moreThanZero]}
               />
@@ -282,7 +285,7 @@ export class Pricing extends React.Component<IStores> {
                     />
                   </Box>
                 </Box>
-                <Box style={{ width: '361px', maxWidth: "100%" }}>
+                <Box style={{ width: '361px', maxWidth: '100%' }}>
                   <Button
                     disabled={user.status !== 'success'}
                     size="xlarge"

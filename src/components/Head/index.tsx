@@ -186,7 +186,7 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
               <Button
                 onClick={() => history.push('/my-cards')}
                 disabled={!user.isAuthorized}
-                style={{ width: isTabletOrMobile ? 120 : 140 }}
+                style={{ width: isTabletOrMobile ? 130 : 140 }}
               >
                 Inventory ({tokenList.list.length})
               </Button>
