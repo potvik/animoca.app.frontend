@@ -1,78 +1,189 @@
-import { action, observable } from 'mobx';
+import { action, autorun, observable } from 'mobx';
 import { IStores } from 'stores';
 import { statusFetching } from '../constants';
 import * as blockchain from '../blockchain';
+import { Magic } from 'magic-sdk';
+import { StoreConstructor } from './core/StoreConstructor';
+import { sleep } from '../utils';
+
+// const { Harmony: Index } = require('@harmony-js/core');
+const { ChainID } = require('@harmony-js/utils');
+
+const magic = new Magic('pk_live_0E839FF643A591CC', {
+  network: {
+    rpcUrl: blockchain.RPC_URL,
+    chainId: Number(ChainID.HmyTestnet),
+    chainType: 'HARMONY',
+  } as any,
+});
+
+// @ts-ignore
+window.rpcProvider = magic.rpcProvider;
 
 const defaults = {};
 
-export class UserStoreEx {
+export enum WALLET_TYPE {
+  ONE_WALLET = 'ONE_WALLET',
+  MAGIC_WALLET = 'MAGIC_WALLET',
+}
+
+export class UserStoreEx extends StoreConstructor {
   public stores: IStores;
   @observable public isAuthorized: boolean;
-  public status: statusFetching;
+  @observable public status: statusFetching = 'init';
   redirectUrl: string;
 
-  private mathwallet: any;
-  @observable public isMathWallet = false;
+  private onewallet: any;
+  @observable public isOneWallet = false;
+  @observable public isLogged = false;
 
-  @observable public sessionType: 'mathwallet' | 'ledger' | 'wallet';
+  @observable public walletType: WALLET_TYPE;
+
   @observable public address: string;
   @observable public balance: string = '0';
 
-  constructor() {
-    setInterval(async () => {
-      // @ts-ignore
-      this.isMathWallet = window.harmony && window.harmony.isMathWallet;
-      // @ts-ignore
-      this.mathwallet = window.harmony;
+  @observable metadata: any = {};
+  @observable email = '';
 
-      if (this.address) {
+  constructor(stores: IStores) {
+    super(stores);
+
+    setInterval(async () => {
+      if (!this.isOneWallet) {
+        this.initOneWallet();
+      }
+
+      if (this.isAuthorized) {
+        // this.metadata = await this.getMetaData();
         const res = await blockchain.getBalance(this.address);
         this.balance = res && res.result;
       }
     }, 3000);
 
+    this.firstInit();
+  }
+
+  @action.bound
+  initOneWallet() {
     // @ts-ignore
-    this.isMathWallet = window.harmony && window.harmony.isMathWallet;
+    this.isOneWallet = window.onewallet && window.onewallet.isOneWallet;
     // @ts-ignore
-    this.mathwallet = window.harmony;
+    this.onewallet = window.onewallet;
+  }
 
-    const session = localStorage.getItem('harmony_session');
+  @action.bound
+  public async firstInit() {
+    try {
+      if (!this.isAuthorized) {
+        const session = localStorage.getItem('harmony_session');
 
-    const sessionObj = JSON.parse(session);
+        const sessionObj = JSON.parse(session);
 
-    if (sessionObj && sessionObj.address) {
-      this.address = sessionObj.address;
-      this.sessionType = sessionObj.sessionType;
-      this.isAuthorized = true;
+        if (sessionObj && sessionObj.address) {
+          switch (sessionObj.walletType) {
+            case WALLET_TYPE.MAGIC_WALLET:
+              this.status = 'fetching';
 
+              const res = await magic.user.isLoggedIn();
+
+              this.isAuthorized = res;
+
+              if (this.isAuthorized) {
+                this.address = sessionObj.address;
+                this.walletType = sessionObj.walletType;
+                await this.initMetaData();
+              }
+              break;
+
+            case WALLET_TYPE.ONE_WALLET:
+              this.status = 'fetching';
+
+              let count = 0;
+              this.initOneWallet();
+
+              while (!this.isOneWallet && count < 5) {
+                await sleep(1000);
+                this.initOneWallet();
+                count++;
+              }
+
+              await this.signIn(null, WALLET_TYPE.ONE_WALLET);
+              break;
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.status = 'success';
+
+    if (this.isAuthorized) {
+      this.stores.tokenList.getList();
       blockchain
         .getBalance(this.address)
         .then(res => (this.balance = res && res.result));
     }
   }
 
-  @action public signIn() {
-    return this.mathwallet.getAccount().then(account => {
-      this.sessionType = `mathwallet`;
-      this.address = account.address;
-      this.isAuthorized = true;
+  @action.bound
+  public signIn(email: string, walletType: WALLET_TYPE) {
+    this.walletType = walletType;
 
-      this.syncLocalStorage();
+    switch (walletType) {
+      case WALLET_TYPE.MAGIC_WALLET:
+        return magic.auth
+          .loginWithMagicLink({ email, showUI: true })
+          .then(async () => {
+            this.isAuthorized = true;
 
-      blockchain
-        .getBalance(this.address)
-        .then(res => (this.balance = res && res.result));
+            await this.initMetaData();
 
-      return Promise.resolve();
-    });
+            this.syncLocalStorage();
+
+            this.stores.tokenList.getList();
+
+            return Promise.resolve();
+          });
+
+      case WALLET_TYPE.ONE_WALLET:
+        return this.onewallet.getAccount().then(account => {
+          this.address = account.address;
+          this.isAuthorized = true;
+
+          this.syncLocalStorage();
+
+          blockchain
+            .getBalance(this.address)
+            .then(res => (this.balance = res && res.result));
+
+          return Promise.resolve();
+        });
+    }
   }
 
-  @action public signOut() {
-    if (this.sessionType === 'mathwallet' && this.isMathWallet) {
-      return this.mathwallet
+  @action.bound
+  initMetaData = async () => {
+    this.metadata = await this.getMetaData();
+    this.email = this.metadata.email;
+    this.address = this.metadata.publicAddress;
+
+    blockchain
+      .getBalance(this.address)
+      .then(res => (this.balance = res && res.result));
+  };
+
+  @action.bound
+  public signOut() {
+    // if(!this.isAuthorized) {
+    //   return;
+    // }
+
+    if (this.walletType === WALLET_TYPE.ONE_WALLET) {
+      return this.onewallet
         .forgetIdentity()
         .then(() => {
-          this.sessionType = null;
+          this.walletType = null;
           this.address = null;
           this.isAuthorized = false;
           this.balance = '0';
@@ -85,6 +196,19 @@ export class UserStoreEx {
           console.error(err.message);
         });
     }
+
+    if (this.walletType === WALLET_TYPE.MAGIC_WALLET) {
+      return magic.user.logout().then(() => {
+        this.walletType = null;
+        this.address = null;
+        this.isAuthorized = false;
+        this.balance = '0';
+
+        this.syncLocalStorage();
+
+        return Promise.resolve();
+      });
+    }
   }
 
   private syncLocalStorage() {
@@ -92,24 +216,21 @@ export class UserStoreEx {
       'harmony_session',
       JSON.stringify({
         address: this.address,
-        sessionType: this.sessionType,
+        walletType: this.walletType,
       }),
     );
-  }
-
-  @action public signTransaction(txn: any) {
-    if (this.sessionType === 'mathwallet' && this.isMathWallet) {
-      return this.mathwallet.signTransaction(txn);
-    }
-  }
-
-  public saveRedirectUrl(url: string) {
-    if (!this.isAuthorized && url) {
-      this.redirectUrl = url;
-    }
   }
 
   @action public reset() {
     Object.assign(this, defaults);
   }
+
+  // Magic
+
+  getMetaData = async () => {
+    const metadata = await magic.user.getMetadata();
+    console.log('Metadata:', metadata);
+
+    return metadata;
+  };
 }

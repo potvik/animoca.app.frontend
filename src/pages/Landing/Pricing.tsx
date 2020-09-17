@@ -10,12 +10,12 @@ import {
   MobxForm,
   NumberInput,
 } from 'components/Form';
-import { computed, observable } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { formatWithTwoDecimals, moreThanZero } from 'utils';
-import { AuthWarning } from '../../components/AuthWarning';
-import { BuyPlayerModal } from '../PlayersMarketplace/BuyPlayerModal';
-import { IStores } from '../../stores';
+import { IStores, useStores } from '../../stores';
+import { BuyLootBoxModal } from '../PlayersMarketplace/BuyLootBoxModal';
+import { SignIn } from '../../components/SignIn';
+import { useMediaQuery } from 'react-responsive';
 
 export const BoxItem = (props: {
   id: string;
@@ -68,130 +68,165 @@ const DataItemLarge = (props: { text: any; label: string }) => {
   );
 };
 
-@inject('user', 'actionModals', 'buyPlayer', 'soccerPlayers')
+const Preview = () => {
+  const isSmallMobile = useMediaQuery({ query: '(max-width: 600px)' });
+  const { tokenList } = useStores();
+
+  return (
+    <Box
+      direction="column"
+      width="400px"
+      gap="20px"
+      style={{ background: '#0D1C2B', borderRadius: 12, flexGrow: 1 }}
+      pad={isSmallMobile ? '20px' : 'xlarge'}
+      margin={{ top: isSmallMobile ? '' : 'medium', right: 'medium' }}
+    >
+      <Title color="white">Legendary Chest </Title>
+      <Text color="white">
+        Each Chest contains 2400 gems, 730 vip points and a card with rarity
+        Common, Epic or Legendary. The card is a collectible and can be used to
+        claim ONE rewards via staking.
+      </Text>
+      <Box direction="row">
+        <Box direction="column" style={{ minWidth: 132 }}>
+          {tokenList.boxes.map(box => (
+            <BoxItem
+              key={box.id}
+              {...box}
+              selected={box.id === tokenList.boxId}
+              onClick={() => (tokenList.boxId = box.id)}
+            />
+          ))}
+        </Box>
+        {!isSmallMobile ? (
+          <Box justify="center" align="center" margin={{ left: '50px' }}>
+            <img
+              style={{ maxWidth: '100%' }}
+              src={`/landing/pricing/preview.png`}
+            />
+          </Box>
+        ) : null}
+      </Box>
+    </Box>
+  );
+};
+
+@inject('user', 'actionModals', 'buyPlayer', 'soccerPlayers', 'tokenList')
 @observer
 export class Pricing extends React.Component<IStores> {
   formRef: MobxForm;
 
-  @observable boxId = '1';
-
-  @observable formData = {
-    address: '',
-    playerId: '',
-    boxId: '1',
-    platform: 'ios',
-    amount: 0,
-  };
-
-  boxes = [
-    { id: '1', total: 60, allow: 20, price: 100 },
-    { id: '2', total: 60, allow: 20, price: 200 },
-    { id: '3', total: 25, allow: 5, price: 300 },
-    { id: '4', total: 5, allow: 5, price: 400 },
-  ];
-
-  @computed
-  get selectedBox() {
-    return this.boxes.find(box => box.id === this.boxId);
-  }
-
-  @computed
-  get total() {
-    if (this.formData.amount) {
-      return this.selectedBox.price * this.formData.amount;
-    } else {
-      return 0;
-    }
-  }
-
   buyHandler = async () => {
-    const { user, actionModals, buyPlayer, soccerPlayers } = this.props;
+    const { user, actionModals, tokenList } = this.props;
+
+    if (!user.isAuthorized) {
+      await actionModals.open(SignIn, {
+        title: 'Sign in',
+        applyText: 'Sign in',
+        closeText: 'Cancel',
+        noValidation: true,
+        width: '500px',
+        showOther: true,
+        onApply: (data: any) => user.signIn(data.email, data.walletType),
+      });
+    }
 
     this.formRef.validateFields().then(async data => {
       if (!user.isAuthorized) {
-        if (!user.isMathWallet) {
-          return actionModals.open(() => <AuthWarning />, {
-            title: '',
-            applyText: 'Got it',
-            closeText: '',
-            noValidation: true,
-            width: '500px',
-            showOther: true,
-            onApply: () => Promise.resolve(),
-          });
-        } else {
-          await user.signIn();
-        }
+        await actionModals.open(SignIn, {
+          title: 'Sign in',
+          applyText: 'Sign in',
+          closeText: 'Cancel',
+          noValidation: true,
+          width: '500px',
+          showOther: true,
+          onApply: (data: any) => user.signIn(data.email, data.walletType),
+        });
       }
-      await buyPlayer.initPlayer(soccerPlayers.list[0].player);
 
-      actionModals.open(() => <BuyPlayerModal />, {
+      // await buyPlayer.initPlayer(soccerPlayers.list[0].player);
+
+      actionModals.open(() => <BuyLootBoxModal />, {
         title: '',
-        applyText: 'Buy Player Card',
+        applyText: 'Buy Loot Box',
         closeText: 'Cancel',
         noValidation: true,
         width: '1000px',
         showOther: true,
-        onApply: () => buyPlayer.buy(),
-        onClose: () => buyPlayer.clear(),
+        onApply: () => this.props.tokenList.buyLootBox(),
+        onClose: () => tokenList.clear(),
       });
     });
   };
 
   render() {
+    const { tokenList, user, actionModals } = this.props;
+
     return (
-      <Box direction="row">
+      <Box
+        className={styles.pricingBody}
+        margin={{ top: 'medium' }}
+        gap="20px"
+        justify="between"
+        fill={true}
+      >
+        <Preview />
+
         <Box
           direction="column"
-          width="70%"
-          gap="20px"
+          width="400px"
+          justify="center"
           style={{ background: '#0D1C2B', borderRadius: 12 }}
-          pad="xlarge"
         >
-          <Title color="white">Legendary Chest </Title>
-          <Text color="white">
-            A Legendary Chest contains one common card, 2400 gems, 730 vip
-            points and 5 REVV. The card is a collectible and can only be used
-            through NFTs trading platform.
-          </Text>
-          <Box direction="row">
-            <Box direction="column">
-              {this.boxes.map(box => (
-                <BoxItem
-                  key={box.id}
-                  {...box}
-                  selected={box.id === this.boxId}
-                  onClick={() => (this.boxId = box.id)}
-                />
-              ))}
-            </Box>
-            <Box justify="center" align="center" margin={{ left: '50px' }}>
-              <img
-                style={{ maxWidth: 500 }}
-                src={`/landing/pricing/preview.png`}
-              />
-            </Box>
-          </Box>
-        </Box>
-        <Box direction="column" width="40%" justify="center">
           <Form
             ref={ref => (this.formRef = ref)}
-            data={this.formData}
+            data={tokenList.formData}
             {...({} as any)}
           >
             <Box
               direction="column"
               justify="between"
               align="center"
+              pad="20px"
               className={styles.formStyles}
             >
-              <Input
-                name="address"
-                label="Wallet Address"
-                style={{ width: '361px' }}
-                placeholder="address"
-                rules={[isRequired]}
-              />
+              <Box direction="row" align="end">
+                <Input
+                  name="address"
+                  disabled={true}
+                  label={
+                    user.isAuthorized
+                      ? 'Wallet Address'
+                      : 'Wallet Address (sign in to get wallet address)'
+                  }
+                  style={{
+                    width: !user.isAuthorized ? '260px' : '361px',
+                    maxWidth: '100%',
+                  }}
+                  placeholder="address"
+                  rules={[isRequired]}
+                />
+                {!user.isAuthorized ? (
+                  <Button
+                    margin={{ left: 'medium', bottom: 'small' }}
+                    onClick={() => {
+                      actionModals.open(SignIn, {
+                        title: 'Sign in',
+                        applyText: 'Sign in',
+                        closeText: 'Cancel',
+                        noValidation: true,
+                        width: '500px',
+                        showOther: true,
+                        onApply: (data: any) =>
+                          user.signIn(data.email, data.walletType),
+                      });
+                    }}
+                    disabled={user.status !== 'success'}
+                  >
+                    Sign in
+                  </Button>
+                ) : null}
+              </Box>
               <Box
                 direction="column"
                 justify="start"
@@ -199,25 +234,27 @@ export class Pricing extends React.Component<IStores> {
                 style={{ width: '361px' }}
                 margin={{ top: 'small', bottom: 'medium' }}
               >
-                <Text>Platform</Text>
+                <Text color="white">Platform</Text>
                 <Box direction="row">
                   <Box
                     className={cn(
                       styles.platformButton,
-                      this.formData.platform === 'ios' ? styles.selected : '',
+                      tokenList.formData.platform === 'ios'
+                        ? styles.selected
+                        : '',
                     )}
-                    onClick={() => (this.formData.platform = 'ios')}
+                    onClick={() => (tokenList.formData.platform = 'ios')}
                   >
                     IOS
                   </Box>
                   <Box
                     className={cn(
                       styles.platformButton,
-                      this.formData.platform === 'android'
+                      tokenList.formData.platform === 'android'
                         ? styles.selected
                         : '',
                     )}
-                    onClick={() => (this.formData.platform = 'android')}
+                    onClick={() => (tokenList.formData.platform = 'android')}
                   >
                     Android
                   </Box>
@@ -226,14 +263,14 @@ export class Pricing extends React.Component<IStores> {
               <Input
                 name="playerId"
                 label="Player ID"
-                style={{ width: '361px' }}
+                style={{ width: '361px', maxWidth: '100%' }}
                 placeholder="player id"
                 rules={[isRequired]}
               />
               <NumberInput
                 name="amount"
                 label="Amount"
-                style={{ width: '361px' }}
+                style={{ width: '361px', maxWidth: '100%' }}
                 placeholder="0"
                 rules={[isRequired, moreThanZero]}
               />
@@ -241,21 +278,27 @@ export class Pricing extends React.Component<IStores> {
                 <Box direction="column" gap="10px">
                   <DataItem
                     label="Lootbox type:"
-                    text={`${this.selectedBox.id}`}
+                    text={`${tokenList.selectedBox.id}`}
                   />
                   <DataItem
                     label="Price:"
-                    text={`${this.selectedBox.price} ONEs`}
+                    text={`${tokenList.selectedBox.price} ONEs`}
                   />
                   <Box margin={{ top: 'small' }}>
                     <DataItemLarge
                       label="Total:"
-                      text={`${formatWithTwoDecimals(this.total)} ONEs`}
+                      text={`${formatWithTwoDecimals(tokenList.total)} ONEs`}
                     />
                   </Box>
                 </Box>
-                <Box style={{ width: '361px' }}>
-                  <Button size="xlarge" onClick={() => this.buyHandler()}>
+                <Box style={{ width: '361px', maxWidth: '100%' }}>
+                  <Button
+                    disabled={user.status !== 'success'}
+                    size="xlarge"
+                    onClick={() => {
+                      this.buyHandler();
+                    }}
+                  >
                     Buy now
                   </Button>
                 </Box>

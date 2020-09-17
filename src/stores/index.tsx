@@ -5,8 +5,8 @@ import { UserStoreEx } from './UserStore';
 import { SoccerPlayersList } from './SoccerPlayersList';
 import { BuySoccerPlayer } from './BuySoccerPlayer';
 import { SendSoccerPlayer } from './SendSoccerPlayer';
+import { TokenList } from './TokenList';
 import { createStoresContext } from './create-context';
-
 
 export interface IStores {
   routing?: RouterStore;
@@ -16,6 +16,7 @@ export interface IStores {
   soccerPlayers?: SoccerPlayersList;
   buyPlayer?: BuySoccerPlayer;
   sendPlayer?: SendSoccerPlayer;
+  tokenList?: TokenList;
 }
 
 const stores: IStores = {};
@@ -23,10 +24,11 @@ const stores: IStores = {};
 stores.routing = new RouterStore();
 stores.modal = new ModalsStore();
 stores.actionModals = new ActionModalsStore();
-stores.user = new UserStoreEx();
+stores.user = new UserStoreEx(stores);
 stores.soccerPlayers = new SoccerPlayersList(stores);
 stores.buyPlayer = new BuySoccerPlayer(stores);
 stores.sendPlayer = new SendSoccerPlayer(stores);
+stores.tokenList = new TokenList(stores);
 
 if (!process.env.production) {
   window.stores = stores;

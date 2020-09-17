@@ -8,7 +8,7 @@ export function downloadFile(
   name: string,
 ) {
   anchorRef.href = url;
-  anchorRef.setAttribute('download', name);
+  anchorRef.setAttribute('_target', 'blank');
   anchorRef.click();
 }
 

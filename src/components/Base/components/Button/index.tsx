@@ -9,7 +9,14 @@ import { getSize } from '../Inputs/common';
 
 import { TEdgeSize, getMarginCSS, getPaddingCSS } from '../../utils';
 
-type TButtonSize = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' | 'full' | 'auto';
+type TButtonSize =
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge'
+  | 'full'
+  | 'auto';
 type TBtnType = 'default' | 'href';
 
 interface IConfirmProps {
@@ -98,7 +105,8 @@ const StyledButton = styled.button<IStyledButtonProps & any>`
   width: ${props => getSize(props.size, props.theme)};
   text-align: center;
   font-weight: 500;
-  border: ${props => (props.bordered ? props.theme.styled.button.border : 'none')};
+  border: ${props =>
+    props.bordered ? props.theme.styled.button.border : 'none'};
 
   display: flex;
   justify-content: center;
@@ -117,8 +125,10 @@ const StyledButton = styled.button<IStyledButtonProps & any>`
 
   &:hover {
     background-color: ${props =>
-      props.bgHoverColor || lighten(props.disabled ? 0 : 0.07, getButtonBgColor(props))};
-    color: ${props => lighten(props.disabled ? 0 : 0.07, getButtonTextColor(props))};
+      props.bgHoverColor ||
+      lighten(props.disabled ? 0 : 0.07, getButtonBgColor(props))};
+    color: ${props =>
+      lighten(props.disabled ? 0 : 0.07, getButtonTextColor(props))};
   }
 `;
 
@@ -187,8 +197,11 @@ class ButtonClass extends React.Component<IButtonProps> {
   };
 
   handleOnClick = (event: any) => {
-    event.preventDefault();
-    event.stopPropagation();
+    if (this.props.btnType !== 'href') {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
     const { confirmOnClick, disabled } = this.props;
     const isLoading = this.isLoading || this.props.isLoading;
 
@@ -220,7 +233,12 @@ class ButtonClass extends React.Component<IButtonProps> {
     return (
       <TooltipWrap position={position} theme={theme}>
         <div>{text}</div>
-        <Row jc="space-between" flex="1 0 auto" style={{ width: '100%' }} margin="16px 0 0">
+        <Row
+          jc="space-between"
+          flex="1 0 auto"
+          style={{ width: '100%' }}
+          margin="16px 0 0"
+        >
           <StyledButton
             transparent
             pad="8px"
@@ -245,7 +263,13 @@ class ButtonClass extends React.Component<IButtonProps> {
   };
 
   render() {
-    const { btnType = 'default', children, isLoading, className, ...rest } = this.props;
+    const {
+      btnType = 'default',
+      children,
+      isLoading,
+      className,
+      ...rest
+    } = this.props;
     const isButtonLoading = this.isLoading || isLoading;
 
     return (

@@ -7,6 +7,7 @@ import { PlayersMarketplace } from './pages/PlayersMarketplace';
 import {Landing} from "./pages/Landing";
 import { ActionModals } from './components/ActionModals';
 import {BuyLootBox} from "./pages/BuyLootBox";
+import {Preview} from "./pages/Preview";
 
 export const App: React.FC = () => (
   <Providers>
@@ -19,6 +20,7 @@ export const App: React.FC = () => (
       </Switch>
     </React.Suspense>
     <ActionModals />
+    <Preview />
     <GlobalStyle theme={...baseTheme as any} />
   </Providers>
 );

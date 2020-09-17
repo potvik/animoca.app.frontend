@@ -14,7 +14,7 @@ export const BaseContainer: React.FC<IStyledChildrenProps<
     const { minWidth, maxWidth } = container;
     return (
       <>
-        {/*<div className={styles.backgroundImage} />*/}
+        <div className={styles.backgroundImage} />
         <div className={styles.blur} />
         <div
           style={{
@@ -23,6 +23,7 @@ export const BaseContainer: React.FC<IStyledChildrenProps<
             position: 'absolute',
             top: 0,
             width: '100vw',
+            overflow: 'hidden',
             // backgroundColor: palette.Basic100,
           }}
         >

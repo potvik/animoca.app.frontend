@@ -90,6 +90,8 @@ function getClientEnvironment(publicUrl) {
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
         API_MODE: process.env.API_MODE,
+        TOKEN: process.env.TOKEN,
+        SALE: process.env.SALE,
         BASE_URL: process.env.BASE_URL,
         HIDE_CONTRACT_BTN: process.env.HIDE_CONTRACT_BTN === 'true',
         CLIENT_AUTH_HASH: new Buffer(

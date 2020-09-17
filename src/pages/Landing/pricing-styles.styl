@@ -5,8 +5,8 @@
   border-radius 8px
 
   img {
-    height 70px
-    width auto
+    height: 100%;
+    max-width: 100%;
   }
 
   background black
@@ -16,7 +16,7 @@
   }
 
   .numbers {
-    display flex
+    display none
     justify-content flex-end
   }
 }
@@ -36,6 +36,20 @@
     &.selected {
       background #2330D0
       border 2px solid #2330D0
+    }
+  }
+}
+
+.pricingBody {
+  flex-direction row
+}
+
+@media (max-width: 900px) {
+  .pricingBody {
+    flex-direction column
+
+    > div {
+      width 100%
     }
   }
 }
