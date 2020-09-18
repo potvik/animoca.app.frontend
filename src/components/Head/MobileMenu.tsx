@@ -76,7 +76,7 @@ export const MobileMenu = observer(props => {
           disabled={!user.isAuthorized}
           style={{ width: 200 }}
         >
-          Inventory ({tokenList.list.length})
+          Inventory {tokenList.list.length ? `(${tokenList.list.length})` : ''}
         </Button>
       )}
 

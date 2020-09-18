@@ -188,7 +188,7 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
                 disabled={!user.isAuthorized}
                 style={{ width: isTabletOrMobile ? 130 : 140 }}
               >
-                Inventory ({tokenList.list.length})
+                Inventory {tokenList.list.length ? `(${tokenList.list.length})` : ''}
               </Button>
             )}
 

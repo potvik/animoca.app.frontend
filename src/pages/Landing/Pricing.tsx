@@ -16,6 +16,7 @@ import { IStores, useStores } from '../../stores';
 import { BuyLootBoxModal } from '../PlayersMarketplace/BuyLootBoxModal';
 import { SignIn } from '../../components/SignIn';
 import { useMediaQuery } from 'react-responsive';
+import { withRouter } from 'react-router';
 
 export const BoxItem = (props: {
   id: string;
@@ -68,7 +69,7 @@ const DataItemLarge = (props: { text: any; label: string }) => {
   );
 };
 
-const Preview = () => {
+const Preview = ({buyBtn = null}) => {
   const isSmallMobile = useMediaQuery({ query: '(max-width: 600px)' });
   const { tokenList } = useStores();
 
@@ -87,6 +88,7 @@ const Preview = () => {
         Common, Epic or Legendary. The card is a collectible and can be used to
         claim ONE rewards via staking.
       </Text>
+
       <Box direction="row">
         <Box direction="column" style={{ minWidth: 132 }}>
           {tokenList.boxes.map(box => (
@@ -104,6 +106,7 @@ const Preview = () => {
               style={{ maxWidth: '100%' }}
               src={`/landing/pricing/preview.png`}
             />
+            {buyBtn}
           </Box>
         ) : null}
       </Box>
@@ -113,7 +116,7 @@ const Preview = () => {
 
 @inject('user', 'actionModals', 'buyPlayer', 'soccerPlayers', 'tokenList')
 @observer
-export class Pricing extends React.Component<IStores> {
+export class PricingBase extends React.Component<IStores> {
   formRef: MobxForm;
 
   buyHandler = async () => {
@@ -159,8 +162,33 @@ export class Pricing extends React.Component<IStores> {
     });
   };
 
+
   render() {
-    const { tokenList, user, actionModals } = this.props;
+    // @ts-ignore
+    const { tokenList, user, actionModals, history, location } = this.props;
+
+    const isLandingPage = location.pathname === '/'
+
+    const buyBtn = <Button
+      disabled={user.status !== 'success'}
+      size="xlarge"
+      style={{
+        fontSize: 40,
+        padding: 30,
+        marginTop: 20,
+        cursor: 'pointer'
+      }}
+      onClick={() => {
+        if (isLandingPage) {
+          history.push('/buy')
+          return
+        }
+
+        this.buyHandler();
+      }}
+    >
+      Buy now
+    </Button>
 
     return (
       <Box
@@ -170,9 +198,10 @@ export class Pricing extends React.Component<IStores> {
         justify="between"
         fill={true}
       >
-        <Preview />
+        <Preview buyBtn={isLandingPage ? buyBtn : null} />
 
-        <Box
+
+       {!isLandingPage && <Box
           direction="column"
           width="400px"
           justify="center"
@@ -240,8 +269,8 @@ export class Pricing extends React.Component<IStores> {
                     className={cn(
                       styles.platformButton,
                       tokenList.formData.platform === 'ios'
-                        ? styles.selected
-                        : '',
+                        ? ''
+                        : styles.selected,
                     )}
                     onClick={() => (tokenList.formData.platform = 'ios')}
                   >
@@ -251,8 +280,8 @@ export class Pricing extends React.Component<IStores> {
                     className={cn(
                       styles.platformButton,
                       tokenList.formData.platform === 'android'
-                        ? styles.selected
-                        : '',
+                        ? ''
+                        : styles.selected,
                     )}
                     onClick={() => (tokenList.formData.platform = 'android')}
                   >
@@ -262,7 +291,7 @@ export class Pricing extends React.Component<IStores> {
               </Box>
               <Input
                 name="playerId"
-                label="Player ID"
+                label="Beast Quest Player ID"
                 style={{ width: '361px', maxWidth: '100%' }}
                 placeholder="player id"
                 rules={[isRequired]}
@@ -305,8 +334,11 @@ export class Pricing extends React.Component<IStores> {
               </Box>
             </Box>
           </Form>
-        </Box>
+        </Box>}
       </Box>
     );
   }
 }
+
+// @ts-ignore
+export const Pricing = withRouter(PricingBase)

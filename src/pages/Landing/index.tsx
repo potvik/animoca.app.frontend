@@ -121,7 +121,7 @@ export const Landing = observer(() => {
                   // textShadow:
                   //     '2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
                   fontWeight: 600,
-                  fontSize: isSmallMobile ? 25 : isMobile ? 30 : 40,
+                  fontSize: isSmallMobile ? 30 : isMobile ? 35 : 45,
                   zIndex: 999,
                   // color: '#f9ca36',
                   // color: 'rgb(249 183 18)',
@@ -135,8 +135,8 @@ export const Landing = observer(() => {
                 className={styles.mainTitle}
                 color="white"
               >
-                First Official Chest
-                <br /> <span style={{ color: '#f9ca36' }}>Sale</span> Begins
+                <span style={{ color: '#f9ca36' }}>First Official <br /></span>
+                <span style={{ color: '#f9ca36' }}>Chest Sale</span>
               </Title>
 
               <Box
@@ -162,12 +162,16 @@ export const Landing = observer(() => {
                       display: !isSmallMobile ? 'none' : 'block',
                     }}
                   >
-                    First Official Chest Sale Begins
+                    First Official Chest Sale
                   </b>
-                  Limited Edition NFT Chests, include a huge discount on in-game
-                  items. Each chest includes a 150% extra gems, VIP points and
-                  an NFT collectible card which will earn you ONE tokens when
-                  you stake on the Harmony network.
+
+                  <b
+                    style={{
+                    }}
+                  >
+                    Buy limited edition NFT chests containing gems, VIP points & NFT
+                    collectible cards. Collect a set to win Harmony ONE tokens!
+                  </b>
                   <b
                     style={{
                       textTransform: 'uppercase',
@@ -187,7 +191,7 @@ export const Landing = observer(() => {
                     height: '70px',
                     alignItems: 'center',
                     fontWeight: 500,
-                    fontSize: 25,
+                    fontSize: 30,
                     marginTop: 10,
                   }}
                   onClick={() => routing.push('/buy')}
@@ -379,11 +383,12 @@ export const Landing = observer(() => {
               </div>
               <Button
                 onClick={() => {
-                  if (user.isAuthorized) {
+                  window.location.href='https://docs.harmony.one/home/partners/ecosystem#exchanges'
+                  /*if (user.isAuthorized) {
                     routing.push('/buy');
                   } else {
                     signIn();
-                  }
+                  }*/
                 }}
               >
                 Top Up
@@ -419,18 +424,15 @@ export const Landing = observer(() => {
         >
           <Box>
             <Title color="white">
-              Do I need to buy NFTs to enjoy Beast Quest Ultimate Heroes?
+              How do the staking rewards work?
             </Title>
           </Box>
           <Box>
             <Text color="white">
-              No, NTFs are not essential for players to play the game. You might
-              prefer to fight the battles in order to complete the different
-              levels, which is the fun way of playing the game (we’ve designed
-              the game to give you lots of cool beasts to battle!). If you
-              decide to buy NFTs, please ask bill payer’s permission and make
-              sure they have read and understood the process above before you
-              proceed.
+              To be eligible for a Harmony ONE reward, you need to
+              collect a set of either 1 legendary, 5 epic, 10 rare or
+              20 common cards. Once you have a set, you need to stake
+              to 50,000 ONE tokens to Animoca’s validator on the Harmony network.
             </Text>
           </Box>
         </Box>
