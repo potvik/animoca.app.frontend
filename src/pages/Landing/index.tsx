@@ -12,6 +12,7 @@ import { SignIn } from '../../components/SignIn';
 import moment from 'moment';
 import { download } from '../../utils';
 import { useMediaQuery } from 'react-responsive';
+import {Head} from '../../components/Head';
 
 const MainLogo = styled.img`
   width: auto;
@@ -76,6 +77,8 @@ export const Landing = observer(() => {
   }, []);
 
   return (
+    <>
+      <Head />
     <Box
       direction="column"
       justify="between"
@@ -104,7 +107,7 @@ export const Landing = observer(() => {
             justify="start"
             style={{ height: '100%' }}
           >
-            <MainLogo src="main_logo.png" />
+            {/*<MainLogo src="main_logo.png" />*/}
 
             <Box
               direction="column"
@@ -122,7 +125,7 @@ export const Landing = observer(() => {
                   //     '2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
                   fontWeight: 600,
                   fontSize: isSmallMobile ? 30 : isMobile ? 35 : 45,
-                  zIndex: 999,
+                  zIndex: 3,
                   // color: '#f9ca36',
                   // color: 'rgb(249 183 18)',
                   color: 'white',
@@ -292,8 +295,8 @@ export const Landing = observer(() => {
               </div>
               <div className={styles.description}>
                 <Text>
-                  If you don't already have a CDH account, please download the
-                  game first. You need an User ID to get these special offers.
+                  You need a Beast Quest User ID.
+                  If you don't have one, download the game and follow step 3.
                 </Text>
               </div>
               <a href="https://bquh2.onelink.me/b04p/d96d406e" target="_blank">
@@ -464,5 +467,6 @@ export const Landing = observer(() => {
         </Box>
       </Box>
     </Box>
+      </>
   );
 });

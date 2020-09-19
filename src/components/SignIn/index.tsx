@@ -126,6 +126,7 @@ export class SignIn extends React.Component<IStores & any> {
             {!user.isOneWallet ? <AuthWarning /> : null}
           </Box>
         ) : null}
+
       </Box>
     );
   }

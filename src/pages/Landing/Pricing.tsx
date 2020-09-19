@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Box } from 'grommet';
-import { Title, Text, Button } from 'components/Base';
+import {Box} from 'grommet';
+import {Title, Text, Button} from 'components/Base';
 import * as styles from './pricing-styles.styl';
 import cn from 'classnames';
 import {
@@ -10,13 +10,13 @@ import {
   MobxForm,
   NumberInput,
 } from 'components/Form';
-import { inject, observer } from 'mobx-react';
-import { formatWithTwoDecimals, moreThanZero } from 'utils';
-import { IStores, useStores } from '../../stores';
-import { BuyLootBoxModal } from '../PlayersMarketplace/BuyLootBoxModal';
-import { SignIn } from '../../components/SignIn';
-import { useMediaQuery } from 'react-responsive';
-import { withRouter } from 'react-router';
+import {inject, observer} from 'mobx-react';
+import {formatWithTwoDecimals, moreThanZero} from 'utils';
+import {IStores, useStores} from '../../stores';
+import {BuyLootBoxModal} from '../PlayersMarketplace/BuyLootBoxModal';
+import {SignIn} from '../../components/SignIn';
+import {useMediaQuery} from 'react-responsive';
+import {withRouter} from 'react-router';
 
 export const BoxItem = (props: {
   id: string;
@@ -41,7 +41,7 @@ export const BoxItem = (props: {
   );
 };
 
-const DataItem = (props: { text: any; label: string }) => {
+const DataItem = (props: {text: any; label: string}) => {
   return (
     <Box direction="row" justify="between" gap="10px">
       <Box direction="row" justify="start" align="center" gap="5px">
@@ -56,7 +56,7 @@ const DataItem = (props: { text: any; label: string }) => {
   );
 };
 
-const DataItemLarge = (props: { text: any; label: string }) => {
+const DataItemLarge = (props: {text: any; label: string}) => {
   return (
     <Box direction="row" justify="between" gap="10px">
       <Box direction="row" justify="start" align="center" gap="5px">
@@ -70,17 +70,17 @@ const DataItemLarge = (props: { text: any; label: string }) => {
 };
 
 const Preview = ({buyBtn = null}) => {
-  const isSmallMobile = useMediaQuery({ query: '(max-width: 600px)' });
-  const { tokenList } = useStores();
+  const isSmallMobile = useMediaQuery({query: '(max-width: 600px)'});
+  const {tokenList} = useStores();
 
   return (
     <Box
       direction="column"
       width="400px"
       gap="20px"
-      style={{ background: '#0D1C2B', borderRadius: 12, flexGrow: 1 }}
+      style={{background: '#0D1C2B', borderRadius: 12, flexGrow: 1}}
       pad={isSmallMobile ? '20px' : 'xlarge'}
-      margin={{ top: isSmallMobile ? '' : 'medium', right: 'medium' }}
+      margin={{top: isSmallMobile ? '' : 'medium', right: 'medium'}}
     >
       <Title color="white">Legendary Chest </Title>
       <Text color="white">
@@ -90,7 +90,7 @@ const Preview = ({buyBtn = null}) => {
       </Text>
 
       <Box direction="row">
-        <Box direction="column" style={{ minWidth: 132 }}>
+        <Box direction="column" style={{minWidth: 132}}>
           {tokenList.boxes.map(box => (
             <BoxItem
               key={box.id}
@@ -101,14 +101,18 @@ const Preview = ({buyBtn = null}) => {
           ))}
         </Box>
         {!isSmallMobile ? (
-          <Box justify="center" align="center" margin={{ left: '50px' }}>
+          <Box justify="center" align="center" margin={{left: '50px'}}
+               style={{width: '100%'}}>
             <img
-              style={{ maxWidth: '100%' }}
+              style={{maxWidth: '100%'}}
               src={`/landing/pricing/preview.png`}
             />
-            {buyBtn}
           </Box>
         ) : null}
+      </Box>
+
+      <Box justify="center" align="center">
+        {buyBtn}
       </Box>
     </Box>
   );
@@ -120,7 +124,7 @@ export class PricingBase extends React.Component<IStores> {
   formRef: MobxForm;
 
   buyHandler = async () => {
-    const { user, actionModals, tokenList } = this.props;
+    const {user, actionModals, tokenList} = this.props;
 
     if (!user.isAuthorized) {
       await actionModals.open(SignIn, {
@@ -165,9 +169,9 @@ export class PricingBase extends React.Component<IStores> {
 
   render() {
     // @ts-ignore
-    const { tokenList, user, actionModals, history, location } = this.props;
+    const {tokenList, user, actionModals, history, location} = this.props;
 
-    const isLandingPage = location.pathname === '/'
+    const isLandingPage = location.pathname === '/';
 
     const buyBtn = <Button
       disabled={user.status !== 'success'}
@@ -176,24 +180,24 @@ export class PricingBase extends React.Component<IStores> {
         fontSize: 40,
         padding: 30,
         marginTop: 20,
-        cursor: 'pointer'
+        cursor: 'pointer',
       }}
       onClick={() => {
         if (isLandingPage) {
-          history.push('/buy')
-          return
+          history.push('/buy');
+          return;
         }
 
         this.buyHandler();
       }}
     >
       Buy now
-    </Button>
+    </Button>;
 
     return (
       <Box
         className={styles.pricingBody}
-        margin={{ top: 'medium' }}
+        margin={{top: 'medium'}}
         gap="20px"
         justify="between"
         fill={true}
@@ -201,11 +205,11 @@ export class PricingBase extends React.Component<IStores> {
         <Preview buyBtn={isLandingPage ? buyBtn : null} />
 
 
-       {!isLandingPage && <Box
+        {!isLandingPage && <Box
           direction="column"
           width="400px"
           justify="center"
-          style={{ background: '#0D1C2B', borderRadius: 12 }}
+          style={{background: '#0D1C2B', borderRadius: 12}}
         >
           <Form
             ref={ref => (this.formRef = ref)}
@@ -237,7 +241,7 @@ export class PricingBase extends React.Component<IStores> {
                 />
                 {!user.isAuthorized ? (
                   <Button
-                    margin={{ left: 'medium', bottom: 'small' }}
+                    margin={{left: 'medium', bottom: 'small'}}
                     onClick={() => {
                       actionModals.open(SignIn, {
                         title: 'Sign in',
@@ -260,8 +264,8 @@ export class PricingBase extends React.Component<IStores> {
                 direction="column"
                 justify="start"
                 align="start"
-                style={{ width: '361px' }}
-                margin={{ top: 'small', bottom: 'medium' }}
+                style={{width: '361px'}}
+                margin={{top: 'small', bottom: 'medium'}}
               >
                 <Text color="white">Platform</Text>
                 <Box direction="row">
@@ -292,35 +296,35 @@ export class PricingBase extends React.Component<IStores> {
               <Input
                 name="playerId"
                 label="Beast Quest Player ID"
-                style={{ width: '361px', maxWidth: '100%' }}
+                style={{width: '361px', maxWidth: '100%'}}
                 placeholder="player id"
                 rules={[isRequired]}
               />
               <NumberInput
                 name="amount"
                 label="Amount"
-                style={{ width: '361px', maxWidth: '100%' }}
+                style={{width: '361px', maxWidth: '100%'}}
                 placeholder="0"
                 rules={[isRequired, moreThanZero]}
               />
-              <Box direction="column" gap="30px" margin={{ top: '10px' }}>
+              <Box direction="column" gap="30px" margin={{top: '10px'}}>
                 <Box direction="column" gap="10px">
-                  <DataItem
+                  {/*  <DataItem
                     label="Lootbox type:"
                     text={`${tokenList.selectedBox.id}`}
-                  />
+                  />*/}
                   <DataItem
                     label="Price:"
                     text={`${tokenList.selectedBox.price} ONEs`}
                   />
-                  <Box margin={{ top: 'small' }}>
+                  <Box margin={{top: 'small'}}>
                     <DataItemLarge
                       label="Total:"
                       text={`${formatWithTwoDecimals(tokenList.total)} ONEs`}
                     />
                   </Box>
                 </Box>
-                <Box style={{ width: '361px', maxWidth: '100%' }}>
+                <Box style={{width: '361px', maxWidth: '100%'}}>
                   <Button
                     disabled={user.status !== 'success'}
                     size="xlarge"
@@ -341,4 +345,4 @@ export class PricingBase extends React.Component<IStores> {
 }
 
 // @ts-ignore
-export const Pricing = withRouter(PricingBase)
+export const Pricing = withRouter(PricingBase);
