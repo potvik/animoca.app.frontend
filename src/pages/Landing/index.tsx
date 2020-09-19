@@ -172,8 +172,10 @@ export const Landing = observer(() => {
                     style={{
                     }}
                   >
-                    Buy limited edition NFT chests containing gems, VIP points & NFT
-                    collectible cards. Collect a set to win Harmony ONE tokens!
+                    Beast Quest, Animoca Brands and Harmony Protocol have teamed up
+                    for this exclusive offer! Buy limited edition lootboxes
+                    containing gems, VIP points & NFT collectible cards.
+                    Collect a set to win Harmony ONE tokens!
                   </b>
                   <b
                     style={{
@@ -299,8 +301,8 @@ export const Landing = observer(() => {
                   If you don't have one, download the game and follow step 3.
                 </Text>
               </div>
-              <a href="https://bquh2.onelink.me/b04p/d96d406e" target="_blank">
-                <Button btnType="href">Download Now</Button>
+              <a href="https://www.animocabrands.com/beast-quest-ultimate-heroes" target="_blank">
+                <Button btnType="href">Download now</Button>
               </a>
             </Box>
 
@@ -310,7 +312,7 @@ export const Landing = observer(() => {
                 <img src="/landing/how-to-buy/3.png" />
               </div>
               <div className={styles.smallTitle}>
-                <Text>Get your game User ID</Text>
+                <Text>Get your Beast Quest User ID</Text>
               </div>
               <div className={styles.description}>
                 <Text>
@@ -404,12 +406,12 @@ export const Landing = observer(() => {
                 <img src="/landing/how-to-buy/5.png" />
               </div>
               <div className={styles.smallTitle}>
-                <Text>Purchase Super Value Chests</Text>
+                <Text>Purchase lootboxes</Text>
               </div>
               <div className={styles.description}>
                 <Text>
-                  Once you have purchased a chest, the Collectible Card will be
-                  stored in your digital wallet.
+                  Once you have purchased a lootbox, your Collectible Card
+                  will be appear in your digital wallet.
                 </Text>
               </div>
               <Button onClick={() => routing.push('/buy')}>Buy now</Button>

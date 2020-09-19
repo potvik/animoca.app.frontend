@@ -82,11 +82,13 @@ const Preview = ({buyBtn = null}) => {
       pad={isSmallMobile ? '20px' : 'xlarge'}
       margin={{top: isSmallMobile ? '' : 'medium', right: 'medium'}}
     >
-      <Title color="white">Legendary Chest </Title>
+      <Title color="white">Limited Edition Lootboxes</Title>
       <Text color="white">
-        Each Chest contains 2400 gems, 730 vip points and a card with rarity
-        Common, Epic or Legendary. The card is a collectible and can be used to
-        claim ONE rewards via staking.
+        Each lootbox costs 1000 ONE and contains 2400 gems,
+        730 vip points and a random NFT collectible card
+        with rarity Common, Rare, Epic or Legendary.
+        If you collect a set of cards, you are
+        eligible for a 10,000 ONE staking reward!
       </Text>
 
       <Box direction="row">
