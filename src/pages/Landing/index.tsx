@@ -301,7 +301,7 @@ export const Landing = observer(() => {
                   If you don't have one, download the game and follow step 3.
                 </Text>
               </div>
-              <a href="https://www.animocabrands.com/beast-quest-ultimate-heroes" target="_blank">
+              <a href="https://www.animocabrands.com/beast-quest-ultimate-heroes?" target="_blank">
                 <Button btnType="href">Download now</Button>
               </a>
             </Box>
@@ -396,7 +396,7 @@ export const Landing = observer(() => {
                   }*/
                 }}
               >
-                Top Up
+                Top up
               </Button>
             </Box>
 
@@ -434,10 +434,14 @@ export const Landing = observer(() => {
           </Box>
           <Box>
             <Text color="white">
-              To be eligible for a Harmony ONE reward, you need to
-              collect a set of either 1 legendary, 5 epic, 10 rare or
-              20 common cards. Once you have a set, you need to stake
-              to 50,000 ONE tokens to Animoca’s validator on the Harmony network.
+              You have a chance to win a Harmony ONE staking reward
+              worth 10,000 ONE tokens! To be eligible for the Harmony ONE
+              staking reward, you need to collect a set of cards
+              and delegate 50,000 ONE tokens to Animoca’s
+              Harmony validator. A set can be any of the following:
+              20 common cards, 10 rare, 5 epic, or 1 legendary card.
+
+              For more information on the ONE staking reward, please see this blog post.
             </Text>
           </Box>
         </Box>
