@@ -73,13 +73,13 @@ const Description = observer(() => {
           </a>
         ) : null}
 
-        {/*{description === 'Success' && <>
+        {description === 'Success' && <>
           <TwitterShareButton
             url={'https://facebook.com/saurabhnemade'}
             size='large'
             options={{ text: '#reactjs is awesome', via: 'saurabhnemade', size: 'large' }}
           />
-        </>}*/}
+        </>}
 
       </Box>
     </Box>
