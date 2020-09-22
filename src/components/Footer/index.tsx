@@ -2,21 +2,21 @@ import * as React from 'react';
 import {Box} from 'grommet';
 // import { Facebook } from 'grommet-icons';
 
-export const Footer: typeof Box = props => (
+export const Footer = props => (
   <Box
     flex={{shrink: 0}}
-    style={{backgroundColor: 'black', color: 'white'}}
+    style={{backgroundColor: props.bg}}
     direction="row"
-    justify="end"
+    justify="center"
     pad={{horizontal: 'xlarge', vertical: 'large'}}
     {...props}
   >
     <a href='https://harmony.one/' target='_blank'>
-      <img src='/harmony.svg' style={{width: 50, height: 50, marginRight: 20}}/>
+      <img alt="Harmony One" src='/harmony.svg' style={{width: 50, height: 50, marginRight: 20}}/>
     </a>
 
     <a href='https://harmony.one/twitter' target='_blank'>
-      <img src='/twitter.png' style={{width: 50, height: 50, marginRight: 20}}/>
+      <img title="Twitter" src='/twitter.png' style={{width: 50, height: 50, marginRight: 20}}/>
     </a>
 
     <a href='https://harmony.one/youtube' target='_blank'>

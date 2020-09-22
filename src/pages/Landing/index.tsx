@@ -487,7 +487,7 @@ export const Landing = observer(() => {
           </Box>
         </Box>
       </Box>
-      <Footer/>
+      <Footer bg='black'/>
     </>
   );
 });
