@@ -13,6 +13,7 @@ import moment from 'moment';
 import {download} from '../../utils';
 import {useMediaQuery} from 'react-responsive';
 import {Head} from '../../components/Head';
+import {Footer} from '../../components/Footer';
 
 const MainLogo = styled.img`
   width: auto;
@@ -486,6 +487,7 @@ export const Landing = observer(() => {
           </Box>
         </Box>
       </Box>
+      <Footer/>
     </>
   );
 });
