@@ -10,7 +10,6 @@ import {Spinner} from 'ui';
 import {truncateAddressString} from '../../../utils';
 import {PlayerCardLiteOwner} from './PlayerCardLiteOwner';
 import {useMediaQuery} from 'react-responsive';
-import {  TwitterShareButton } from 'react-twitter-embed'
 
 interface IBuyPlayerModalProps {
 }
@@ -72,14 +71,6 @@ const Description = observer(() => {
             Tx id: {truncateAddressString(buyPlayer.txId)}
           </a>
         ) : null}
-
-        {description === 'Success' && <>
-          <TwitterShareButton
-            url={'https://facebook.com/saurabhnemade'}
-            size='large'
-            options={{ text: '#reactjs is awesome', via: 'saurabhnemade', size: 'large' }}
-          />
-        </>}
 
       </Box>
     </Box>

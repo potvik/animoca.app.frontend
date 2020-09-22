@@ -82,9 +82,9 @@ const Preview = ({buyBtn = null}) => {
       pad={isSmallMobile ? '20px' : 'xlarge'}
       margin={{top: isSmallMobile ? '' : 'medium', right: 'medium'}}
     >
-      <Title color="white">Limited Edition Lootboxes</Title>
+      <Title color="white">Limited Edition Chests</Title>
       <Text color="white">
-        Each lootbox costs 1000 ONE and contains 2400 gems,
+        Each chest costs 1000 ONE and contains 2400 gems,
         730 vip points and a random NFT collectible card
         with rarity Common, Rare, Epic or Legendary.
         If you collect a set of cards, you are
