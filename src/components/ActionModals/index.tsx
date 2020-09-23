@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from 'stores';
 import { Header } from './components';
-import { Footer } from '../Footer';
+import { Footer } from './components/Footer';
 import { ActionModalConfig } from 'stores/ActionModalsStore';
 import { useMemo, useRef } from 'react';
 import { observable } from 'mobx';

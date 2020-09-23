@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { BaseContainer, PageContainer } from 'components';
-import { observer } from 'mobx-react-lite';
-import { Pricing } from '../Landing/Pricing';
-import { useStores } from '../../stores';
-import { useEffect } from 'react';
-import { SignIn } from '../../components/SignIn';
+import {BaseContainer, Footer, PageContainer} from 'components';
+import {observer} from 'mobx-react-lite';
+import {Pricing} from '../Landing/Pricing';
+import {useStores} from '../../stores';
+import {useEffect} from 'react';
+import {SignIn} from '../../components/SignIn';
 
 export const BuyLootBox = observer(() => {
-  const { user, actionModals, routing } = useStores();
+  const {user, actionModals, routing} = useStores();
 
   useEffect(() => {
     if (!user.isAuthorized && user.status === 'success') {
@@ -29,10 +29,12 @@ export const BuyLootBox = observer(() => {
   }, [user.status]);
 
   return (
-    <BaseContainer>
-      <PageContainer>
-        <Pricing />
-      </PageContainer>
-    </BaseContainer>
+    <>
+      <BaseContainer>
+        <PageContainer>
+          <Pricing />
+        </PageContainer>
+      </BaseContainer>
+    </>
   );
 });
