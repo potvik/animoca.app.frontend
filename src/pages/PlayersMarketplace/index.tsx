@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { Box } from 'grommet';
-import { Loader } from 'components/Base';
-import { BaseContainer, PageContainer } from 'components';
-import { TokenCard } from './TokenCard';
-import { useStores } from 'stores';
-import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
-import { SignIn } from '../../components/SignIn';
-import { useMediaQuery } from 'react-responsive';
+import {Box} from 'grommet';
+import {Loader} from 'components/Base';
+import {BaseContainer, PageContainer} from 'components';
+import {TokenCard} from './TokenCard';
+import {useStores} from 'stores';
+import {observer} from 'mobx-react-lite';
+import {useEffect} from 'react';
+import {SignIn} from '../../components/SignIn';
+import {useMediaQuery} from 'react-responsive';
 // import { PLAYERS_FILTER } from '../../stores/SoccerPlayersList';
 
 export const PlayersMarketplace = observer(() => {
-  const { tokenList, user, actionModals, routing } = useStores();
+  const {tokenList, user, actionModals, routing} = useStores();
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
@@ -37,10 +37,19 @@ export const PlayersMarketplace = observer(() => {
     }
   }, [user.status]);
 
-  const isSmallMobile = useMediaQuery({ query: '(max-width: 600px)' });
+  const isSmallMobile = useMediaQuery({query: '(max-width: 600px)'});
 
   return (
     <BaseContainer>
+      <Box
+        direction="row"
+        align="center"
+        justify="center"
+        style={{color: 'black', fontWeight: 'bold'}}
+        margin={{vertical: '30px'}}>
+        {tokenList.totalSets > 0 && <>{tokenList.totalSets} {tokenList.totalSets === 1 ? 'set' : 'sets'}</>}
+      </Box>
+
       <PageContainer>
         {/*<Box*/}
         {/*  direction="row"*/}
@@ -93,8 +102,9 @@ export const PlayersMarketplace = observer(() => {
             align="center"
             wrap
             gap={tokenList.filteredList.length < 10 ? '20px' : '10x'}
-            style={{ minHeight: 600 }}
+            style={{minHeight: 600}}
           >
+
             {tokenList.filteredList.map((item, idx) => (
               <TokenCard
                 key={item.id}

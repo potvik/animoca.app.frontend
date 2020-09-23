@@ -429,7 +429,7 @@ export const Landing = observer(() => {
             direction="row"
             align="center"
           >
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/uPPj1yzzAKA" frameBorder="0"
+            <iframe width="800" height="500" src="https://www.youtube.com/embed/uPPj1yzzAKA" frameBorder="0"
                     style={{margin: 'auto'}}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen></iframe>

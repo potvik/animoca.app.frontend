@@ -5,6 +5,13 @@ import { StoreConstructor } from './core/StoreConstructor';
 import * as blockchain from '../blockchain';
 import { WALLET_TYPE } from './UserStore';
 
+const score = {
+  'Common': 1,
+  'Rare': 2,
+  'Epic': 4,
+  'Legendary': 20
+}
+
 export interface ITokenCard {
   id: string;
   name: string;
@@ -70,6 +77,15 @@ export class TokenList extends StoreConstructor {
     } else {
       return 0;
     }
+  }
+
+  @computed
+  get totalSets() {
+    const points = this.list.reduce((sum, e)=> {
+      return sum + score[e.core.rarity.value]
+    }, 0)
+
+    return ~~(points / 20)
   }
 
   @computed
