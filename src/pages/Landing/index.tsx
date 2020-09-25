@@ -310,7 +310,7 @@ export const Landing = observer(() => {
               <Box className={styles.reason}>
                 <div className={styles.number}>3</div>
                 <div className={styles.imageContainer}>
-                  <img src="/landing/how-to-buy/3.png" />
+                  <img src="/bquh-chest02.png" />
                 </div>
                 <div className={styles.smallTitle}>
                   <Text>Get your Beast Quest User ID</Text>

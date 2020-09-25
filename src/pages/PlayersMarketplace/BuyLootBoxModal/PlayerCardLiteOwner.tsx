@@ -66,7 +66,8 @@ export const PlayerCardLiteOwner = observer<IPlayerCardProps>(props => {
       align="center"
       background=""
     >
-      <img width="100%" src="/landing/pricing/preview.png" />
+      {/*<img width="100%" src="/landing/pricing/preview.png" />*/}
+      <img width="100%" src="/bquh-chest01.png" />
 
       <Box
         className={styles.infoBlockEmpty}

@@ -31,7 +31,7 @@ export const BoxItem = (props: {
       className={cn(styles.boxItem, props.selected ? styles.selected : '')}
       onClick={() => props.onClick()}
     >
-      <img src={`/landing/pricing/${props.id}.png`} />
+      <img style={{width:156, height: 131}} src={`/landing/pricing/${props.id}.png`} />
       <div className={styles.numbers}>
         <Text color="white">
           {props.allow}/{props.total}
@@ -92,7 +92,7 @@ const Preview = ({buyBtn = null}) => {
       </Text>
 
       <Box direction="row">
-        <Box direction="column" style={{minWidth: 132}}>
+        <Box direction="column" style={{minWidth: 132, maxWidth:132, maxHeight: 140}}>
           {tokenList.boxes.map(box => (
             <BoxItem
               key={box.id}
@@ -105,10 +105,13 @@ const Preview = ({buyBtn = null}) => {
         {!isSmallMobile ? (
           <Box justify="center" align="center" margin={{left: '50px'}}
                style={{width: '100%'}}>
-            <img
+           {/* <img
               style={{maxWidth: '100%'}}
               src={`/landing/pricing/preview.png`}
-            />
+            />*/}
+            <img
+              style={{maxWidth: '100%'}}
+              src="/bquh-chest01.png" />
           </Box>
         ) : null}
       </Box>
