@@ -19,6 +19,8 @@ export const Preview = observer(() => {
       let scale = 'scale(0.8)',
         width = '1000px';
 
+      console.log({new: tokenList.newCardsList.length})
+
       if (tokenList.newCardsList.length === 1) {
         width = '600px';
         scale = 'scale(1)';

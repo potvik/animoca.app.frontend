@@ -120,6 +120,10 @@ export class TokenList extends StoreConstructor {
       return;
     }
 
+    if (this.status === 'first_fetching') {
+      return
+    }
+
     if (this.status === 'init') {
       this.status = 'first_fetching';
     } else {
