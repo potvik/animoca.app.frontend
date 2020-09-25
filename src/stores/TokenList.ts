@@ -29,6 +29,10 @@ export interface ITokenCard {
   }>;
 }
 
+const sortByRarity = (a, b) => {
+  return score[b.core.rarity.value] - score[a.core.rarity.value];
+};
+
 export class TokenList extends StoreConstructor {
   @observable public list: Array<ITokenCard> = [];
   @observable public status: statusFetching = 'init';
@@ -137,7 +141,7 @@ export class TokenList extends StoreConstructor {
         this.hasNewCards = true;
       }
 
-      this.list = list;
+      this.list = list.sort(sortByRarity);
 
       this.status = 'success';
     } catch (e) {
