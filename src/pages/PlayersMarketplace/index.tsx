@@ -46,8 +46,19 @@ export const PlayersMarketplace = observer(() => {
         align="center"
         justify="center"
         style={{color: 'black', fontWeight: 'bold'}}
-        margin={{vertical: '30px'}}>
-        {tokenList.totalSets > 0 && <>{tokenList.totalSets} {tokenList.totalSets === 1 ? 'set' : 'sets'}</>}
+        margin={{top: '30px'}}>
+        {tokenList.totalSets > 0 && <div>
+          {tokenList.totalSets} {tokenList.totalSets === 1 ? 'set' : 'sets'}
+        </div>}
+      </Box>
+      <Box
+        direction="row"
+        align="center"
+        justify="center"
+        style={{color: 'black', fontWeight: 'bold', textTransform: 'lowercase'}}>
+        {Object.keys(tokenList.totalByRarity).map(k => <div key={k} style={{marginRight: 20}}>
+          {tokenList.totalByRarity[k]}&nbsp;{k}
+        </div> )}
       </Box>
 
       <PageContainer>
