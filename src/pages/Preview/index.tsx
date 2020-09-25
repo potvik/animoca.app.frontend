@@ -5,13 +5,17 @@ import {useEffect} from 'react';
 import {Box} from 'grommet';
 import {Title} from '../../components/Base/components/Title';
 import {TokenCard} from '../PlayersMarketplace/TokenCard';
-import {TwitterShareButton} from 'react-twitter-embed';
+import {share} from '../../utils/twitterShare'
+import {Button} from '../../components/Base/components/Button';
+import {MobileMenu} from '../../components/Head/MobileMenu';
+import {Icon} from '../../components/Base/components/Icons';
+import { Twitter } from 'grommet-icons';
 
 export const Preview = observer(() => {
   const {actionModals, routing, tokenList} = useStores();
 
   useEffect(() => {
-    if (tokenList.hasNewCards) {
+    if (tokenList.hasNewCards || 1) {
       let scale = 'scale(0.8)',
         width = '1000px';
 
@@ -30,7 +34,7 @@ export const Preview = observer(() => {
           <Box pad={{vertical: 'large', horizontal: 'small'}}>
             <Title style={{textAlign: 'center'}}>
               You got {tokenList.newCardsList.length} new{' '}
-              {tokenList.newCardsList.length === 1 ? 'card' : 'cards'}
+              {tokenList.newCardsList.length === 1 ? 'card' : 'cards'}!
             </Title>
             <Box
               direction="row"
@@ -62,15 +66,21 @@ export const Preview = observer(() => {
               Share this on social media for a chance to win 10 chests!
             </Box>
             <Box
+              style={{marginTop: 20}}
               direction="row"
               justify="center"
             >
-              <TwitterShareButton
-                url={'http://bquh.io'}
-                size='large'
-                options={{text: `I just bought ${tokenList.newCardsList.length || ''} @animocabrands #BeastQuest NFT chests on @harmonyprotocol! Join in for your chance to win 10,000 $ONE in staking rewards 🎉🥳👇 \n#HarmonyNFTs #animoca #blockchain #gaming #NFT`,
-                  via: undefined, size: 'large'}}
-              />
+
+              <Button
+                style={{ width: 140 }}
+                onClick={() => share({
+                  text: `I just bought ${tokenList.newCardsList.length || ''} @animocabrands NFT chests on @harmonyprotocol! Join in for your chance to win 10,000 $ONE in staking rewards 🎉🥳👇 \n`,
+                  hashtags: 'HarmonyNFTs,animoca,blockchain,gaming,NFT'
+                })}
+              >
+                <Twitter size="small" color={'white'} />&nbsp;
+                Tweet
+              </Button>
             </Box>
           </Box>
         ),

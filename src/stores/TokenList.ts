@@ -1,16 +1,16 @@
-import { action, autorun, computed, observable } from 'mobx';
-import { IStores } from 'stores';
-import { statusFetching } from '../constants';
-import { StoreConstructor } from './core/StoreConstructor';
+import {action, autorun, computed, observable} from 'mobx';
+import {IStores} from 'stores';
+import {statusFetching} from '../constants';
+import {StoreConstructor} from './core/StoreConstructor';
 import * as blockchain from '../blockchain';
-import { WALLET_TYPE } from './UserStore';
+import {WALLET_TYPE} from './UserStore';
 
 const score = {
   'Common': 1,
   'Rare': 2,
   'Epic': 4,
-  'Legendary': 20
-}
+  'Legendary': 20,
+};
 
 export interface ITokenCard {
   id: string;
@@ -59,7 +59,7 @@ export class TokenList extends StoreConstructor {
   @observable formData = this.defaultDormData;
 
   boxes = [
-    { id: '3', total: 60, allow: 20, price: 100 },
+    {id: '3', total: 60, allow: 20, price: 100},
     // { id: '2', total: 60, allow: 20, price: 200 },
     // { id: '3', total: 25, allow: 5, price: 300 },
     // { id: '4', total: 5, allow: 5, price: 400 },
@@ -80,12 +80,20 @@ export class TokenList extends StoreConstructor {
   }
 
   @computed
-  get totalSets() {
-    const points = this.list.reduce((sum, e)=> {
-      return sum + score[e.core.rarity.value]
-    }, 0)
+  get totalByRarity() {
+    return Object.keys(score).reduce((o, rarity) => {
+      o[rarity] = this.list.filter(e => e.core.rarity.value === rarity).length;
+      return o;
+    }, {});
+  }
 
-    return ~~(points / 20)
+  @computed
+  get totalSets() {
+    const points = this.list.reduce((sum, e) => {
+      return sum + score[e.core.rarity.value];
+    }, 0);
+
+    return ~~(points / 20);
   }
 
   @computed

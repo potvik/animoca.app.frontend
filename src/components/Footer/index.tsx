@@ -12,23 +12,23 @@ export const Footer = props => (
     {...props}
   >
     <a href='https://harmony.one/' target='_blank'>
-      <img  src='/social/harmony-white.png' style={{width: 50, height: 50, marginRight: 20}}/>
+      <img  src='/social/harmony-white.png' style={{width: 36, height: 36, marginRight: 30}}/>
     </a>
 
     <a href='https://harmony.one/twitter' target='_blank'>
-      <img src='/social/twitter-white.png' style={{width: 50, height: 50, marginRight: 20}}/>
+      <img src='/social/twitter-white.png' style={{width: 36, height: 36, marginRight: 30}}/>
     </a>
 
     <a href='https://harmony.one/youtube' target='_blank'>
-      <img src='/social/youtube-white.png' style={{width: 50, height: 50, marginRight: 20}}/>
+      <img src='/social/youtube-white.png' style={{width: 36, height: 36, marginRight: 30}}/>
     </a>
 
     <a href='https://harmony.one/telegram' target='_blank'>
-      <img src='/social/telegram-white.png' style={{width: 50, height: 50, marginRight: 20}}/>
+      <img src='/social/telegram-white.png' style={{width: 36, height: 36, marginRight: 30}}/>
     </a>
 
     <a href='https://harmony.one/discord' target='_blank'>
-      <img src='/social/discord-white.png' style={{width: 50, height: 50}}/>
+      <img src='/social/discord-white.png' style={{width: 36, height: 36}}/>
     </a>
 
   </Box>
