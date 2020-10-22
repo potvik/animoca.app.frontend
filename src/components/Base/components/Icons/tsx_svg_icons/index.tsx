@@ -52,3 +52,4 @@ export * from './Password';
 export * from './Mail';
 export * from './Phone';
 export * from './Send';
+export * from './Medal'

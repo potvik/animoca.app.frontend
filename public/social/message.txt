@@ -1,0 +1,58 @@
+/hmy blockchain median-stake -n https://api.s0.b.hmny.io
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "epos-median-stake": "473059218447500000000000.000000000000000000",
+    "epos-slot-candidates": [
+      {
+        "keys-at-auction": [
+          "2260e8d59dec2000d7a0d7b00e11ea49242e79ba79b2e7eafa630f59878d6724ad0cdce01eb4fce9caf17f13fab25b13"
+        ],
+        "percentage-of-total-auction-stake": "0.079189355567449623",
+        "stake": 3.12369e+23,
+        "stake-per-key": 3.12369e+23,
+        "validator": "one1u6c4wer2dkm767hmjeehnwu6tqqur62gx9vqsd"
+      },
+      {
+        "keys-at-auction": [
+          "96848c4cfdc9f60e482e4cdc281baf5e4e32a5450241213820596a774932235544583e093185ea49f2d3cbeffdee9c8e"
+        ],
+        "percentage-of-total-auction-stake": "0.800884356439507208",
+        "stake": 3.159154961471667e+24,
+        "stake-per-key": 3.159154961471667e+24,
+        "validator": "one170xqsfzm4xdmuyax54t5pvtp5l5yt66u50ctrp"
+      },
+      {
+        "keys-at-auction": [
+          "a39b9a06edd40998ce2ba2dd928b6fe773761e873f19e5d540c2ce51e3677d77ba7d91319a1fab7747cc5c0ea1d19798"
+        ],
+        "percentage-of-total-auction-stake": "0.119926287993043169",
+        "stake": 4.730592184475e+23,
+        "stake-per-key": 4.730592184475e+23,
+        "validator": "one13up8rppejatmznzr7nder8u6llatvudrumxt02"
+      }
+    ],
+    "epos-slot-winners": [
+      {
+        "bls-public-key": "96848c4cfdc9f60e482e4cdc281baf5e4e32a5450241213820596a774932235544583e093185ea49f2d3cbeffdee9c8e",
+        "eposed-stake": "544018101214625000000000.000000000000000000",
+        "raw-stake": "3159154961471666667000000.000000000000000000",
+        "slot-owner": "one170xqsfzm4xdmuyax54t5pvtp5l5yt66u50ctrp"
+      },
+      {
+        "bls-public-key": "a39b9a06edd40998ce2ba2dd928b6fe773761e873f19e5d540c2ce51e3677d77ba7d91319a1fab7747cc5c0ea1d19798",
+        "eposed-stake": "473059218447500000000000.000000000000000000",
+        "raw-stake": "473059218447500000000000.000000000000000000",
+        "slot-owner": "one13up8rppejatmznzr7nder8u6llatvudrumxt02"
+      },
+      {
+        "bls-public-key": "2260e8d59dec2000d7a0d7b00e11ea49242e79ba79b2e7eafa630f59878d6724ad0cdce01eb4fce9caf17f13fab25b13",
+        "eposed-stake": "402100335680375000000000.000000000000000000",
+        "raw-stake": "312369000000000000000000.000000000000000000",
+        "slot-owner": "one1u6c4wer2dkm767hmjeehnwu6tqqur62gx9vqsd"
+      }
+    ],
+    "max-external-slots": 88
+  }
+}

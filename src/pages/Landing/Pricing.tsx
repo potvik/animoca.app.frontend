@@ -85,7 +85,7 @@ const Preview = ({buyBtn = null}) => {
       <Title color="white">Limited Edition Chests</Title>
       <Text color="white">
         Each chest costs 1000 ONE and contains 2400 gems,
-        730 vip points and a random NFT collectible card
+        730 VIP points and a random NFT collectible card
         with rarity Common, Rare, Epic or Legendary.
         If you collect a set of cards, you are
         eligible for a 10,000 ONE staking reward!
@@ -160,7 +160,7 @@ export class PricingBase extends React.Component<IStores> {
 
       actionModals.open(() => <BuyLootBoxModal />, {
         title: '',
-        applyText: 'Buy Loot Box',
+        applyText: 'Buy Chest',
         closeText: 'Cancel',
         noValidation: true,
         width: '1000px',

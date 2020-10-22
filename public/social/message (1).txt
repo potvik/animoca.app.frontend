@@ -1,0 +1,51 @@
+9月 27 11:12:09 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Fetched blocks. Time elapsed: 0.256s
+9月 27 11:12:09 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: No new blocks
+9月 27 11:12:09 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:09 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 1 failed with error: requested block number greater than current block number
+9月 27 11:12:09 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 2 failed with error: requested block number greater than current block number
+9月 27 11:12:09 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 3 failed with error: requested block number greater than current block number
+9月 27 11:12:10 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: [hrc20 token list syncer] shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:10 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: [app] Channel established.
+9月 27 11:12:10 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Time for getUpdateData: 0s
+9月 27 11:12:11 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: [app] Channel established.
+9月 27 11:12:11 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Time for getUpdateData: 0s
+9月 27 11:12:11 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: getTransaction null for 0xcab0179d15ca022e28118947dbadc0fed6220aba59f91016ee456f629711131e: {"err":"Not found"}
+9月 27 11:12:15 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: [hrc20 token list syncer] shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: -------------
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Time: Sun Sep 27 2020 11:12:17 GMT+0000 (Coordinated Universal Time)
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 0: 5097246 - 5097249, 4 blocks
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 1: 5103722 - 5103725, 4 blocks
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 2: 5141568 - 5141571, 4 blocks
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 3: 5125383 - 5125386, 4 blocks
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Fetched blocks. Time elapsed: 0.257s
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 2 failed with error: requested block number greater than current block number
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 3 failed with error: requested block number greater than current block number
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Updated to store. Time elapsed: 0.258s
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard: 1, BlockCount: 5103726 +(4), TxCount: 5601 +(0, StakingTxCount: 0 +(0)
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Time for getUpdateData: 0.003s
+9月 27 11:12:17 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Broadcasted to clients. Time elapsed: 0.273s
+9月 27 11:12:20 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: [hrc20 token list syncer] shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: -------------
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Time: Sun Sep 27 2020 11:12:25 GMT+0000 (Coordinated Universal Time)
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 0: 5097246 - 5097249, 4 blocks
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 1: 5103726 - 5103729, 4 blocks
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 2: 5141568 - 5141571, 4 blocks
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 3: 5125383 - 5125386, 4 blocks
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Fetched blocks. Time elapsed: 0.258s
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: shard 1 failed with error: requested block number greater than current block number
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Updated to store. Time elapsed: 0.26s
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard: 2, BlockCount: 5141572 +(4), TxCount: 9717 +(0, StakingTxCount: 0 +(0)
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard: 3, BlockCount: 5125387 +(4), TxCount: 5247 +(0, StakingTxCount: 0 +(0)
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Time for getUpdateData: 0.007s
+9月 27 11:12:25 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Broadcasted to clients. Time elapsed: 0.277s
+9月 27 11:12:26 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: [hrc20 token list syncer] shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:31 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: [hrc20 token list syncer] shard 0 failed with error: requested block number greater than current block number
+9月 27 11:12:33 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: -------------
+9月 27 11:12:33 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Time: Sun Sep 27 2020 11:12:33 GMT+0000 (Coordinated Universal Time)
+9月 27 11:12:33 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 0: 5097246 - 5097249, 4 blocks
+9月 27 11:12:33 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 1: 5103726 - 5103729, 4 blocks
+9月 27 11:12:33 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 2: 5141572 - 5141575, 4 blocks
+9月 27 11:12:33 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Shard 3: 5125387 - 5125390, 4 blocks
+9月 27 11:12:33 ip-172-31-46-244.us-west-2.compute.internal harmony-explorer-be[26940]: Fetched blocks. Time elapsed: 0.258s

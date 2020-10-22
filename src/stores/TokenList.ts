@@ -45,8 +45,13 @@ export class TokenList extends StoreConstructor {
 
     autorun(() => {
       if (this.stores.user.address) {
+        console.log('autorun')
+        this.getList()
         this.formData.address = this.stores.user.address;
       }
+     /* if (!this.stores.user.address && this.list.length) {
+        this.list = []
+      }*/
     });
   }
 
@@ -116,7 +121,8 @@ export class TokenList extends StoreConstructor {
 
   @action.bound
   getList = async () => {
-    if (!this.stores.user.isAuthorized) {
+    console.log('getList')
+    if (!this.stores.user.address) {
       return;
     }
 
@@ -145,7 +151,9 @@ export class TokenList extends StoreConstructor {
         this.hasNewCards = true;
       }
 
-      this.list = list.sort(sortByRarity);
+      //this.list = list.sort(sortByRarity);
+
+      this.list = [...list,...list,...list, ...list,...list,...list,...list,...list].sort(sortByRarity);
 
       this.status = 'success';
     } catch (e) {
@@ -194,6 +202,8 @@ export class TokenList extends StoreConstructor {
 
             resolve();
           }, 2000);
+
+
 
           return;
         }

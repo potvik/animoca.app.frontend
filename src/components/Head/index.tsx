@@ -182,13 +182,14 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
               Buy
             </Button>
 
+
             {user.status !== 'success' ? null : (
               <Button
                 onClick={() => history.push('/my-cards')}
                 disabled={!user.isAuthorized}
                 style={{ width: isTabletOrMobile ? 130 : 140 }}
               >
-                Inventory {tokenList.list.length ? `(${tokenList.list.length})` : ''}
+                Inventory {tokenList.list.length && user.address ? `(${tokenList.list.length})` : ''}
               </Button>
             )}
 

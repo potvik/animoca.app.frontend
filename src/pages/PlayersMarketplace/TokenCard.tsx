@@ -73,7 +73,7 @@ export const PlayerCardEx = observer<IPlayerCardProps>(props => {
       <Box className={styles.infoBlock} fill={true} gap="10px" pad="medium">
         <DataItem icon="User" iconSize="16px" text={props.data.name} label="Name" />
         <DataItem
-          icon="Refresh"
+          icon="Medal"
           iconSize="16px"
           text={
             props.data.attributes.find(v => v.trait_type === 'rarity').value

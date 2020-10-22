@@ -33,7 +33,7 @@ const Description = observer(() => {
           />
         );
       description =
-        'Each Chest contains 2400 gems, 730 vip points and a card with rarity Common, Epic or Legendary. The card is a collectible and can be used to claim ONE rewards via staking.';
+        'Each Chest contains 2400 gems, 730 VIP points and a card with rarity Common, Epic or Legendary. The card is a collectible and can be used to claim ONE rewards via staking.';
       break;
 
     case 'fetching':
@@ -91,7 +91,7 @@ export const BuyLootBoxModal = observer<IBuyPlayerModalProps>(props => {
         gap="20px"
         pad="medium"
       >
-        <Title style={{textAlign: 'center'}}>Buy Loot Box</Title>
+        <Title style={{textAlign: 'center'}}>Buy Chest</Title>
         <PlayerCardLite />
         <Description />
       </Box>
@@ -106,7 +106,7 @@ export const BuyLootBoxModal = observer<IBuyPlayerModalProps>(props => {
       }}
       className={styles.modalContainer}
     >
-      <Title style={{textAlign: 'center'}}>Buy Loot Box</Title>
+      <Title style={{textAlign: 'center'}}>Buy Chest</Title>
       <Box
         margin={{vertical: isMobile ? '' : 'large'}}
         direction="row"
