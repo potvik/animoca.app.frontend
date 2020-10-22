@@ -76,7 +76,7 @@ export const Preview = observer(() => {
               <Button
                 style={{ width: 140 }}
                 onClick={() => share({
-                  text: `I just bought ${tokenList.newCardsList.length || ''} @animocabrands NFT chests on @harmonyprotocol! Join in for your chance to win 10,000 $ONE in staking rewards 🎉🥳👇 \n`,
+                  text: `I just bought ${tokenList.newCardsList.length || ''} @animocabrands NFT chests on @harmonyprotocol! Join in for your chance to win 10,000 $ONE in staking rewards 🎉🥳👇`,
                   hashtags: 'HarmonyNFTs,animoca,blockchain,gaming,NFT'
                 })}
               >

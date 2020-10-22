@@ -38,7 +38,7 @@ export const PlayersMarketplace = observer(() => {
   }, [user.status]);
 
   const isSmallMobile = useMediaQuery({query: '(max-width: 600px)'});
-
+  console.log('sets', Object.keys(tokenList.list).length)
   return (
     <BaseContainer>
       <Box style={
@@ -78,8 +78,8 @@ export const PlayersMarketplace = observer(() => {
           justify="center"
           style={{
             color: 'black', fontWeight: 'bold', textTransform: 'capitalize'}}>
-          <div style={{marginRight: 20}}>Gems: 10</div>
-          <div>VIP Points: 10</div>
+          <div style={{marginRight: 20}}>Gems: {tokenList.list.length * 2400}</div>
+          <div>VIP Points: {tokenList.list.length * 730}</div>
         </Box>
 
       </Box>
@@ -130,10 +130,10 @@ export const PlayersMarketplace = observer(() => {
             direction="row"
             justify={
               tokenList.filteredList.length < 10 || isSmallMobile
-                ? 'center'
-                : 'between'
+                ? 'start'
+                : 'start'
             }
-            align="center"
+            align="start"
             wrap
             gap={tokenList.filteredList.length < 10 ? '20px' : '10x'}
             style={{minHeight: 600}}

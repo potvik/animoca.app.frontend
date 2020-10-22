@@ -121,7 +121,6 @@ export class TokenList extends StoreConstructor {
 
   @action.bound
   getList = async () => {
-    console.log('getList')
     if (!this.stores.user.address) {
       return;
     }
@@ -140,7 +139,7 @@ export class TokenList extends StoreConstructor {
       const res = await blockchain.getTokens(this.stores.user.address);
 
       let list = res.filter(r => !!r);
-
+      console.log({list})
       // list = list.concat(list, list, list, list, list, list, list, list, list, list, list, list)
 
       if (this.status !== 'first_fetching' && list.length > this.list.length) {
@@ -151,9 +150,8 @@ export class TokenList extends StoreConstructor {
         this.hasNewCards = true;
       }
 
-      //this.list = list.sort(sortByRarity);
-
-      this.list = [...list,...list,...list, ...list,...list,...list,...list,...list].sort(sortByRarity);
+      this.list = list.sort(sortByRarity);
+      //this.list = [...list,...list,...list, ...list,...list,...list,...list,...list].sort(sortByRarity);
 
       this.status = 'success';
     } catch (e) {

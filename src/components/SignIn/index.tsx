@@ -52,7 +52,7 @@ export class SignIn extends React.Component<IStores & any> {
     const isMobile = !!md.mobile();
 
     return (
-      <Box pad={{ horizontal: 'large', top: 'large' }}>
+      <Box pad={{ horizontal: 'large', top: 'large' }} style={{top: '100px'}}>
         <Box direction="column">
           <Title style={{ textAlign: 'center', marginBottom: 10 }}>
             Choose your wallet
