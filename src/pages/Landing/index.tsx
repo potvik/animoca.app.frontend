@@ -448,8 +448,8 @@ export const Landing = observer(() => {
             </Box>
             <Box>
               <Text color="white">
-                You have a chance to win a Harmony ONE staking reward
-                worth 10,000 ONE tokens! To be eligible for the Harmony ONE
+                You have a chance to win a Harmony ONE special reward!
+                To be eligible for the Harmony ONE
                 staking reward, you need to collect a set of cards
                 and delegate 50,000 ONE tokens to Animoca’s
                 Harmony validator. A set can be any of the following:

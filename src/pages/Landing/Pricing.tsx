@@ -84,11 +84,20 @@ const Preview = ({buyBtn = null}) => {
     >
       <Title color="white">Limited Edition Chests</Title>
       <Text color="white">
-        Each chest costs 1000 ONE and contains 2400 gems,
+       {/* Each chest costs 1000 ONE and contains 2400 gems,
         730 VIP points and a random NFT collectible card
         with rarity Common, Rare, Epic or Legendary.
         If you collect a set of cards, you are
-        eligible for a 10,000 ONE staking reward!
+        eligible for a 10,000 ONE staking reward!*/}
+        Each chest costs 250 ONE and contains 2400 gems,
+        730 VIP points and a random NFT collectible card
+        with rarity Common, Rare, Epic or Legendary.
+        If you collect a set of cards
+        (20-Common, 10-Rare, 5-epic and 1 Legendary)
+        + staking 50000 ONE (3 months)
+        to Animoca Brands validator,
+        you will receive part of
+        the 80% Chest purchase rewards
       </Text>
 
       <Box direction="row">
