@@ -23,7 +23,7 @@ const MainLogo = styled.img`
 `;
 
 const b = moment();
-const a = moment('20200901', 'YYYYMMDD');
+const a = moment('20210201', 'YYYYMMDD');
 
 const settings = {
   count: a.diff(b) / 1000,
@@ -291,6 +291,52 @@ export const Landing = observer(() => {
               <Box className={styles.reason}>
                 <div className={styles.number}>2</div>
                 <div className={styles.imageContainer}>
+                  <img src="/landing/how-to-buy/4.png" />
+                </div>
+                <div className={styles.smallTitle}>
+                  <Text>Top up</Text>
+                </div>
+                <div className={styles.description}>
+                  <Text>
+                    You will need to add ONE tokens to your digital wallet to
+                    enjoy these special offers
+                  </Text>
+                </div>
+                <Button
+                  onClick={() => {
+                    //window.location.href='https://docs.harmony.one/home/partners/ecosystem#exchanges'
+                    window.open('https://docs.harmony.one/home/partners/ecosystem#exchanges', '_blank');
+                    /*if (user.isAuthorized) {
+                      routing.push('/buy');
+                    } else {
+                      signIn();
+                    }*/
+                  }}
+                >
+                  Top up
+                </Button>
+              </Box>
+
+              <Box className={styles.reason}>
+                <div className={styles.number}>3</div>
+                <div className={styles.imageContainer}>
+                  <img src="/landing/how-to-buy/5.png" />
+                </div>
+                <div className={styles.smallTitle}>
+                  <Text>Purchase chests</Text>
+                </div>
+                <div className={styles.description}>
+                  <Text>
+                    Once you have purchased a chest, your Collectible Card
+                    will be appear in your digital wallet.
+                  </Text>
+                </div>
+                <Button onClick={() => routing.push('/buy')}>Buy now</Button>
+              </Box>
+
+              <Box className={styles.reason}>
+                <div className={styles.number}>4</div>
+                <div className={styles.imageContainer}>
                   <img src="/landing/how-to-buy/2.png" />
                 </div>
                 <div className={styles.smallTitle}>
@@ -308,7 +354,7 @@ export const Landing = observer(() => {
               </Box>
 
               <Box className={styles.reason}>
-                <div className={styles.number}>3</div>
+                <div className={styles.number}>5</div>
                 <div className={styles.imageContainer}>
                   <img src="/bquh-chest02.png" />
                 </div>
@@ -371,52 +417,6 @@ export const Landing = observer(() => {
                 >
                   How to find
                 </Button>
-              </Box>
-
-              <Box className={styles.reason}>
-                <div className={styles.number}>4</div>
-                <div className={styles.imageContainer}>
-                  <img src="/landing/how-to-buy/4.png" />
-                </div>
-                <div className={styles.smallTitle}>
-                  <Text>Top up</Text>
-                </div>
-                <div className={styles.description}>
-                  <Text>
-                    You will need to add ONE tokens to your digital wallet to
-                    enjoy these special offers
-                  </Text>
-                </div>
-                <Button
-                  onClick={() => {
-                    //window.location.href='https://docs.harmony.one/home/partners/ecosystem#exchanges'
-                    window.open('https://docs.harmony.one/home/partners/ecosystem#exchanges', '_blank');
-                    /*if (user.isAuthorized) {
-                      routing.push('/buy');
-                    } else {
-                      signIn();
-                    }*/
-                  }}
-                >
-                  Top up
-                </Button>
-              </Box>
-
-              <Box className={styles.reason}>
-                <div className={styles.number}>5</div>
-                <div className={styles.imageContainer}>
-                  <img src="/landing/how-to-buy/5.png" />
-                </div>
-                <div className={styles.smallTitle}>
-                  <Text>Purchase chests</Text>
-                </div>
-                <div className={styles.description}>
-                  <Text>
-                    Once you have purchased a chest, your Collectible Card
-                    will be appear in your digital wallet.
-                  </Text>
-                </div>
-                <Button onClick={() => routing.push('/buy')}>Buy now</Button>
               </Box>
             </Box>
           </Box>

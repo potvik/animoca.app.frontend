@@ -125,6 +125,12 @@ const Preview = ({buyBtn = null}) => {
         ) : null}
       </Box>
 
+
+      <Box>
+        <Title color="white">Download Beast Quest</Title>
+        <img style={{width: 200, marginTop: 20}} src="/BQQR.png" />
+      </Box>
+
       <Box justify="center" align="center">
         {buyBtn}
       </Box>
@@ -223,7 +229,7 @@ export class PricingBase extends React.Component<IStores> {
           direction="column"
           width="400px"
           justify="center"
-          style={{background: '#0D1C2B', borderRadius: 12}}
+          style={{background: '#0D1C2B', borderRadius: 12, height: 700, marginTop:24}}
         >
           <Form
             ref={ref => (this.formRef = ref)}
