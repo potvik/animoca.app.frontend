@@ -108,12 +108,9 @@ export class TokenList extends StoreConstructor {
 
     return Object.keys(score)
       .map(k => ~~(this.list.filter(e => e.core.rarity.value === k).length / amountForSet[k]))
-      .reduce((a,b)=>{
-        if (a === null) {
-          return b
-        }
-        return a < b ? a : b
-      }, null)
+      .reduce((a, b) => {
+        return a + b;
+      }, 0);
   }
 
   @computed
@@ -132,13 +129,14 @@ export class TokenList extends StoreConstructor {
 
   @computed
   get canClaim() {
-    return true
-
     if (!this.list.length) {
       return false;
     }
 
-    const uniqPlayerIds = [...new Set(this.list.map(e => e.playerId))];
+    return this.list.map(e => e.playerId).filter(e=>!e).length > 0
+    /*const uniqPlayerIds = [...new Set(
+      this.list.map(e => e.playerId)
+    )];
     console.log({ uniqPlayerIds });
     if (uniqPlayerIds.length > 1) {
       return true;
@@ -148,7 +146,7 @@ export class TokenList extends StoreConstructor {
       return true;
     }
 
-    return false;
+    return false;*/
   }
 
   @action.bound
@@ -195,7 +193,9 @@ export class TokenList extends StoreConstructor {
   async claimCards(playerId) {
     return blockchain.setPlayerID({
       address: this.stores.user.address,
-      tokens: this.list.map(e => e.id),
+      tokens: this.list
+        .filter(e => !e.playerId)
+        .map(e => e.id),
       playerId
     });
   }

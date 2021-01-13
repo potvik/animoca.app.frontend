@@ -35,6 +35,7 @@ export class PlayerIDModal extends React.Component<IStores & any> {
   render() {
     return (
       <Box pad={{ horizontal: "large", top: "large" }} style={{ top: "100px" }}>
+        <Text style={{textAlign:"center"}}>Enter your BeastQuest player ID to receive the gems and VIP points in the game</Text>
         <Form
           ref={ref => (this.formRef = ref)}
           data={this.formData}

@@ -120,10 +120,11 @@ export const PlayersMarketplace = observer(() => {
           <a
             href="https://staking.harmony.one/validators/mainnet/one1xrlz4kjut6rpq4ghvernnjgxwcrq27kwqresgc"
             target="_blank"
+            title="After having one Set, delegate at least 50,000 ONE to Animoca validator to earn additional rewards"
           ><Button btnType="href">Stake</Button>
           </a>
 
-          {tokenList.canClaim && <Button onClick={()=>setPlayerIDModal(true)}>Claim</Button>}
+          {tokenList.canClaim && <Button onClick={()=>setPlayerIDModal(true)}>Claim In-Game Currency</Button>}
         </Box>
 
       </Box>
