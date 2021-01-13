@@ -71,6 +71,7 @@ export const PlayerCardEx = observer<IPlayerCardProps>(props => {
       <img width="100%" src={props.data.image} />
 
       <Box className={styles.infoBlock} fill={true} gap="10px" pad="medium">
+        <DataItem icon="Right" iconSize="16px" text={props.data.playerId || '—'} label="Player ID" />
         <DataItem icon="User" iconSize="16px" text={props.data.name} label="Name" />
         <DataItem
           icon="Medal"

@@ -132,6 +132,8 @@ export class TokenList extends StoreConstructor {
 
   @computed
   get canClaim() {
+    return true
+
     if (!this.list.length) {
       return false;
     }
