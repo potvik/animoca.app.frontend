@@ -1,10 +1,17 @@
+import { ChainID } from "@harmony-js/utils";
+
 const { Harmony } = require('@harmony-js/core');
 const { ChainID, ChainType } = require('@harmony-js/utils');
 const { hexToNumber } = require('@harmony-js/utils');
 
-export const EXPLORER_URL = 'https://explorer.testnet.harmony.one/#';
+const isTestnet = true
+export const EXPLORER_URL = isTestnet
+  ? 'https://explorer.testnet.harmony.one/#'
+  : "https://explorer.harmony.one/#"
 
-export const RPC_URL = 'https://api.s0.b.hmny.io';
+export const RPC_URL = isTestnet
+  ? 'https://api.s0.b.hmny.io'
+  : "https://api.s0.b.hmny.io"
 
 const GAS_LIMIT = 103802;
 const GAS_PRICE = 1000000000;
@@ -14,7 +21,7 @@ export const hmy = new Harmony(
   RPC_URL,
   {
     chainType: ChainType.Harmony,
-    chainId: ChainID.HmyTestnet,
+    chainId: isTestnet ? ChainID.HmyTestnet : ChainID.HmyMainnet,
   },
 );
 

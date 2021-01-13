@@ -9,7 +9,9 @@
     "test": "jest --verbose",
     "test:watch": "jest --watch",
     "test:debug": "jest --config=jest.config.debug.js",
-    "version": "echo $npm_package_version"
+    "version": "echo $npm_package_version",
+    "deploy-mainnet": "npm run build && firebase deploy --only hosting:animoca",
+    "deploy-testnet": "npm run build && firebase deploy --only hosting:animoca-testnet"
   },
   "repository": {
     "type": "git",
