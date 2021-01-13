@@ -7,11 +7,15 @@ import { useStores } from "stores";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { SignIn } from "../../components/SignIn";
+import { PlayerIDModal } from "../../components/PlayerIDModal";
+
 import { useMediaQuery } from "react-responsive";
 // import { PLAYERS_FILTER } from '../../stores/SoccerPlayersList';
 
 export const PlayersMarketplace = observer(() => {
   const { tokenList, user, actionModals, routing } = useStores();
+
+  const [ isPlayerIDModalOpen, setPlayerIDModal ] = React.useState(false);
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
@@ -36,6 +40,33 @@ export const PlayersMarketplace = observer(() => {
       }
     }
   }, [user.status]);
+
+
+  useEffect(() => {
+    if (!isPlayerIDModalOpen) {
+      return;
+    }
+    // soccerPlayers.setMaxDisplay(20);
+    actionModals.open(PlayerIDModal, {
+      title: "Claim",
+      applyText: "Claim",
+      closeText: "Cancel",
+      noValidation: true,
+      width: "500px",
+      showOther: false,
+      //@ts-ignore
+      onApply: async (data: any) => {
+        console.log(data.playerID);
+        actionModals.closeLastModal();
+        setPlayerIDModal(false)
+        await tokenList.claimCards(data.playerID)
+        await tokenList.getList()
+      },
+      onClose: () => {
+        setPlayerIDModal(false)
+      }
+    });
+  }, [isPlayerIDModalOpen]);
 
   const isSmallMobile = useMediaQuery({ query: "(max-width: 600px)" });
   console.log("sets", Object.keys(tokenList.list).length);
@@ -84,12 +115,15 @@ export const PlayersMarketplace = observer(() => {
           <div>VIP Points: {tokenList.list.length * 730}</div>
         </Box>
 
-        <Box align="center" style={{ marginTop: 20 }}>
+
+        <Box direction="row" align="center" gap="30px" style={{ margin: "auto", marginTop: 20 }}>
           <a
             href="https://staking.harmony.one/validators/mainnet/one1xrlz4kjut6rpq4ghvernnjgxwcrq27kwqresgc"
             target="_blank"
           ><Button btnType="href">Stake</Button>
           </a>
+
+          {tokenList.canClaim && <Button onClick={()=>setPlayerIDModal(true)}>Claim</Button>}
         </Box>
 
       </Box>

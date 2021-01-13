@@ -1,15 +1,15 @@
-import {action, autorun, computed, observable} from 'mobx';
-import {IStores} from 'stores';
-import {statusFetching} from '../constants';
-import {StoreConstructor} from './core/StoreConstructor';
-import * as blockchain from '../blockchain';
-import {WALLET_TYPE} from './UserStore';
+import { action, autorun, computed, observable } from "mobx";
+import { IStores } from "stores";
+import { statusFetching } from "../constants";
+import { StoreConstructor } from "./core/StoreConstructor";
+import * as blockchain from "../blockchain";
+import { WALLET_TYPE } from "./UserStore";
 
 const score = {
-  'Common': 1,
-  'Rare': 2,
-  'Epic': 4,
-  'Legendary': 20,
+  "Common": 1,
+  "Rare": 2,
+  "Epic": 4,
+  "Legendary": 20
 };
 
 export interface ITokenCard {
@@ -22,6 +22,7 @@ export interface ITokenCard {
   collection_url: string;
   external_url: string;
   license: string;
+  playerId?: string;
   core: any;
   attributes: Array<{
     trait_type: string;
@@ -35,40 +36,40 @@ const sortByRarity = (a, b) => {
 
 export class TokenList extends StoreConstructor {
   @observable public list: Array<ITokenCard> = [];
-  @observable public status: statusFetching = 'init';
-  @observable public actionStatus: statusFetching = 'init';
-  @observable public error: string = '';
-  @observable public txId: string = '';
+  @observable public status: statusFetching = "init";
+  @observable public actionStatus: statusFetching = "init";
+  @observable public error: string = "";
+  @observable public txId: string = "";
 
   constructor(stores: IStores) {
     super(stores);
 
     autorun(() => {
       if (this.stores.user.address) {
-        console.log('autorun')
-        this.getList()
+        console.log("autorun");
+        this.getList();
         this.formData.address = this.stores.user.address;
       }
-     /* if (!this.stores.user.address && this.list.length) {
-        this.list = []
-      }*/
+      /* if (!this.stores.user.address && this.list.length) {
+         this.list = []
+       }*/
     });
   }
 
-  @observable boxId = '3';
+  @observable boxId = "3";
 
   defaultDormData = {
-    address: '',
-    playerId: '',
-    boxId: '3',
-    platform: 'ios',
-    amount: 1,
+    address: "",
+    playerId: "",
+    boxId: "3",
+    platform: "ios",
+    amount: 1
   };
 
   @observable formData = this.defaultDormData;
 
   boxes = [
-    {id: '3', total: 60, allow: 20, price: 100},
+    { id: "3", total: 60, allow: 20, price: 250 }
     // { id: '2', total: 60, allow: 20, price: 200 },
     // { id: '3', total: 25, allow: 5, price: 300 },
     // { id: '4', total: 5, allow: 5, price: 400 },
@@ -98,11 +99,21 @@ export class TokenList extends StoreConstructor {
 
   @computed
   get totalSets() {
-    const points = this.list.reduce((sum, e) => {
-      return sum + score[e.core.rarity.value];
-    }, 0);
+    const amountForSet = {
+      "Common": 20,
+      "Rare": 10,
+      "Epic": 5,
+      "Legendary": 1
+    };
 
-    return ~~(points / 20);
+    return Object.keys(score)
+      .map(k => ~~(this.list.filter(e => e.core.rarity.value === k).length / amountForSet[k]))
+      .reduce((a,b)=>{
+        if (a === null) {
+          return b
+        }
+        return a < b ? a : b
+      }, null)
   }
 
   @computed
@@ -119,30 +130,47 @@ export class TokenList extends StoreConstructor {
     this.newCardsList = [];
   };
 
+  @computed
+  get canClaim() {
+    if (!this.list.length) {
+      return false;
+    }
+
+    const uniqPlayerIds = [...new Set(this.list.map(e => e.playerId))];
+    console.log({ uniqPlayerIds });
+    if (uniqPlayerIds.length > 1) {
+      return true;
+    }
+
+    if (!uniqPlayerIds[0]) {
+      return true;
+    }
+
+    return false;
+  }
+
   @action.bound
   getList = async () => {
     if (!this.stores.user.address) {
       return;
     }
 
-    if (this.status === 'first_fetching') {
-      return
+    if (this.status === "first_fetching") {
+      return;
     }
 
-    if (this.status === 'init') {
-      this.status = 'first_fetching';
+    if (this.status === "init") {
+      this.status = "first_fetching";
     } else {
-      this.status = 'fetching';
+      this.status = "fetching";
     }
 
     try {
       const res = await blockchain.getTokens(this.stores.user.address);
 
       let list = res.filter(r => !!r);
-      console.log({list})
-      // list = list.concat(list, list, list, list, list, list, list, list, list, list, list, list)
 
-      if (this.status !== 'first_fetching' && list.length > this.list.length) {
+      if (this.status !== "first_fetching" && list.length > this.list.length) {
         const diffCount = list.length - this.list.length;
 
         this.newCardsList = list.slice(list.length - diffCount, list.length);
@@ -151,23 +179,33 @@ export class TokenList extends StoreConstructor {
       }
 
       this.list = list.sort(sortByRarity);
-      //this.list = [...list,...list,...list, ...list,...list,...list,...list,...list].sort(sortByRarity);
 
-      this.status = 'success';
+      console.log("list", list);
+
+      this.status = "success";
     } catch (e) {
       console.error(e);
-      this.status = 'error';
+      this.status = "error";
     }
   };
 
   @action.bound
+  async claimCards(playerId) {
+    return blockchain.setPlayerID({
+      address: this.stores.user.address,
+      tokens: this.list.map(e => e.id),
+      playerId
+    });
+  }
+
+  @action.bound
   async buyLootBox() {
-    this.actionStatus = 'fetching';
+    this.actionStatus = "fetching";
 
     return new Promise(async (resolve, reject) => {
       try {
         if (Number(this.stores.user.balance) < Number(this.total) * 1e18) {
-          throw new Error('Your balance is not enough to buy');
+          throw new Error("Your balance is not enough to buy");
         }
 
         let res;
@@ -177,7 +215,7 @@ export class TokenList extends StoreConstructor {
             address: this.stores.user.address,
             quantity: this.formData.amount,
             amount: String(this.total),
-            playerId: this.formData.playerId,
+            playerId: this.formData.playerId
           });
         }
 
@@ -186,14 +224,14 @@ export class TokenList extends StoreConstructor {
             address: this.stores.user.address,
             quantity: this.formData.amount,
             amount: String(this.total),
-            playerId: this.formData.playerId,
+            playerId: this.formData.playerId
           });
         }
 
         this.txId = res.result.transactionHash || res.result.id;
 
         if (!res.error) {
-          this.actionStatus = 'success';
+          this.actionStatus = "success";
 
           setTimeout(async () => {
             await this.getList();
@@ -202,19 +240,18 @@ export class TokenList extends StoreConstructor {
           }, 2000);
 
 
-
           return;
         }
 
         this.error = res.error;
 
-        this.actionStatus = 'error';
+        this.actionStatus = "error";
         reject(res.error);
       } catch (e) {
         console.error(e);
         this.error = e.message;
 
-        this.actionStatus = 'error';
+        this.actionStatus = "error";
 
         reject(e.message);
       }
@@ -223,7 +260,7 @@ export class TokenList extends StoreConstructor {
 
   @action.bound
   clear() {
-    this.actionStatus = 'init';
+    this.actionStatus = "init";
     this.formData = this.defaultDormData;
   }
 }

@@ -229,7 +229,7 @@ export class PricingBase extends React.Component<IStores> {
           direction="column"
           width="400px"
           justify="center"
-          style={{background: '#0D1C2B', borderRadius: 12, height: 700, marginTop:24}}
+          style={{background: '#0D1C2B', borderRadius: 12, height: 400, marginTop:24}}
         >
           <Form
             ref={ref => (this.formRef = ref)}
@@ -280,7 +280,7 @@ export class PricingBase extends React.Component<IStores> {
                   </Button>
                 ) : null}
               </Box>
-              <Box
+             {/* <Box
                 direction="column"
                 justify="start"
                 align="start"
@@ -312,14 +312,14 @@ export class PricingBase extends React.Component<IStores> {
                     Android
                   </Box>
                 </Box>
-              </Box>
-              <Input
+              </Box>*/}
+             {/* <Input
                 name="playerId"
                 label="Beast Quest Player ID"
                 style={{width: '361px', maxWidth: '100%'}}
                 placeholder="player id"
                 rules={[isRequired]}
-              />
+              />*/}
               <NumberInput
                 name="amount"
                 label="Amount"

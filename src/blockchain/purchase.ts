@@ -37,6 +37,15 @@ export const purchaseOneWallet = (params: IParams): Promise<any> => {
 
       let options2 = { gasPrice: 1000000000, gasLimit: 6721900, value };
 
+      console.log({
+        recipient,
+        lotId,
+        quantity,
+        tokenAddress,
+        maxTokenAmount,
+        hexToNumber: hexToNumber(minConversionRate),
+        extData
+      })
       const res = await contractSale.methods
         .purchaseFor(
           recipient,
@@ -80,6 +89,7 @@ export const purchase = (params: IParams): Promise<any> => {
       const quantity = params.quantity;
       const tokenAddress = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
       const maxTokenAmount = params.amount;
+
       const minConversionRate = '0xDE0B6B3A7640000'; // equivalent to 1e+18
       const extData = params.playerId;
 

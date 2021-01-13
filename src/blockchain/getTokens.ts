@@ -11,7 +11,7 @@ export const getTokens = (address): Promise<any[]> => {
 
       const tokens = await Promise.all(
         [...new Array(count)].map(async (r, idx) => {
-          let json, token, url;
+          let json, token, url, playerId;
 
           try {
             token = await contractToken.methods
@@ -19,6 +19,7 @@ export const getTokens = (address): Promise<any[]> => {
               .call(options);
 
             url = await contractToken.methods.tokenURI(token).call(options);
+            playerId = await contractToken.methods.playerIdByToken(token).call(options)
 
             const response = await fetch(url, { mode: 'cors' });
 
@@ -28,7 +29,7 @@ export const getTokens = (address): Promise<any[]> => {
             console.log(idx, token, url);
           }
 
-          return json;
+          return {...json, playerId};
         }),
       );
 
