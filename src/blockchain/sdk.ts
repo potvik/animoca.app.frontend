@@ -1,5 +1,3 @@
-import { ChainID } from "@harmony-js/utils";
-
 const { Harmony } = require('@harmony-js/core');
 const { ChainID, ChainType } = require('@harmony-js/utils');
 const { hexToNumber } = require('@harmony-js/utils');

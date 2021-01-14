@@ -353,7 +353,9 @@ export const Landing = observer(() => {
                 </a>
               </Box>
 
-              <Box className={styles.reason}>
+              <Box className={styles.reason} style={{
+                marginRight: isMobile ? 20 : 0
+              }}>
                 <div className={styles.number}>5</div>
                 <div className={styles.imageContainer}>
                   <img src="/bquh-chest02.png" />
@@ -423,13 +425,14 @@ export const Landing = observer(() => {
         </Box>
 
 
+
         <Box className={styles.needToBuy}>
           <Box
             pad={{top: '60px', bottom: '0px'}}
             direction="row"
             align="center"
           >
-            <iframe width="800" height="500" src="https://www.youtube.com/embed/uPPj1yzzAKA" frameBorder="0"
+            <iframe width={isMobile ? "400" : "800"} height={isMobile ? "300" : "500"} src="https://www.youtube.com/embed/uPPj1yzzAKA" frameBorder="0"
                     style={{margin: 'auto'}}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen></iframe>

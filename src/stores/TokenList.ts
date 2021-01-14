@@ -133,7 +133,7 @@ export class TokenList extends StoreConstructor {
       return false;
     }
 
-    return this.list.map(e => e.playerId).filter(e=>!e).length > 0
+    return this.list.map(e => e.playerId).filter(e => !e).length > 0;
     /*const uniqPlayerIds = [...new Set(
       this.list.map(e => e.playerId)
     )];
@@ -191,13 +191,22 @@ export class TokenList extends StoreConstructor {
 
   @action.bound
   async claimCards(playerId) {
-    return blockchain.setPlayerID({
-      address: this.stores.user.address,
-      tokens: this.list
-        .filter(e => !e.playerId)
-        .map(e => e.id),
-      playerId
-    });
+    const tokens = this.list
+      .filter(e => !e.playerId)
+      .map(e => e.id);
+    if (this.stores.user.walletType === WALLET_TYPE.MAGIC_WALLET) {
+      return blockchain.setPlayerIDMagicWallet({
+        address: this.stores.user.address,
+        tokens,
+        playerId
+      });
+    } else {
+      return blockchain.setPlayerID({
+        address: this.stores.user.address,
+        tokens,
+        playerId
+      });
+    }
   }
 
   @action.bound

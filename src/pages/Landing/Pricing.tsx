@@ -11,7 +11,7 @@ import {
   NumberInput,
 } from 'components/Form';
 import {inject, observer} from 'mobx-react';
-import {formatWithTwoDecimals, moreThanZero} from 'utils';
+import {formatWithTwoDecimals, moreThanZero, lessOrTen} from 'utils';
 import {IStores, useStores} from '../../stores';
 import {BuyLootBoxModal} from '../PlayersMarketplace/BuyLootBoxModal';
 import {SignIn} from '../../components/SignIn';
@@ -93,7 +93,7 @@ const Preview = ({buyBtn = null}) => {
         730 VIP points and a random NFT collectible card
         with rarity Common, Rare, Epic or Legendary.
         If you collect a set of cards
-        (20-Common, 10-Rare, 5-epic and 1 Legendary)
+        (20-Common, 10-Rare, 5-epic, 1 Legendary)
         + staking 50000 ONE (3 months)
         to Animoca Brands validator,
         you will receive part of
@@ -325,7 +325,7 @@ export class PricingBase extends React.Component<IStores> {
                 label="Amount"
                 style={{width: '361px', maxWidth: '100%'}}
                 placeholder="0"
-                rules={[isRequired, moreThanZero]}
+                rules={[isRequired, moreThanZero, lessOrTen]}
               />
               <Box direction="column" gap="30px" margin={{top: '10px'}}>
                 <Box direction="column" gap="10px">

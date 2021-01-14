@@ -124,3 +124,22 @@ export const moreThanZero = {
   },
   validateType: 'requiredValidator',
 };
+
+
+export const lessOrTen = {
+  validator(
+    rule: any[],
+    value: any,
+    callback: (errors: any[]) => void,
+    storeData?: any,
+  ) {
+    const errors = [];
+
+    if (!value || Number(value) > 10) {
+      errors.push('Value must not be greater than 10');
+    }
+
+    callback(errors);
+  },
+  validateType: 'requiredValidator',
+};
