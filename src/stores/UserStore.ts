@@ -9,10 +9,12 @@ import { sleep } from '../utils';
 // const { Harmony: Index } = require('@harmony-js/core');
 const { ChainID } = require('@harmony-js/utils');
 
+const isMainnet = !!(+process.env.MAINNET)
+
 const magic = new Magic('pk_live_0E839FF643A591CC', {
   network: {
     rpcUrl: blockchain.RPC_URL,
-    chainId: Number(ChainID.HmyTestnet),
+    chainId: isMainnet ? Number(ChainID.HmyMainnet) : Number(ChainID.HmyTestnet),
     chainType: 'HARMONY',
   } as any,
 });
