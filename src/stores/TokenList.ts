@@ -134,19 +134,6 @@ export class TokenList extends StoreConstructor {
     }
 
     return this.list.map(e => e.playerId).filter(e => !e).length > 0;
-    /*const uniqPlayerIds = [...new Set(
-      this.list.map(e => e.playerId)
-    )];
-    console.log({ uniqPlayerIds });
-    if (uniqPlayerIds.length > 1) {
-      return true;
-    }
-
-    if (!uniqPlayerIds[0]) {
-      return true;
-    }
-
-    return false;*/
   }
 
   @action.bound

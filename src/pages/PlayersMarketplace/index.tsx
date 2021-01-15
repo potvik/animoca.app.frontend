@@ -8,6 +8,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { SignIn } from "../../components/SignIn";
 import { PlayerIDModal } from "../../components/PlayerIDModal";
+import { ClaimTransactionModal } from "../../components/ClaimTransactionModal";
 
 import { useMediaQuery } from "react-responsive";
 // import { PLAYERS_FILTER } from '../../stores/SoccerPlayersList';
@@ -17,6 +18,7 @@ export const PlayersMarketplace = observer(() => {
 
   const [isPlayerIDModalOpen, setPlayerIDModal] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [claimTxDetails, setClaimTxDetails]= React.useState(null);
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
@@ -57,18 +59,12 @@ export const PlayersMarketplace = observer(() => {
       showOther: false,
       //@ts-ignore
       onApply: async (data: any) => {
-        console.log(data.playerID);
         actionModals.closeLastModal();
         setIsLoading(true);
+        await tokenList.getList();
+        setIsLoading(false);
         setPlayerIDModal(false);
 
-        try {
-          await tokenList.claimCards(data.playerID);
-          await tokenList.getList();
-          setIsLoading(false);
-        } catch (e) {
-          setIsLoading(false);
-        }
       },
       onClose: () => {
         setPlayerIDModal(false);
@@ -179,7 +175,7 @@ export const PlayersMarketplace = observer(() => {
 
         {isLoading ?
           //@ts-ignore
-          <Loader label={'Processing...'}/>
+          <Loader />
           : tokenList.status === "first_fetching" ? (
           <Loader />
         ) : (

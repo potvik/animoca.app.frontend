@@ -58,7 +58,6 @@ export const PlayerCardEx = observer<IPlayerCardProps>(props => {
   const { user } = useStores();
 
   // const bech32Owner = props.player ? getBech32Address(props.player.owner) : '';
-  console.log({props})
   return (
     <Box
       className={styles.cardContainer}
