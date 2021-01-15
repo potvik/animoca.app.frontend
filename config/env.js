@@ -92,6 +92,7 @@ function getClientEnvironment(publicUrl) {
         API_MODE: process.env.API_MODE,
         TOKEN: process.env.TOKEN,
         SALE: process.env.SALE,
+        MAINNET: process.env.MAINNET,
         TESTNET_TOKEN: process.env.TESTNET_TOKEN,
         TESTNET_SALE: process.env.TESTNET_SALE,
         BASE_URL: process.env.BASE_URL,

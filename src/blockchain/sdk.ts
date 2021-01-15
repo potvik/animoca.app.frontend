@@ -3,6 +3,7 @@ const { ChainID, ChainType } = require('@harmony-js/utils');
 const { hexToNumber } = require('@harmony-js/utils');
 
 const isMainnet = !!(+process.env.MAINNET)
+
 //@ts-ignore
 //window.env = process.env
 export const EXPLORER_URL = !isMainnet
