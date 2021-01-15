@@ -40,12 +40,21 @@ export class PlayerIDModal extends React.Component<IStores & any> {
         .then(data => ({ ...data }))
         .then(async (data) => {
           this.setState({ isLoading: true });
-          const res = await this.props.tokenList.claimCards(data.playerID);
+          let res
+
+          try {
+          res = await this.props.tokenList.claimCards(data.playerID);
+          } catch(e) {
+            this.setState({ isLoading: false });
+            this.setState({ tx: null })
+            return null
+          }
           this.setState({ isLoading: false });
           this.setState({ tx: res });
           console.log({ res });
           await new Promise((r) => setTimeout(r, 4000));
           this.setState({ tx: null });
+          return res
         });
     };
   };

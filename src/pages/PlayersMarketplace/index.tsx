@@ -60,10 +60,14 @@ export const PlayersMarketplace = observer(() => {
       //@ts-ignore
       onApply: async (data: any) => {
         actionModals.closeLastModal();
+        setPlayerIDModal(false);
+        if (data === null) {
+          return
+        }
+
         setIsLoading(true);
         await tokenList.getList();
         setIsLoading(false);
-        setPlayerIDModal(false);
 
       },
       onClose: () => {
