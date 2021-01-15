@@ -23,7 +23,7 @@ const MainLogo = styled.img`
 `;
 
 const b = moment();
-const a = moment('20210201', 'YYYYMMDD');
+const a = moment('2021012919', 'YYYYMMDDHH');
 
 const settings = {
   count: a.diff(b) / 1000,
@@ -236,7 +236,10 @@ export const Landing = observer(() => {
                   href="https://play.google.com/store/apps/details?id=com.animocabrands.google.beastquest.towerdefense.td">
                   <img src="/landing/main/gp.png" className={styles.googlePlay} />
                 </a>
+
+                {!isMobile && <img style={{width: 100, marginTop: 20}} src="/BQQR.png" />}
               </Box>
+
             </Box>
           </Box>
         </Box>

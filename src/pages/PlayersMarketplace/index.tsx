@@ -15,7 +15,8 @@ import { useMediaQuery } from "react-responsive";
 export const PlayersMarketplace = observer(() => {
   const { tokenList, user, actionModals, routing } = useStores();
 
-  const [ isPlayerIDModalOpen, setPlayerIDModal ] = React.useState(false);
+  const [isPlayerIDModalOpen, setPlayerIDModal] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   useEffect(() => {
     // soccerPlayers.setMaxDisplay(20);
@@ -58,12 +59,19 @@ export const PlayersMarketplace = observer(() => {
       onApply: async (data: any) => {
         console.log(data.playerID);
         actionModals.closeLastModal();
-        setPlayerIDModal(false)
-        await tokenList.claimCards(data.playerID)
-        await tokenList.getList()
+        setIsLoading(true);
+        setPlayerIDModal(false);
+
+        try {
+          await tokenList.claimCards(data.playerID);
+          await tokenList.getList();
+          setIsLoading(false);
+        } catch (e) {
+          setIsLoading(false);
+        }
       },
       onClose: () => {
-        setPlayerIDModal(false)
+        setPlayerIDModal(false);
       }
     });
   }, [isPlayerIDModalOpen]);
@@ -124,7 +132,7 @@ export const PlayersMarketplace = observer(() => {
           ><Button btnType="href">Stake</Button>
           </a>
 
-          {tokenList.canClaim && <Button onClick={()=>setPlayerIDModal(true)}>Claim In-Game Currency</Button>}
+          {tokenList.canClaim && <Button onClick={() => setPlayerIDModal(true)}>Claim In-Game Currency</Button>}
         </Box>
 
       </Box>
@@ -169,7 +177,10 @@ export const PlayersMarketplace = observer(() => {
         {/*  </Box>*/}
         {/*</Box>*/}
 
-        {tokenList.status === "first_fetching" ? (
+        {isLoading ?
+          //@ts-ignore
+          <Loader label={'Processing...'}/>
+          : tokenList.status === "first_fetching" ? (
           <Loader />
         ) : (
           <Box

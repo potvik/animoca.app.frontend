@@ -92,6 +92,8 @@ function getClientEnvironment(publicUrl) {
         API_MODE: process.env.API_MODE,
         TOKEN: process.env.TOKEN,
         SALE: process.env.SALE,
+        TESTNET_TOKEN: process.env.TESTNET_TOKEN,
+        TESTNET_SALE: process.env.TESTNET_SALE,
         BASE_URL: process.env.BASE_URL,
         HIDE_CONTRACT_BTN: process.env.HIDE_CONTRACT_BTN === 'true',
         CLIENT_AUTH_HASH: new Buffer(

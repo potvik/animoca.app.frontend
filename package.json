@@ -5,13 +5,14 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.js --progress --colors --open",
-    "build": "NODE_ENV=production node scripts/build.js --stats",
+    "build": "export MAINNET=1 && export NODE_ENV=production && node scripts/build.js --stats",
+    "builddev": "export NODE_ENV=production && node scripts/build.js --stats",
     "test": "jest --verbose",
     "test:watch": "jest --watch",
     "test:debug": "jest --config=jest.config.debug.js",
     "version": "echo $npm_package_version",
     "deploy-mainnet": "npm run build && firebase deploy --only hosting:animoca",
-    "deploy-testnet": "npm run build && firebase deploy --only hosting:animoca-testnet"
+    "deploy-testnet": "npm run builddev && firebase deploy --only hosting:animoca-testnet"
   },
   "repository": {
     "type": "git",

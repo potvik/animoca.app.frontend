@@ -2,14 +2,16 @@ const { Harmony } = require('@harmony-js/core');
 const { ChainID, ChainType } = require('@harmony-js/utils');
 const { hexToNumber } = require('@harmony-js/utils');
 
-const isTestnet = true
-export const EXPLORER_URL = isTestnet
+const isMainnet = !!(+process.env.MAINNET)
+//@ts-ignore
+//window.env = process.env
+export const EXPLORER_URL = !isMainnet
   ? 'https://explorer.testnet.harmony.one/#'
   : "https://explorer.harmony.one/#"
 
-export const RPC_URL = isTestnet
+export const RPC_URL = !isMainnet
   ? 'https://api.s0.b.hmny.io'
-  : "https://api.s0.b.hmny.io"
+  : "https://api0.s0.t.hmny.io"
 
 const GAS_LIMIT = 103802;
 const GAS_PRICE = 1000000000;
@@ -19,19 +21,22 @@ export const hmy = new Harmony(
   RPC_URL,
   {
     chainType: ChainType.Harmony,
-    chainId: isTestnet ? ChainID.HmyTestnet : ChainID.HmyMainnet,
+    chainId: !isMainnet ? ChainID.HmyTestnet : ChainID.HmyMainnet,
   },
 );
+
+
 
 export const contractJsonSale = require('./contracts/BQSale.json');
 export const contractSale = hmy.contracts.createContract(
   contractJsonSale.abi,
-  process.env.SALE,
+  isMainnet ? process.env.SALE : process.env.TESTNET_SALE,
 );
 
 contractSale.wallet.createAccount();
 
-const contractAddrToken = process.env.TOKEN;
+
+const contractAddrToken = isMainnet ? process.env.TOKEN : process.env.TESTNET_TOKEN;
 const contractJsonToken = require('./contracts/BeastQuest.json');
 export const contractToken = hmy.contracts.createContract(
   contractJsonToken.abi,

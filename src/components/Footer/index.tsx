@@ -23,7 +23,7 @@ export const Footer = props => (
       <img src='/social/youtube-white.png' style={{width: 36, height: 36, marginRight: 30}}/>
     </a>
 
-    <a href='https://harmony.one/telegram' target='_blank'>
+    <a href='https://t.me/HarmonyBeastQuestAnimocaBrands' target='_blank'>
       <img src='/social/telegram-white.png' style={{width: 36, height: 36, marginRight: 30}}/>
     </a>
 
