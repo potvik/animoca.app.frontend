@@ -172,8 +172,10 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
             </Box>
           </Box>
 
+
           <Box direction="row" align="center" gap="30px">
             {/*<Box style={{ flex: '1 1 100%' }} />*/}
+
 
             <Button
               style={{ width: isTabletOrMobile ? 80 : 140 }}
@@ -192,6 +194,13 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
                 Inventory {tokenList.list.length && user.address ? `(${tokenList.list.length})` : ''}
               </Button>
             )}
+
+            <Button
+              onClick={() => history.push('/leaders')}
+              style={{ width: isTabletOrMobile ? 130 : 140 }}
+            >
+              Leaders
+            </Button>
 
             {user.status !== 'success' ? (
               <Spinner />

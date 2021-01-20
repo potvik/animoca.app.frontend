@@ -82,6 +82,16 @@ export const MobileMenu = observer(props => {
 
       <Button
         onClick={() => {
+          history.push('/leaders')
+          actionModals.closeLastModal();
+        }}
+        style={{ width: 200 }}
+      >
+        Leaders
+      </Button>
+
+      <Button
+        onClick={() => {
           actionModals.closeLastModal();
           user.signOut().then(() => {
             history.push(`/${Routes.login}`);
