@@ -8,7 +8,7 @@ import {Landing} from "./pages/Landing";
 import { ActionModals } from './components/ActionModals';
 import {BuyLootBox} from "./pages/BuyLootBox";
 import {Preview} from "./pages/Preview";
-
+import {Leaders} from './pages/Leaders'
 export const App: React.FC = () => (
   <Providers>
     <React.Suspense fallback={<div />}>
@@ -16,6 +16,7 @@ export const App: React.FC = () => (
         <Route exact path="/" component={Landing} />
         <Route exact path="/buy" component={BuyLootBox} />
         <Route exact path="/my-cards" component={PlayersMarketplace} />
+        <Route exact path="/leaders" component={Leaders} />
         <Redirect to="/" />
       </Switch>
     </React.Suspense>

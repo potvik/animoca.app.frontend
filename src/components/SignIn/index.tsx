@@ -82,9 +82,11 @@ export class SignIn extends React.Component<IStores & any> {
                 ? styles.selected
                 : '',
             )}
-            onClick={() => (this.walletType = WALLET_TYPE.MAGIC_WALLET)}
-          >
-            <img src="/magic.svg" style={{ height: 40 }} />
+            style={{ cursor: 'not-allowed'}}
+            onClick={()=>{}}
+            /*onClick={() => (this.walletType = WALLET_TYPE.MAGIC_WALLET)}*/
+          ><img src="/magic.svg" style={{ height: 40 ,cursor: 'not-allowed'}} />
+          &nbsp;(coming soon...)
           </Box>
         </Box>
 

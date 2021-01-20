@@ -12,7 +12,7 @@ export const EXPLORER_URL = !isMainnet
 
 export const RPC_URL = !isMainnet
   ? 'https://api.s0.b.hmny.io'
-  : "https://api0.s0.t.hmny.io"
+  : "https://api.s0.t.hmny.io"
 
 const GAS_LIMIT = 103802;
 const GAS_PRICE = 1000000000;
