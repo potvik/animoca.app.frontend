@@ -20,7 +20,7 @@ const icon = status =>  <Icon size="50" style={{width: 50}} glyph={status === 'C
 
 @inject("user", "tokenList")
 @observer
-export class PlayerIDModal extends React.Component<IStores & any> {
+export class PlayerIDModalAll extends React.Component<IStores & any> {
   formRef: any;
   state = {
     isLoading: false,
@@ -43,7 +43,7 @@ export class PlayerIDModal extends React.Component<IStores & any> {
           let res
 
           try {
-          res = await this.props.tokenList.claimCards(data.playerID);
+          res = await this.props.tokenList.claimCards(data.playerID, true);
           } catch(e) {
             this.setState({ isLoading: false });
             this.setState({ tx: null })

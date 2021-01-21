@@ -136,6 +136,20 @@ export class TokenList extends StoreConstructor {
     return this.list.map(e => e.playerId).filter(e => !e).length > 0;
   }
 
+  @computed
+  get canClaimAll() {
+    if (!this.list.length) {
+      return false;
+    }
+
+    const s = new Set();
+    this.list.map(e => e.playerId)
+      .filter(e => e !== "")
+      .forEach(e => s.add(e));
+
+    return s.size > 1;
+  }
+
   @action.bound
   getList = async () => {
     if (!this.stores.user.address) {
@@ -177,10 +191,15 @@ export class TokenList extends StoreConstructor {
   };
 
   @action.bound
-  async claimCards(playerId) {
-    const tokens = this.list
-      .filter(e => !e.playerId)
-      .map(e => e.id);
+  async claimCards(playerId, claimAll = false) {
+    console.log({claimAll})
+    const tokens = claimAll
+      ? this.list
+        .map(e => e.id)
+      : this.list
+        .filter(e => !e.playerId)
+        .map(e => e.id);
+
     if (this.stores.user.walletType === WALLET_TYPE.MAGIC_WALLET) {
       return blockchain.setPlayerIDMagicWallet({
         address: this.stores.user.address,

@@ -8,6 +8,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { SignIn } from "../../components/SignIn";
 import { PlayerIDModal } from "../../components/PlayerIDModal";
+import { PlayerIDModalAll } from "../../components/PlayerIDModalAll";
 import { ClaimTransactionModal } from "../../components/ClaimTransactionModal";
 
 import { useMediaQuery } from "react-responsive";
@@ -17,6 +18,7 @@ export const PlayersMarketplace = observer(() => {
   const { tokenList, user, actionModals, routing } = useStores();
 
   const [isPlayerIDModalOpen, setPlayerIDModal] = React.useState(false);
+  const [isPlayerIDModalAllOpen, setPlayerIDModalAll] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [claimTxDetails, setClaimTxDetails]= React.useState(null);
 
@@ -43,6 +45,7 @@ export const PlayersMarketplace = observer(() => {
       }
     }
   }, [user.status]);
+
 
 
   useEffect(() => {
@@ -75,6 +78,37 @@ export const PlayersMarketplace = observer(() => {
       }
     });
   }, [isPlayerIDModalOpen]);
+
+  useEffect(() => {
+    if (!isPlayerIDModalAllOpen) {
+      return;
+    }
+    // soccerPlayers.setMaxDisplay(20);
+    actionModals.open(PlayerIDModalAll, {
+      title: "Claim",
+      applyText: "Claim",
+      closeText: "Cancel",
+      noValidation: true,
+      width: "500px",
+      showOther: false,
+      //@ts-ignore
+      onApply: async (data: any) => {
+        actionModals.closeLastModal();
+        setPlayerIDModalAll(false);
+        if (data === null) {
+          return
+        }
+
+        setIsLoading(true);
+        await tokenList.getList();
+        setIsLoading(false);
+
+      },
+      onClose: () => {
+        setPlayerIDModalAll(false);
+      }
+    });
+  }, [isPlayerIDModalAllOpen]);
 
   const isSmallMobile = useMediaQuery({ query: "(max-width: 600px)" });
   console.log("sets", Object.keys(tokenList.list).length);
@@ -133,6 +167,7 @@ export const PlayersMarketplace = observer(() => {
           </a>
 
           {tokenList.canClaim && <Button onClick={() => setPlayerIDModal(true)}>Claim In-Game Currency</Button>}
+          {tokenList.canClaimAll && <Button onClick={() => setPlayerIDModalAll(true)}>Change Player ID</Button>}
         </Box>
 
       </Box>

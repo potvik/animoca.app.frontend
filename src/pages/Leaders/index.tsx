@@ -92,7 +92,7 @@ export const Leaders = observer(() => {
                 <TableCell scope="row" >
                   <strong>{i+1}</strong>
                 </TableCell>
-                <TableCell>{e.address}</TableCell>
+                <TableCell>{e.address} </TableCell>
                 <TableCell>{e.sets}</TableCell>
               </TableRow>
             })}
