@@ -59,8 +59,9 @@ export const MobileMenu = observer(props => {
 
       <Button
         style={{ width: 200 }}
+        disabled
         onClick={() => {
-          history.push('/buy');
+          //history.push('/buy');
           actionModals.closeLastModal();
         }}
       >

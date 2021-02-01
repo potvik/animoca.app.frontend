@@ -346,10 +346,10 @@ export class PricingBase extends React.Component<IStores> {
                 </Box>
                 <Box style={{width: '361px', maxWidth: '100%'}}>
                   <Button
-                    disabled={user.status !== 'success'}
+                    disabled={user.status !== 'success' || true}
                     size="xlarge"
                     onClick={() => {
-                      this.buyHandler();
+                      //this.buyHandler();
                     }}
                   >
                     Buy now

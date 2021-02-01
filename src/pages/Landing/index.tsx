@@ -23,7 +23,7 @@ const MainLogo = styled.img`
 `;
 
 const b = moment();
-const a = moment('2021012919', 'YYYYMMDDHH');
+const a = moment('2021050119', 'YYYYMMDDHH');
 
 const settings = {
   count: a.diff(b) / 1000,
@@ -186,7 +186,7 @@ export const Landing = observer(() => {
                         display: isSmallMobile ? 'none' : 'block',
                       }}
                     >
-                      This offer ends
+                      Delegation rewards distribution in
                     </b>
                   </Text>
                   <CountdownTimer className={styles.timer} {...settings} />
@@ -199,7 +199,10 @@ export const Landing = observer(() => {
                       fontSize: 30,
                       marginTop: 10,
                     }}
-                    onClick={() => routing.push('/buy')}
+                    disabled
+                    onClick={() => {}}
+                    /*//routing.push('/buy')*/
+
                   >
                     Buy now
                   </Button>
@@ -334,7 +337,8 @@ export const Landing = observer(() => {
                     will be appear in your digital wallet.
                   </Text>
                 </div>
-                <Button onClick={() => routing.push('/buy')}>Buy now</Button>
+                {/*<Button onClick={() => routing.push('/buy')}>Buy now</Button>*/}
+                <Button disabled onClick={() => {}}>Buy now</Button>
               </Box>
 
               <Box className={styles.reason}>

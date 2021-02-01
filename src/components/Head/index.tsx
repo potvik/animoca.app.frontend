@@ -178,8 +178,9 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
 
 
             <Button
+              disabled
               style={{ width: isTabletOrMobile ? 80 : 140 }}
-              onClick={() => history.push('/buy')}
+              onClick={() => false && history.push('/buy')}
             >
               Buy
             </Button>
